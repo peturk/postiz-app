@@ -24,6 +24,7 @@ RUN addgroup --system www \
 RUN npm --no-update-notifier --no-fund --global install pnpm@10.6.1 pm2
 
 WORKDIR /app
+RUN chown www:www /app
 
 COPY --chown=www:www . /app
 COPY --chown=www:www var/docker/nginx.conf /etc/nginx/nginx.conf
