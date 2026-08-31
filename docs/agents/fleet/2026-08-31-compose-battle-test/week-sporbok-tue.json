@@ -1,0 +1,31 @@
+{
+  "type": "draft",
+  "shortLink": false,
+  "date": "2026-09-08T08:00:00.000Z",
+  "tags": [],
+  "posts": [
+    {
+      "integration": { "id": "cmsnf6shm0001mk7nhrf52ohl" },
+      "value": [
+        { "content": "Þegar rignir fer spjaldtölvan í poka en snertiskjárinn virkar áfram. Blaðið á mælaborðinu blotnar fyrst.", "image": [] }
+      ],
+      "settings": {
+        "__type": "facebook",
+        "post_type": "post",
+        "text_format_preset_id": "1654916007940525"
+      }
+    }
+  ],
+  "meta": {
+    "brand": "sporbok",
+    "move": "proof",
+    "type": "moment",
+    "channel": "facebook",
+    "weekday": "Tue",
+    "hourLocal": 8,
+    "timezone": "Atlantic/Reykjavik",
+    "language": "is",
+    "pillar": "field-reality",
+    "revision": "2026-08-31 battle-test round 2: field tip replaces question (peer critique, codex grammar fix)"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "draft",
+  "shortLink": false,
+  "date": "2026-09-09T19:00:00.000Z",
+  "tags": [],
+  "posts": [
+    {
+      "integration": { "id": "cmsng2l070001ho7cyp8tfrtd" },
+      "value": [
+        { "content": "Í kvöld leitar garnhnykillinn að tunglinu. Það hefur falið sig bak við ský.", "image": [] }
+      ],
+      "settings": {
+        "__type": "facebook",
+        "post_type": "post",
+        "text_format_preset_id": "1679248482160767"
+      }
+    }
+  ],
+  "meta": {
+    "brand": "yarnkin",
+    "move": "proof",
+    "type": "moment",
+    "channel": "facebook",
+    "weekday": "Wed",
+    "hourLocal": 19,
+    "timezone": "Atlantic/Reykjavik",
+    "language": "is",
+    "pillar": "story-worlds",
+    "revision": "2026-08-31 battle-test round 2: value beat replaces empty question (peer critique)"
+  }
+}

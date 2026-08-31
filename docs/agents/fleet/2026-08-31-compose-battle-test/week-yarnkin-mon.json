@@ -1,0 +1,31 @@
+{
+  "type": "draft",
+  "shortLink": false,
+  "date": "2026-09-07T19:00:00.000Z",
+  "tags": [],
+  "posts": [
+    {
+      "integration": { "id": "cmsng2l070001ho7cyp8tfrtd" },
+      "value": [
+        { "content": "Dreki eða hafmeyja í kvöld?", "image": [] },
+        { "content": "Garnhnykillinn heldur með drekanum í kvöld.", "image": [] }
+      ],
+      "settings": {
+        "__type": "facebook",
+        "post_type": "post",
+        "text_format_preset_id": "175493843120364"
+      }
+    }
+  ],
+  "meta": {
+    "brand": "yarnkin",
+    "move": "engage",
+    "type": "this-or-that",
+    "channel": "facebook",
+    "weekday": "Mon",
+    "hourLocal": 19,
+    "timezone": "Atlantic/Reykjavik",
+    "language": "is",
+    "pillar": "story-worlds"
+  }
+}

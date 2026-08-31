@@ -1,0 +1,32 @@
+{
+  "type": "draft",
+  "shortLink": false,
+  "date": "2026-09-11T19:00:00.000Z",
+  "tags": [],
+  "posts": [
+    {
+      "integration": { "id": "cmsng2l070001ho7cyp8tfrtd" },
+      "value": [
+        { "content": "Best þegar sagan er búin og ...", "image": [] },
+        { "content": "... garnhnykillinn er löngu sofnaður.", "image": [] }
+      ],
+      "settings": {
+        "__type": "facebook",
+        "post_type": "post",
+        "text_format_preset_id": "323371698179784"
+      }
+    }
+  ],
+  "meta": {
+    "brand": "yarnkin",
+    "move": "engage",
+    "type": "finish-the-line",
+    "channel": "facebook",
+    "weekday": "Fri",
+    "hourLocal": 19,
+    "timezone": "Atlantic/Reykjavik",
+    "language": "is",
+    "pillar": "parent-life",
+    "revision": "2026-08-31 battle-test round 2: hook de-sloganized (peer critique)"
+  }
+}
