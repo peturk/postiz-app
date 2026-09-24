@@ -1,6 +1,6 @@
 # Sporbók brand kit and Áhöfnin, 2026-09-24
 
-Second proposal for the Sporbók brand kit, published as a private artifact: https://claude.ai/artifact/AmSWmAMMrMcDYEQAQTqFYD
+The Sporbók brand kit, published as a private artifact: https://claude.ai/artifact/AmSWmAMMrMcDYEQAQTqFYD
 Status: third proposal.
 Decided by the operator 2026-09-24: Source Sans 3 as the one typeface, and the tagline "Þú vinnur verkið. Sporbók man söguna."
 Waiting on approval of the Vinnugalli palette and the v3 cast.
@@ -10,7 +10,7 @@ Waiting on approval of the Vinnugalli palette and the v3 cast.
 - `cast.js`: the Áhöfnin cast (Bíllinn, Kassinn, Hjálmurinn, Nótan) as art data plus a vanilla port of the Yarnkin mascot rig.
   Lineage and licences are in its header comment.
 - `index.src.html`: the brand-kit page source; `build.py` inlines `cast.js` and the official icon into `index.html` and `preview.html`.
-- `export.cjs`: renders the six social templates at full size and a 4 × 10 transparent pose library from the same rig, into `out/`.
+- `export.cjs`: renders the six social templates at full size and a transparent pose library (every cast member × every expression) from the same rig, into `out/`.
 - `sheet.html` and `sheetshot.cjs`: the character × state test sheet with the silhouette column.
 - `moods-big2.html` and `bigshot2.cjs`: large expression sheets (`?m=mood,mood,...`) used for the v3 review rounds.
 - `research-expression.md`: the dated research brief on how eyes-first and object characters read happy, which v3 is calibrated against.
