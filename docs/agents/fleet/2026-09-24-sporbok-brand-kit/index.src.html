@@ -142,6 +142,13 @@ section { padding-block: 56px 8px; scroll-margin-top: 70px; }
 .roles td:first-child { font-weight: 700; white-space: nowrap; }
 .scroll { overflow-x: auto; }
 
+/* ---------- Faces ---------- */
+.faces { display: grid; grid-template-columns: 88px repeat(var(--cols, 8), minmax(64px, 1fr)); gap: 5px; min-width: 860px; }
+.faces .h { font: 500 11px var(--mono); letter-spacing: .06em; color: var(--muted); align-self: end; padding-bottom: 4px; }
+.faces .n { font-weight: 700; font-size: 15px; align-self: center; }
+.faces .c { background: var(--stage); aspect-ratio: 240 / 300; display: grid; place-items: center; }
+.faces .c svg { width: 88%; height: auto; }
+
 /* ---------- Colour ---------- */
 .system { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0; border: 1px solid var(--line); background: var(--panel); }
 .sw { display: grid; grid-template-rows: 110px auto; }
@@ -296,13 +303,13 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
   <header class="order">
     <div>
       <div class="mark"><img src="__ICON__" alt="Sporbók icon"><span>Sporbók</span></div>
-      <h1>Brand kit and Áhöfnin, second proposal</h1>
-      <p class="lede">One colour system, one typeface, a tagline, and a cast of four work objects running on the same character rig as Yarnkin. The cast is alive on this page and renders the social stills from the same code, so a post and the product can never drift apart.</p>
+      <h1>Brand kit and Áhöfnin, third proposal</h1>
+      <p class="lede">Source Sans 3 and "Þú vinnur verkið. Sporbók man söguna." are decided. This round makes Áhöfnin happier and far more expressive: mouths made from each object's own parts, smiling shut eyes, a warm resting face, body acting and small emanata, all tuned against published research on how eyes-first characters read joy. The cast is alive here and renders the social stills from the same code.</p>
     </div>
     <div class="stamp mono" aria-label="Document facts">
-      <div><span>Verkbeiðni</span><span>SB-BRAND-02</span></div>
+      <div><span>Verkbeiðni</span><span>SB-BRAND-03</span></div>
       <div><span>Dagsett</span><span>2026-09-24</span></div>
-      <div><span>Staða</span><span>Tillaga</span></div>
+      <div><span>Letur</span><span>Source Sans 3</span></div>
       <div><span>Rig</span><span>Yarnkin port</span></div>
     </div>
   </header>
@@ -310,13 +317,8 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
 
   <div class="controls">
     <nav class="nav" aria-label="Sections">
-      <a href="#day">Dagurinn</a><a href="#cast">Áhöfnin</a><a href="#colour">Litir</a><a href="#type">Letur</a><a href="#lines">Slagorð</a><a href="#templates">Sniðmát</a><a href="#path">Næstu skref</a>
+      <a href="#day">Dagurinn</a><a href="#cast">Áhöfnin</a><a href="#faces">Svipbrigði</a><a href="#colour">Litir</a><a href="#type">Letur</a><a href="#lines">Slagorð</a><a href="#templates">Sniðmát</a><a href="#path">Næstu skref</a>
     </nav>
-    <div class="seg" role="group" aria-label="Typeface for samples">
-      <span class="label">Typeface</span>
-      <button type="button" class="chip" id="font-ss" data-font="source" aria-pressed="true">Source Sans 3</button>
-      <button type="button" class="chip" id="font-ar" data-font="archivo" aria-pressed="false">Archivo</button>
-    </div>
   </div>
 
   <main class="brand" id="brand" data-font="source">
@@ -326,7 +328,7 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
         <div class="no">01</div>
         <div>
           <h2 id="s-day">Dagur á verkstað</h2>
-          <p>The product in one working day. The cast reacts to what happens and never starts anything. At 17:00 every eye closes and the van's lamps go out: the promise that Sporbók switches off after work, performed instead of claimed.</p>
+          <p>The product in one working day. On duty the cast is happy at work: eyes on the job, a small eye-smile, a hum. When a receipt lands on the job they light up. At 17:00 every eye closes and the van's lamps go out: Sporbók switches off after work, performed instead of claimed.</p>
         </div>
       </div>
       <div class="day">
@@ -357,7 +359,7 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
         <div class="no">02</div>
         <div>
           <h2 id="s-cast">Áhöfnin: four objects, one rig</h2>
-          <p>Built exactly like the Yarnkin animals: rounded rectangles, circles and rounded triangles, flat fill, a round eye that never changes shape, lids that carry the feeling. Unlike Yarnkin there are no mouths and no limbs. Adults read competence from eyes and posture, and a mouth is what turns an object into a toy. Try each state.</p>
+          <p>Built exactly like the Yarnkin animals: rounded rectangles, circles and rounded triangles, flat fill, a round eye that never changes shape, lids that carry the feeling. Each mouth is a part the object already has: the van's grille, the dark gap under the toolbox lid, the band above the hat's strip, the space under the receipt's header. No limbs. Try each state.</p>
         </div>
       </div>
       <div class="sheets" id="sheets"></div>
@@ -367,6 +369,8 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
           <h3>How they behave</h3>
           <ul>
             <li>A state is a pool of expressions on a random cadence, never one held face.</li>
+            <li>Joy lifts the lower lid; the upper lid stays up. Misery starts when the upper lid comes down, so on duty the upper lid never passes 0.15 and a small eye-smile never leaves.</li>
+            <li>Shut from below is a smile (^^). Shut from above is sleep (u). The two are never swapped.</li>
             <li>They react to the user's own events: a receipt logged, a job closed, the day ended.</li>
             <li>The pointer has to come close and move to earn a look. Then the eyes go back to their own business.</li>
             <li>Off duty, every eye closes. Nothing watches after hours.</li>
@@ -385,7 +389,8 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
         <div class="rulebox dont">
           <h3>Never</h3>
           <ul>
-            <li>Mouths, teeth, arms, hands, thumbs-up, winks or blush.</li>
+            <li>Teeth, tongues, arms, hands, thumbs-up, winks or blush. The open smile is for real joy only.</li>
+            <li>More than one emanata at a time: one sparkle pair, one sweat drop, or one z.</li>
             <li>Speech bubbles or sales copy. The cast does not speak; that is Oddur's job.</li>
             <li>Watching, counting or timing a person. Hjálmurinn looks after the wearer, never at them.</li>
             <li>Money, invoice errors, payment or legal screens.</li>
@@ -408,9 +413,20 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
       </div>
     </section>
 
-    <section id="colour" aria-labelledby="s-colour">
+    <section id="faces" aria-labelledby="s-faces">
       <div class="sec-head">
         <div class="no">03</div>
+        <div>
+          <h2 id="s-faces">Svipbrigði: every face, every object</h2>
+          <p>The expression library the posts are drawn from. Every cell is the live rig frozen at rest, so this is exactly what a still will look like.</p>
+        </div>
+      </div>
+      <div class="scroll"><div class="faces" id="faces-grid"></div></div>
+    </section>
+
+    <section id="colour" aria-labelledby="s-colour">
+      <div class="sec-head">
+        <div class="no">04</div>
         <div>
           <h2 id="s-colour">Colour: Vinnugalli</h2>
           <p>Ink and white from the mark, hi-vis orange from the work jacket, concrete for grounds, rain blue for weather and the van. Orange is already on the site as an accent, so this promotes it rather than inventing a colour, and it stops Sporbók looking like a Stripe clone.</p>
@@ -440,15 +456,15 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
 
     <section id="type" aria-labelledby="s-type">
       <div class="sec-head">
-        <div class="no">04</div>
+        <div class="no">05</div>
         <div>
-          <h2 id="s-type">Typeface: the same words, twice</h2>
-          <p>Both are free and have every Icelandic letter. One family runs everything. The toggle at the top switches the taglines and every template on this page.</p>
+          <h2 id="s-type">Typeface: Source Sans 3</h2>
+          <p>Decided. It is already the face of sporbok.is, it is free, it has every Icelandic letter, and it reads like good signage. Archivo stays on record as the considered alternative.</p>
         </div>
       </div>
       <div class="duel">
         <div class="spec">
-          <span class="label">Source Sans 3 · on sporbok.is today</span>
+          <span class="label">Source Sans 3 · chosen</span>
           <p class="face-a eyebrow">Mánudagur · 07:40</p>
           <p class="face-a big">Nótan fór beint á verkið í Hafnarfirði.</p>
           <p class="face-a mid">Þú vinnur verkið. Sporbók man söguna. Reikningsdrögin eru tilbúin áður en helgin byrjar.</p>
@@ -456,7 +472,7 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
           <dl><dt>Feel</dt><dd>Calm, open, very legible small. Reads like good signage.</dd><dt>Risk</dt><dd>Quiet. Headlines need weight and tight tracking to hold a feed.</dd></dl>
         </div>
         <div class="spec">
-          <span class="label">Archivo · on the August covers</span>
+          <span class="label">Archivo · considered</span>
           <p class="face-b eyebrow">Mánudagur · 07:40</p>
           <p class="face-b big">Nótan fór beint á verkið í Hafnarfirði.</p>
           <p class="face-b mid">Þú vinnur verkið. Sporbók man söguna. Reikningsdrögin eru tilbúin áður en helgin byrjar.</p>
@@ -469,14 +485,14 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
 
     <section id="lines" aria-labelledby="s-lines">
       <div class="sec-head">
-        <div class="no">05</div>
+        <div class="no">06</div>
         <div>
-          <h2 id="s-lines">Tagline</h2>
-          <p>Written from the voice guide, not translated. One of these replaces the three taglines in use today.</p>
+          <h2 id="s-lines">Tagline: Þú vinnur verkið. Sporbók man söguna.</h2>
+          <p>Decided. It replaces the three taglines in use today; the others stay on record for campaigns.</p>
         </div>
       </div>
       <div class="lines">
-        <div class="line pick"><q>Þú vinnur verkið. Sporbók man söguna.</q><p class="why"><b>Recommended</b>The voice guide's own line. It carries the name: the <i>bók</i> keeps the <i>saga</i>. It speaks to the worker, not the office.</p></div>
+        <div class="line pick"><q>Þú vinnur verkið. Sporbók man söguna.</q><p class="why"><b>Chosen</b>The voice guide's own line. It carries the name: the <i>bók</i> keeps the <i>saga</i>. It speaks to the worker, not the office.</p></div>
         <div class="line"><q>Vinnudagbók sem skrifar sig sjálf.</q><p class="why"><b>Clearest</b>Says exactly what the product is. Best as the subline under the name.</p></div>
         <div class="line"><q>Lokaðu kassanum. Reikningsdrögin eru tilbúin.</q><p class="why"><b>Most concrete</b>An outcome at a moment everyone knows, and Kassinn acts it out. Strong for ads.</p></div>
         <div class="line"><q>Á vakt á verkstað. Frítíminn er þinn.</q><p class="why"><b>Privacy pillar</b>Answers the fear first. Right for the privacy campaign; too defensive as the main line.</p></div>
@@ -488,7 +504,7 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
 
     <section id="templates" aria-labelledby="s-tpl">
       <div class="sec-head">
-        <div class="no">06</div>
+        <div class="no">07</div>
         <div>
           <h2 id="s-tpl">Templates, drawn by the rig</h2>
           <p>Every character here is the same code as the live cast, frozen in a chosen expression and aimed at the headline. The export script renders these exact frames to PNG at full size for Postiz. Copy is real Icelandic, written to the social Skills: no bait, no link in the body, no signature line.</p>
@@ -509,8 +525,8 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
         <figure class="tpl">
           <div class="canvas r45 p2">
             <div class="halves">
-              <div class="half"><span class="eb">Kostur 1</span><p class="hd">Blað á mælaborðinu</p><div class="pos who" data-cast="note" data-mood="worried" data-look="-0.9,-0.3"></div></div>
-              <div class="half"><span class="eb">Kostur 2</span><p class="hd">Spjaldtölva í rigningunni</p><div class="pos who" data-cast="box" data-mood="curious" data-look="-0.9,-0.4"></div></div>
+              <div class="half"><span class="eb">Kostur 1</span><p class="hd">Blað á mælaborðinu</p><div class="pos who" data-cast="note" data-mood="curious" data-look="-0.9,-0.2"></div></div>
+              <div class="half"><span class="eb">Kostur 2</span><p class="hd">Spjaldtölva í rigningunni</p><div class="pos who" data-cast="box" data-mood="happy" data-look="-0.8,-0.1"></div></div>
             </div>
             <div class="pos or">eða</div>
           </div>
@@ -521,7 +537,7 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
           <div class="canvas r11 p3">
             <div class="pos copy"><span class="eb">Föstudagur · 16:05</span><p class="hd">Kassanum lokað. Reikningsdrögin eru tilbúin.</p></div>
             <div class="pos stat"><b>0</b><span>nótur eftir í bílnum</span></div>
-            <div class="pos who" data-cast="box" data-mood="asleep" data-look="0,0"></div>
+            <div class="pos who" data-cast="box" data-mood="relieved" data-look="0,0"></div>
           </div>
           <figcaption><b>Feed square · proof</b><span class="mono">1080 × 1080</span></figcaption>
         </figure>
@@ -544,7 +560,7 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
         <figure class="tpl span2">
           <div class="canvas rog og">
             <div class="pos copy"><div class="sig"><img src="__ICON__" alt=""><span>Sporbók</span></div><p class="hd">Vinnudagbók sem skrifar sig sjálf.</p><span class="url">sporbok.is</span></div>
-            <div class="pos who" data-cast="van" data-mood="neutral" data-look="-0.5,-0.05"></div>
+            <div class="pos who" data-cast="van" data-mood="neutral" data-look="-0.4,0.05"></div>
             <div class="tapeband"></div>
           </div>
           <figcaption><b>Share card, replaces the placeholder dot</b><span class="mono">1200 × 630</span></figcaption>
@@ -554,14 +570,15 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
 
     <section id="path" aria-labelledby="s-path">
       <div class="sec-head">
-        <div class="no">07</div>
+        <div class="no">08</div>
         <div>
           <h2 id="s-path">From proposal to shipped</h2>
           <p>Once you pick a typeface and a tagline and approve the cast, the rest is mechanical.</p>
         </div>
       </div>
       <ol class="path">
-        <li><span class="who2">You</span><b>Pick the typeface and the tagline, and approve Vinnugalli and Áhöfnin.</b>Everything below waits on this.</li>
+        <li><span class="who2">Done</span><b>Typeface and tagline chosen.</b>Source Sans 3; "Þú vinnur verkið. Sporbók man söguna."</li>
+        <li><span class="who2">You</span><b>Approve Vinnugalli and Áhöfnin v3.</b>Everything below waits on this.</li>
         <li><span class="who2">available (sporbok.is)</span><b>Land the kit in the Sporbók repo.</b>Colour tokens replace the Stripe indigo; the cast's art data and a pose library of PNGs go under <span class="mono">/brand/cast/</span>; the brand README gets the cast rules; the share card, aurora and whale images, and Söhne go.</li>
         <li><span class="who2">@outofcow/creatures</span><b>One rig for everyone.</b>Move the Yarnkin rig into the package as a data-driven <span class="mono">Mascot</span> API next to Oddur's engine, so Yarnkin and Sporbók art are data in their own repos and nobody forks the engine again. Needs its own plan and a major version.</li>
         <li><span class="who2">OutOfCow media step</span><b>Render posts from the rig.</b>The social Flow picks a template, a character and a mood; the exporter renders the PNG at full size and uploads it to Postiz. No image model touches the characters.</li>
@@ -594,11 +611,11 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
     { clock: "07:40", caption: "Mætt á verkstað. Enginn stimplaði sig inn.", dusk: false,
       set: { van: ["hissa", 0.6, 0], hat: ["avakt", -0.6, 0], box: ["idle", -0.6, 0], note: ["idle", -0.6, 0] } },
     { clock: "09:15", caption: "Nótan fer beint á verkið.", dusk: false,
-      set: { van: ["avakt", 1, 0], hat: ["avakt", 1, 0], box: ["bidur", 1, 0], note: ["skrad", -0.8, -0.2] } },
+      set: { van: ["avakt", 1, 0], hat: ["hissa", 1, 0], box: ["bidur", 1, 0], note: ["fagnar", -0.8, -0.2] } },
     { clock: "12:30", caption: "Unnið. Sporbók man hvað var gert.", dusk: false,
-      set: { van: ["idle", 0.4, 0], hat: ["avakt", 0.3, 0.2], box: ["avakt", -0.3, 0.2], note: ["idle", -0.4, 0] } },
+      set: { van: ["avakt", 0.4, 0], hat: ["avakt", 0.3, 0.2], box: ["avakt", -0.3, 0.2], note: ["avakt", -0.4, 0] } },
     { clock: "16:05", caption: "Kassanum lokað. Reikningsdrögin eru tilbúin.", dusk: false,
-      set: { van: ["idle", 0.8, 0], hat: ["skrad", 0.8, 0], box: ["skrad", 0, -0.2], note: ["skrad", -0.8, 0] } },
+      set: { van: ["skrad", 0.8, 0], hat: ["skrad", 0.8, 0], box: ["fagnar", 0, -0.2], note: ["skrad", -0.8, 0] } },
     { clock: "17:00", caption: "Vinnudegi lokið. Sporbók slekkur á sér. Frítíminn er þinn.", dusk: true,
       set: { van: ["fri", 0, 0.3], hat: ["fri", 0, 0.3], box: ["fri", 0, 0.3], note: ["fri", 0, 0.3] } }
   ];
@@ -648,10 +665,10 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
       topics: "Mæting, öryggi, fyrsti dagur á nýjum stað.", start: "idle" },
     { k: "note", size: "0,50", one: "Man hverja skrúfu. Kvíðin fyrir að týnast, léttir þegar hún er skráð.",
       sig: "Rifni endinn sveiflast á eftir. Sléttist út þegar hún er komin á verkið.",
-      topics: "Efni, nótur, byggingavöruverslunin, mánaðamót.", start: "ahyggjur" }
+      topics: "Efni, nótur, byggingavöruverslunin, mánaðamót.", start: "skrad" }
   ];
   var sheetsEl = document.getElementById("sheets");
-  var BEH = ["idle", "avakt", "skrad", "bidur", "hissa", "ahyggjur", "fri"];
+  var BEH = ["idle", "avakt", "skrad", "fagnar", "bidur", "hissa", "ahyggjur", "fri"];
   SHEETS.forEach(function (d) {
     var art = C.ART[d.k];
     var card = document.createElement("article");
@@ -690,13 +707,24 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
     sheetsEl.appendChild(card);
   });
 
+  /* ---------------- faces grid ---------------- */
+  var FACES = [["neutral", "Hlutlaus"], ["content", "Sáttur"], ["busy", "Önnum"], ["happy", "Glaður"], ["joy", "Alsæll"], ["proud", "Stoltur"], ["fond", "Þakklátur"], ["curious", "Forvitinn"], ["thinking", "Hugsi"], ["surprised", "Hissa"], ["oops", "Úps"], ["relieved", "Léttir"], ["asleep", "Sofandi"]];
+  var fg = document.getElementById("faces-grid");
+  fg.style.setProperty("--cols", FACES.length);
+  fg.appendChild(document.createElement("span"));
+  FACES.forEach(function (f) { var hd = document.createElement("span"); hd.className = "h"; hd.textContent = f[1]; fg.appendChild(hd); });
+  C.KINDS.forEach(function (k) {
+    var n = document.createElement("span"); n.className = "n"; n.textContent = C.ART[k].name; fg.appendChild(n);
+    FACES.forEach(function (f) { var c = document.createElement("div"); c.className = "c"; c.title = C.ART[k].name + " · " + f[1]; fg.appendChild(c); C.mount(c, k, { mood: f[0], live: false }); });
+  });
+
   /* ---------------- templates: rig at rest ---------------- */
   document.querySelectorAll("[data-cast]").forEach(function (el) {
     var look = (el.getAttribute("data-look") || "0,0").split(",").map(Number);
     C.mount(el, el.getAttribute("data-cast"), { mood: el.getAttribute("data-mood") || "neutral", look: { x: look[0], y: look[1] }, live: false });
   });
   var row = document.getElementById("castrow");
-  [["van", 0, 46, "neutral", -0.6, -0.05], ["hat", 46, 19, "calm", -0.7, -0.05], ["box", 64, 23, "happy", -0.7, -0.05], ["note", 87, 15, "happy", -0.8, -0.1]].forEach(function (m) {
+  [["van", 0, 46, "neutral", -0.4, 0.05], ["hat", 46, 19, "content", -0.7, -0.05], ["box", 64, 23, "proud", -0.7, -0.05], ["note", 87, 15, "fond", -0.8, -0.1]].forEach(function (m) {
     var d = document.createElement("div");
     d.className = "m";
     d.style.left = m[1] + "%";
@@ -705,14 +733,5 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
     C.mount(d, m[0], { mood: m[3], look: { x: m[4], y: m[5] }, live: false });
   });
 
-  /* ---------------- typeface toggle ---------------- */
-  var brand = document.getElementById("brand");
-  function setFont(f) {
-    brand.setAttribute("data-font", f);
-    document.querySelectorAll("button[data-font]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-font") === f ? "true" : "false"); });
-    try { localStorage.setItem("sb-font", f); } catch (e) {}
-  }
-  document.querySelectorAll("button[data-font]").forEach(function (b) { b.addEventListener("click", function () { setFont(b.getAttribute("data-font")); }); });
-  try { var sf = localStorage.getItem("sb-font"); if (sf === "source" || sf === "archivo") setFont(sf); } catch (e) {}
 })();
 </script>

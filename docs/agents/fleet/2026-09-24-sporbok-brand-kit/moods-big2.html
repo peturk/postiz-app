@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8">
+<style>
+body{margin:0;background:#E6E9EC;font:13px system-ui;padding:16px}
+.row{display:grid;grid-template-columns:90px repeat(6,1fr);gap:6px;align-items:center;margin-bottom:6px}
+.cell{background:#EEF0F2;aspect-ratio:240/300;display:grid;place-items:center}
+.cell svg{width:90%}
+h4{margin:0}
+</style>
+<div id="g"></div>
+<script src="cast.js"></script><script>if(location.search.includes("band"))SporbokCast.options.hatBand=true;</script>
+<script>
+var C=SporbokCast, g=document.getElementById("g");
+var M=(new URLSearchParams(location.search).get("m")||"neutral,content,busy,happy,joy,proud").split(",");
+var hdr=document.createElement("div");hdr.className="row";hdr.innerHTML="<b></b>"+M.map(b=>"<b>"+b+"</b>").join("");g.appendChild(hdr);
+C.KINDS.forEach(function(k){
+  var r=document.createElement("div");r.className="row";r.innerHTML="<h4>"+C.ART[k].name+"</h4>";g.appendChild(r);
+  M.forEach(function(m){var c=document.createElement("div");c.className="cell";r.appendChild(c);C.mount(c,k,{mood:m,live:false});});
+});
+</script>

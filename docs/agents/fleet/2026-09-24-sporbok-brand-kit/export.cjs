@@ -39,7 +39,7 @@ const fs = require("fs");
   await p.setContent('<!doctype html><meta charset="utf-8"><body style="margin:0;background:transparent"><div id="h" style="width:960px"></div></body>');
   await p.addScriptTag({ path: "cast.js" });
   const kinds = ["van", "box", "hat", "note"];
-  const moods = ["neutral", "calm", "focused", "proud", "happy", "curious", "thinking", "surprised", "worried", "asleep"];
+  const moods = await p.evaluate(() => Object.keys(SporbokCast.EXPRESSIONS));
   for (const k of kinds) for (const m of moods) {
     await p.evaluate(([k, m]) => { const h = document.getElementById("h"); h.innerHTML = ""; SporbokCast.mount(h, k, { mood: m, live: false }); h.firstChild.style.width = "960px"; h.firstChild.style.height = "1200px"; }, [k, m]);
     await (await p.$("#h svg")).screenshot({ path: `out/poses/${k}-${m}.png`, omitBackground: true });
