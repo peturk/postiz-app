@@ -8,7 +8,8 @@ description: Yarnkin brand voice and locked visual assets for social compose. Us
 Voice and assets only.
 Facebook length, post shape, and marketing moves live in other Skills.
 
-Authoritative product design: `/home/pk/git/yarnkin/DESIGN.md` (Cream and Starlight).
+Authoritative product design: `DESIGN.md` in the yarnkin repo (Cream and Starlight).
+Asset paths below are relative to the yarnkin repo root; a Flow worktree of this repo does not contain them.
 
 ## Instructions
 
@@ -33,7 +34,16 @@ Use only official assets:
 - wordmark: `yarnkin/web/src/web/assets/brand/yarnkin-wordmark.png`
 - yarnball: `yarnkin/native/android/design-drops/launcher/yarnball_launcher_1024.png`
 
+Facebook color backgrounds (locked; any other preset fails the checker):
+
+- `175493843120364` Pink and yellow gradient
+- `1679248482160767` Light blue illustration
+- `323371698179784` Sunset red illustration
+
+The launcher PNG sits on a cream app tile; it is an identity reference, not an overlay.
 Never redraw the mascot or wordmark.
+The character has no approved Icelandic name.
+In Icelandic copy it is the common noun `garnhnykillinn` (lowercase), never a capitalized proper name, until an operator approves one.
 Never generate letterforms.
 Never present photorealistic AI imagery as a real photograph; illustrated or stylized art only.
 

@@ -1,6 +1,6 @@
 ---
 name: social-compose
-description: Path skill that merges brand, move, type, and channel into one Postiz draft JSON. Use when running Flow social-post, when a compose Step lists social-compose, or when assembling a Yarnkin or Sporbok social post from Ticket fields.
+description: Path skill that merges brand, move, type, and channel into one Postiz draft JSON. Use when running Flow social-post, when a compose Step lists social-compose, or when assembling a Yarnkin or Sporbók social post from Ticket fields.
 ---
 
 # Social compose
@@ -16,18 +16,23 @@ Load those Skills. Fill slots. Emit JSON.
 Required fields:
 
 - `brand`: yarnkin | sporbok
-- `move`: engage | proof | seasonal | launch
-- `type`: this-or-that | favorite | finish-the-line | cover | still | clip
-- `channel`: facebook | instagram | youtube | linkedin
+- `move`: engage | proof
+- `type`: this-or-that | favorite | finish-the-line | moment
+- `channel`: facebook
 - `topic`: this week only
-- `when`: ISO datetime, Atlantic/Reykjavik
+- `when`: ISO datetime, Atlantic/Reykjavik, in the future
 
-Refuse if a field is missing.
+Refuse if a field is missing, if `when` is in the past, or if a value has no Skill named `social-brand-<brand>`, `social-move-<move>`, `social-type-<type>`, `social-channel-<channel>`.
+A value becomes valid only when its Skill exists; add it to this list in the same change.
+All four current types are text-only color posts; media types (still, cover, clip) and other channels wait for their Skills.
+
+Pairing: `moment` goes with `proof`; `this-or-that`, `favorite`, and `finish-the-line` go with `engage`.
+Refuse any other pairing - a question under `proof` or a no-ask moment under `engage` contradicts the move.
 
 ### Step 2: Load only the named Skills
 
 Brand Skill, move Skill, type Skill, channel Skill.
-Do not mix Yarnkin facts into Sporbok.
+Do not mix Yarnkin facts into Sporbók.
 
 ### Step 3: Fill the type slots under brand voice and channel limits
 
@@ -47,6 +52,8 @@ Platitudes are a fail.
 
 This is the exact Postiz `CreatePostDto` wire shape (verified against `libraries/nestjs-libraries/src/dtos/posts/create.post.dto.ts`).
 `value[0]` is the post, `value[1]` is the first comment.
+Include `value[1]` only when the type Skill's comment slot (FLAVOR or PAYOFF) is filled.
+When it is empty, `value` has exactly one item: Postiz rejects empty content even on a draft.
 
 ```
 {
@@ -59,7 +66,7 @@ This is the exact Postiz `CreatePostDto` wire shape (verified against `libraries
       "integration": { "id": "<postiz integration id for this brand+channel>" },
       "value": [
         { "content": "<HOOK>", "image": [] },
-        { "content": "<RULES>", "image": [] }
+        { "content": "<FLAVOR or PAYOFF; omit this item when empty>", "image": [] }
       ],
       "settings": {
         "__type": "facebook",
@@ -91,7 +98,8 @@ Credentials are not in this Skill.
 - channel limits hold
 - language matches the brand Skill's audience rule (Icelandic for the Icelandic Pages)
 - no engagement bait anywhere: no instruction to comment a token, react, or share, in the hook or any comment
-- first comment, when present, follows the type Skill (flavor or context, never voting instructions)
+- first comment, when present, follows the type Skill (flavor or context, never voting instructions), and is never empty
+- no signature on Icelandic posts (brand Skill Step 4)
 - no forbidden brand tokens
 - `type` is `draft`
 - hook would work if said to one parent or one operator in person (Hopkins salesperson test)
@@ -103,14 +111,15 @@ On failure, return `NEEDS_WORK` with the failing check. Do not post.
 ## Examples
 
 Ticket: yarnkin, engage, this-or-that, facebook, `Dragon or mermaid tonight?`
-Result draft: hook in `posts[0].value[0]`, rules in `posts[0].value[1]`, empty image, a FACEBOOK_PRESETS id, `type: draft`.
+Result draft: hook in `posts[0].value[0]`, optional flavor in `posts[0].value[1]`, empty image, a locked Yarnkin preset, `type: draft`.
 
 ## Troubleshooting
 
 Issue: 131-character Facebook color hook
 Cause: extra setup in the hook
-Solution: cut the hook. Keep rules in the first comment.
+Solution: cut the hook.
+Move context to the first comment.
 
-Issue: Yarnkin copy on a Sporbok integrationId
+Issue: Yarnkin copy on a Sporbók integrationId
 Cause: brand and credentials mixed
 Solution: refuse. Brand Skill does not pick the API key.

@@ -20,7 +20,7 @@ First comment: next item in Postiz `value[]` (`facebook.provider.ts` `comment()`
 Use this when the type has no media (this-or-that, favorite, finish-the-line).
 
 - `settings.post_type`: `post`
-- `settings.text_format_preset_id`: a `FACEBOOK_PRESETS` id
+- `settings.text_format_preset_id`: one of the brand Skill's locked presets (a subset of `FACEBOOK_PRESETS`)
 - `image`: empty
 - post body: at most 130 characters
 - first comment: allowed, and not counted in the 130
@@ -53,7 +53,7 @@ Buying engagement or comment pods.
 
 ## Examples
 
-Color post: 28-character hook, a warm preset, empty image, optional non-bait flavor comment.
+Color post: 28-character hook, a locked brand preset, empty image, optional non-bait flavor comment.
 
 ## Troubleshooting
 

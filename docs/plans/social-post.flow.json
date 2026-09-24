@@ -70,9 +70,9 @@
     }
   ],
   "not_yet_wired": [
-    "spec deltas found at registration: output variable is {{compose.json}} not {{compose.payload}}; steps[].skills does not persist through a runtime save (skill discovery = ticket worktree cwd + system_prompt), see PLAN-0001",
-    "config.postiz_url and config.postiz_api_key are not injected; postiz_url must include the /api ingress prefix, e.g. https://postiz.peturk.com/api; api key in flow_config is browser-visible, decision pending",
-    "no postiz-app local project is registered on prod OutOfCow, and these Skills are uncommitted local files - they must land in a clonable repo first",
+    "spec deltas found at registration: output variable is {{compose.json}} not {{compose.payload}}; steps[].skills does not persist, but steps now carry skill_bindings (2026-09-24), see PLAN-0001",
+    "config.postiz_url and config.postiz_api_key are not injected; postiz_url must include the /api ingress prefix, e.g. https://postiz.peturk.com/api; planned fix is a connector credential on the HTTP node, see PLAN-0001 Review 2026-09-24",
+    "Skills are committed (f2a997cb) but not yet loaded as OutOfCow Skill rows; the skills list here predates proof/favorite/finish-the-line/moment",
     "compose payload must be the CreatePostDto wire shape (posts[].integration.id + value[]), see social-compose Skill Step 4; proven 2026-08-31 with drafts cmth9vii40000oa7jm7fodm3w and cmth9vilc0002oa7jfsn00mle",
     "Waitpoint and publish HTTP are Phase 2",
     "Media branch is Phase 3"

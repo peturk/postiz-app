@@ -1,8 +1,8 @@
 # PLAN-0001: Social post Flow
 
 **Plan ID:** PLAN-0001
-**Status:** draft (plan plus Skills in this checkout; Flow not installed in OutOfCow)
-**Last Updated:** 2026-08-24
+**Status:** draft (Skills committed on `origin/main`; Flow `social-post` v1 registered on prod OutOfCow, never run; nothing published)
+**Last Updated:** 2026-09-24
 **Authors:** operator conversation in postiz-app session 01a02f9d, continued 2026-08-24
 **Home checkout:** `/home/pk/git/postiz-app`
 **Runtime home:** OutOfCow Flow system
@@ -23,7 +23,7 @@ Related OutOfCow ledger, not duplicated here:
 - PLAN-0064 Flow and Skill outcome metrics
 - PLAN-0070 graph hardening, including Postiz changelog-draft connector candidate
 - `docs/plans/postiz-social-media-hub-goal.md` for instance wiring
-- `src/scripts/social-cover-image-prompts.ts` already holds Yarnkin and Sporbok cover recipes
+- Yarnkin and Sporbók cover recipes (`src/scripts/social-cover-image-prompts.ts`) are no longer on outofcow `main`; they survive only in archive commit `53375080d` - restore them deliberately with the media branch, do not cite them as live
 
 Do not write this plan into `/home/pk/git/outofcow` while that working tree is dirty and claimed.
 When that checkout is clean, copy this file as the next free `PLAN-NNNN-social-post-flow.md` and add a row to `docs/plans/INDEX.md`.
@@ -39,7 +39,7 @@ That does not compose, does not version, and does not learn.
 We already have the pieces:
 
 - Yarnkin brand system in `git/yarnkin/DESIGN.md`
-- Sporbok brand assets in `git/available/public/brand/`
+- Sporbók brand assets served at `https://sporbok.is/brand/` (source `git/available/public/brand/`, rules in its `README.md`)
 - Facebook pages connected in Postiz
 - Postiz public API at `/public/v1`
 - OutOfCow Flows that puzzle Skills, prompts, HTTP, and waitpoints
@@ -151,9 +151,11 @@ That graph is the factory.
 
 ## Skills (the cards)
 
-First set to write.
 Each Skill is a short Anthropic-format `SKILL.md`.
 One home per fact.
+
+Written (2026-09-24): `social-compose`, both brands, moves `engage` and `proof`, types `this-or-that`, `favorite`, `finish-the-line`, `moment`, and channel `facebook`.
+Everything else below is planned; `social-compose` refuses a Ticket value until its Skill exists.
 
 ### Brand
 
@@ -166,17 +168,17 @@ One home per fact.
 - Never redraw the mascot or wordmark.
 - Palette and chrome: Yarnkin `DESIGN.md` Cream and Starlight.
 - Forbidden: plum chrome, hard sell in the hook, Christmas cues unless the Ticket says so.
-- Signature: `Yarnkin · bedtime stories from Reykjavik`
+- Signature: none on Icelandic posts; `Yarnkin · bedtime stories from Reykjavik` is reserved for English-market posts (brand Skill Step 4 owns this).
 
 **`social-brand-sporbok`**
 
 - Audience: Icelandic field-service operators and SMBs.
 - Voice: quiet, competent, real weather, real work.
-- Visuals: official icon, lockup, wordmark from `available/public/brand/`.
+- Visuals: official icon, stacked lockup, and wordmark from `https://sporbok.is/brand/`; the horizontal lockup was removed 2026-08-10 and must never be reused (icon plus live text instead).
 - Photo is the trust layer.
 - Type and logo are composites, never generated glyphs.
 - Forbidden: tourism Iceland, aurora, puffins, yarnball energy.
-- Signature: `Sporbok · field work, without the chaos`
+- Signature: none on Icelandic posts; `Sporbók · field work, without the chaos` is reserved for English-market posts (brand Skill Step 4 owns this).
 
 ### Moves (marketing skills)
 
@@ -207,12 +209,12 @@ One home per fact.
 **`social-type-this-or-that`**
 
 - Two options.
-- First comment is how to play.
+- First comment is optional flavor or the brand's own answer, never how to play (engagement bait).
 
 **`social-type-favorite`**
 
 - Open question.
-- First comment invites the winner or a follow-up.
+- First comment is optional: the brand answers its own question first.
 
 **`social-type-finish-the-line`**
 
@@ -245,7 +247,7 @@ One home per fact.
 
 **`social-channel-facebook`**
 
-- Color text post: no media, at most 130 characters, `text_format_preset_id` from `FACEBOOK_PRESETS` in `libraries/nestjs-libraries/src/dtos/posts/providers-settings/facebook.dto.ts`.
+- Color text post: no media, at most 130 characters, `text_format_preset_id` from the brand Skill's locked presets (a subset of `FACEBOOK_PRESETS` in `libraries/nestjs-libraries/src/dtos/posts/providers-settings/facebook.dto.ts`).
 - Photo or video post: no background preset.
 - First comment is the next item in Postiz `value[]`.
 - Postiz Facebook provider already supports `comment()`.
@@ -286,12 +288,15 @@ Every Run starts from a Ticket with these fields in the description or structure
 
 ```
 brand: yarnkin | sporbok
-move: engage | proof | seasonal | launch
-type: this-or-that | favorite | finish-the-line | cover | still | clip
-channel: facebook | instagram | youtube | linkedin
+move: engage | proof
+type: this-or-that | favorite | finish-the-line | moment
+channel: facebook
 topic: free text, this week only
-when: ISO datetime, Atlantic/Reykjavik
+when: ISO datetime, Atlantic/Reykjavik, in the future
 ```
+
+Live values only; `social-compose` Step 1 owns the list and the move-type pairing.
+Planned values (moves `seasonal`, `launch`; types `cover`, `still`, `clip`; channels `instagram`, `youtube`, `linkedin`) join when their Skills land.
 
 Example:
 
@@ -550,6 +555,7 @@ Skills written in this checkout:
 - `.claude/skills/social-type-this-or-that/SKILL.md`
 - `.claude/skills/social-channel-facebook/SKILL.md`
 - `.claude/skills/social-compose/SKILL.md`
+- added 2026-08-31: `social-move-proof`, `social-type-favorite`, `social-type-finish-the-line`, `social-type-moment`
 
 Flow graph written as `docs/plans/social-post.flow.json`.
 
@@ -558,13 +564,16 @@ Registration facts learned from the OutOfCow source (commit `44f002440`):
 
 - `flow.save` takes an editor graph (`{nodes, edges}`), not a raw `FlowTemplate`; the compiler emits `category: custom`, `is_builtin: false`.
 - An AI step's JSON output variable is `{{<stepId>.json}}` (requires `expects_json: true`), not `{{<stepId>.payload}}`; the registered HTTP step sends `body_json: "{{compose.json}}"`.
-- The declarative `skills: []` array on steps does NOT persist through a runtime save (no DB column); skill selection is worktree cwd (`needs_worktree: true` + the ticket's `local_project_id`) plus explicit `system_prompt` naming, or a numeric ingested `skill_id`.
+- The declarative `skills: []` array on steps does NOT persist through a runtime save (no DB column).
+  Superseded 2026-09-24: steps now carry `skill_bindings` (stored in `flow_steps.skill_bindings`, outofcow `src/server/db/schema/flow.ts:63`), each resolving to one active Skill row whose version is pinned on the Run - that pin is this plan's "Skill versions used" record.
+  Skills reach the DB through tRPC `skills.create` with a `project_id`; the MCP global skill sync can remove rows and is unsafe for this.
 - `config.*` comes from the Ticket's `metadata.flow_config` (or a recurring-flow schedule's `config`), not from a per-Flow store.
 - Ticket fields reach the compose prompt via `user_prompt_template` rendered against `{{config.*}}`; `system_prompt` is verbatim.
 
 Remaining wiring before a Flow-driven Run works:
 
-1. These Skills and this plan are uncommitted local files; prod OutOfCow worktrees are in-cluster (`/workspace/*`), so the Skills must land in a repo that instance can clone, and a `postiz-app` local project must be registered there (none exists as of 2026-08-31). Where to push is an operator decision - postiz-app tracks the public upstream, and the brand Skills are private marketing material.
+1. The Skills are committed (`f2a997cb`, on Forgejo `origin/main`); they reach OutOfCow as Skill rows via `skills.create` and `skill_bindings`, not as a worktree clone.
+   Local `main` now tracks `origin/main` (it tracked the public gitroomhq upstream until 2026-09-24, which made a bare `git push` aim private brand material at upstream).
 2. `config.postiz_api_key` in `metadata.flow_config` is returned to logged-in UI clients (`recurring-flow-dispatch.ts` documents config as non-secret). Options: accept the exposure on a single-operator instance, or land an env-backed credential in OutOfCow (precedent: `OUTOFCOW_CONNECTOR_AUTH_*`). Decide before the first Flow-driven Run.
 3. `config.postiz_url` must be the origin plus `/api`, e.g. `https://postiz.peturk.com/api`.
 4. `config.integration_id` carries the brand's Postiz integration id so COMPOSE never calls the API.
@@ -608,6 +617,39 @@ Same Flow.
 
 ---
 
+## Review 2026-09-24 - open backlog
+
+A three-lane review (Skills, OutOfCow capabilities, live state) found the gaps below.
+The Skill and checker fixes landed with this revision; everything here is still open.
+
+Live state on 2026-09-24:
+
+- Nothing has ever been published; all seven Postiz posts are DRAFTs dated in the past (2026-08-11 and 2026-09-07..11).
+- Only the two Facebook Pages are connected; both show zero reach for 30 days.
+- Flow `social-post` has never run; one API key still sees both brands (hard rule 9).
+
+OutOfCow build order (reuse primitives, no second system):
+
+1. Connector credential on the HTTP Request node (`auth.connector_id`, one connector per brand, header injected only for the connector's origin and redacted) - closes the browser-visible `postiz_api_key` decision.
+2. Load the Skills as rows and bind them; one If-Else on `config.brand` so a brand never loads the other's voice.
+3. A generic Approval node (trusted operation that finishes `NEEDS_WORK`, like `approve_deploy`), then `PUT /posts/:id/status`; define what happens when approval lands after `when`.
+4. A weekly `social-plan-week` recurring Flow that creates the week's Tickets; needs `OUTOFCOW_RECURRING_FLOWS_MODE` on in prod (interval-only, no cron).
+5. A media step: brand HTML templates rendered to PNG (official assets, real fonts, fixed sizes), optional generated backgrounds, uploaded via Postiz `POST /upload`.
+6. `social-harvest` Flow over `GET /analytics/post/:postId`, joined to Runs by the stored Postiz post id.
+7. A Social Ticket Inspector view (preview, image, Postiz ids); Postiz keeps the calendar.
+
+The draft checker (`docs/agents/fleet/2026-08-31-compose-battle-test/check-draft.mjs`) becomes a Run Command step between compose and the HTTP post, because Postiz skips validation for drafts and on status change.
+
+Skill and rule gaps with no owner yet:
+
+- Media: `social-type-still` and `social-type-cover`, per-channel sizes and safe zones, alt text (Postiz `MediaDto.alt` exists; the Facebook provider does not send it).
+- Community ops: owner and alerting for the 1-2 hour reply duty; adopt the moderation and crisis-pause runbook from `research-takeover-ops.md`.
+- Legal: AI-image disclosure and Meta AI labels, photo rights and consent (crews, customers, children), children's-marketing rules for Yarnkin.
+- Sporbók launch sequence (`social-move-launch`).
+- Icelandic holiday and quiet-day calendar, content pillars (`meta.pillar` is used but undefined), evergreen library, UTM rule for links.
+- Instagram and LinkedIn channel Skills; type Skills assume Facebook's first comment.
+- Operator decisions: approved Icelandic name for the Yarnkin character, and whether the Sporbók brand kit is final.
+
 ## Decisions against
 
 | Rejected | Why |
@@ -632,7 +674,7 @@ Same Flow.
 
 Phase 1 is done only when all of these are true:
 
-1. The six Skills exist as files a scanner can see.
+1. The Skills exist as files a scanner can see (ten as of 2026-09-24).
 2. Flow `social-post` is openable on `/flows/:id`.
 3. A Ticket with the contract above produces JSON that passes the output contract.
 4. Postiz shows a **draft** on the Yarnkin Facebook integration.

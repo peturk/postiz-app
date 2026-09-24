@@ -1,14 +1,18 @@
 ---
 name: social-brand-sporbok
-description: Sporbok brand voice and locked visual assets for social compose. Use when the Ticket brand is sporbok, when composing a Sporbok social post, or when a Flow Step lists social-brand-sporbok.
+description: Sporbók brand voice and locked visual assets for social compose. Use when the Ticket brand is sporbok, when composing a Sporbók social post, or when a Flow Step lists social-brand-sporbok.
 ---
 
-# Sporbok brand
+# Sporbók brand
 
 Voice and assets only.
 Facebook length, post shape, and marketing moves live in other Skills.
 
-Authoritative assets: `/home/pk/git/available/public/brand/`.
+The brand name is written `Sporbók` (with the accent) in every post, image, and alt text.
+The Ticket and Postiz key `sporbok` stays unaccented; that is an identifier, not the name.
+
+Authoritative assets: `https://sporbok.is/brand/` (rules in `https://sporbok.is/brand/README.md`).
+Fetch assets by URL; a Flow worktree has no local brand checkout.
 
 ## Instructions
 
@@ -31,8 +35,17 @@ Restrained situational humor is allowed only when it grows from a real task and 
 Use only official assets:
 
 - `sporbok-icon.png`
-- `sporbok-lockup-horizontal.png`
-- `sporbok-wordmark.png`
+- `sporbok-lockup-stacked.png` (light surfaces only)
+- `sporbok-wordmark.png` (light surfaces only)
+
+There is no horizontal lockup.
+The horizontal raster was removed 2026-08-10 for a defective underline; never recreate or reuse it.
+When a horizontal treatment is needed, compose `sporbok-icon.png` with live `Sporbók` text in the brand font.
+
+Facebook color backgrounds (locked; any other preset fails the checker):
+
+- `1654916007940525` Light grey illustration
+- `218067308976029` Light grey illustration
 
 Photo is the trust layer.
 Type and logo are composites.
@@ -42,7 +55,7 @@ Never present photorealistic AI imagery as a real photograph.
 ### Step 4: Signature
 
 No signature on Icelandic posts until an approved Icelandic variant exists.
-The English signature `Sporbok · field work, without the chaos` is reserved for future English-market posts.
+The English signature `Sporbók · field work, without the chaos` is reserved for future English-market posts.
 When a signature exists, append in one place only.
 
 ### Step 5: Forbidden
