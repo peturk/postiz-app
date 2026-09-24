@@ -1,0 +1,718 @@
+<title>Sporbók Brand Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400..900&display=swap">
+<style>
+:root {
+  --page: #EEF0F2;
+  --panel: #FFFFFF;
+  --ink: #111418;
+  --ink-2: #3B434D;
+  --muted: #56616E;
+  --line: #D5DAE0;
+  --hivis: #FF5A1F;
+  --hivis-text: #B63A0B;
+  --focus: #2C5F7F;
+  --stage: #E6E9EC;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --sans: "Source Sans 3", "Source Sans Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #0C0E11; --panel: #161A1F; --ink: #EEF0F2; --ink-2: #C4CAD2; --muted: #97A1AC;
+    --line: #2A3038; --hivis-text: #FF7A45; --focus: #7FB3D5; --stage: #D9DDE2;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #0C0E11; --panel: #161A1F; --ink: #EEF0F2; --ink-2: #C4CAD2; --muted: #97A1AC;
+  --line: #2A3038; --hivis-text: #FF7A45; --focus: #7FB3D5; --stage: #D9DDE2;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--page); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.55; padding-inline: 20px; padding-block: 0 80px; }
+.wrap { max-width: 1160px; margin: 0 auto; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.mono { font-family: var(--mono); font-size: 12.5px; letter-spacing: .02em; }
+.label { font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+button { font-family: inherit; }
+
+/* header */
+.order { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px; align-items: end; padding-block: 44px 28px; border-bottom: 2px solid var(--ink); }
+.order .mark { display: flex; align-items: center; gap: 16px; }
+.order .mark img { width: 64px; height: 64px; border-radius: 14px; }
+.order .mark span { font-weight: 700; font-size: 44px; letter-spacing: -.02em; line-height: 1; }
+.order h1 { margin-top: 22px; font-size: clamp(30px, 4.4vw, 50px); line-height: 1.06; letter-spacing: -.02em; font-weight: 750; max-width: 22ch; }
+.order .lede { margin-top: 14px; color: var(--ink-2); max-width: 64ch; }
+.stamp { border: 1.5px solid var(--ink); padding: 12px 14px; display: grid; gap: 4px; min-width: 230px; }
+.stamp div { display: flex; justify-content: space-between; gap: 18px; }
+.tape { height: 14px; background: linear-gradient(to bottom, transparent 5px, #C5CBD2 5px, #C5CBD2 9px, transparent 9px), var(--hivis); }
+
+/* controls */
+.controls { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--page); padding-block: 12px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: center; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.seg .label { margin-right: 4px; }
+.chip { font: 600 14px/1 var(--sans); color: var(--ink); background: var(--panel); border: 1.5px solid var(--line); padding: 9px 12px; border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--page); }
+.nav { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.nav a { color: var(--ink-2); text-decoration: none; font-size: 14px; }
+.nav a:hover { color: var(--ink); text-decoration: underline; }
+
+/* sections */
+section { padding-block: 56px 8px; scroll-margin-top: 70px; }
+.sec-head { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 18px; align-items: start; margin-bottom: 26px; }
+.sec-head .no { font-family: var(--mono); font-size: 13px; border: 1.5px solid var(--ink); padding: 6px 0; text-align: center; }
+.sec-head h2 { font-size: clamp(24px, 3vw, 32px); letter-spacing: -.015em; line-height: 1.12; font-weight: 750; }
+.sec-head p { margin-top: 8px; color: var(--ink-2); max-width: 68ch; }
+.note { border-left: 3px solid var(--hivis); padding: 4px 0 4px 14px; color: var(--ink-2); max-width: 72ch; }
+
+/* ---------- The day ---------- */
+.day { background: var(--panel); border: 1px solid var(--line); }
+.day-stage {
+  position: relative;
+  aspect-ratio: 16 / 7;
+  max-width: 100%;
+  background: var(--stage);
+  overflow: hidden;
+  transition: background-color 1.2s ease;
+  container-type: inline-size;
+}
+.day-stage.dusk { background: #1A2027; --cast-shadow: rgba(255,255,255,.07); }
+.day-stage .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 13%; background: #CFD5DB; transition: background-color 1.2s ease; }
+.day-stage.dusk .floor { background: #252C35; }
+.day-stage .slot { position: absolute; bottom: 7%; }
+.day-stage .slot svg { width: 100%; height: auto; display: block; }
+.day-stage .s-van { left: 5%; width: 22%; }
+.day-stage .s-hat { left: 33%; width: 12%; }
+.day-stage .s-box { left: 49%; width: 15%; }
+.day-stage .s-note { left: 68%; width: 10.5%; }
+.day-stage .clock {
+  position: absolute; left: 4%; top: 7%;
+  font-family: var(--mono); font-weight: 500; font-size: 5.2cqw; line-height: 1; letter-spacing: -.02em;
+  color: #111418; transition: color 1.2s ease;
+  font-variant-numeric: tabular-nums;
+}
+.day-stage .caption {
+  position: absolute; left: 4%; top: calc(7% + 7cqw); max-width: 56%;
+  font-weight: 700; font-size: 2.35cqw; line-height: 1.2; letter-spacing: -.01em;
+  color: #111418; transition: color 1.2s ease;
+}
+.day-stage.dusk .clock, .day-stage.dusk .caption { color: #EEF0F2; }
+.day-stage .moon { position: absolute; right: 6%; top: 10%; width: 5cqw; height: 5cqw; border-radius: 50%; background: #E6E9EC; box-shadow: -1.2cqw .6cqw 0 0 #1A2027 inset; opacity: 0; transition: opacity 1.2s ease; }
+.day-stage.dusk .moon { opacity: .9; }
+.day-bar { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; padding: 14px 16px; border-top: 1px solid var(--line); }
+.day-bar .play { font: 600 14px/1 var(--sans); background: var(--hivis); color: #111418; border: 0; padding: 10px 14px; border-radius: 999px; cursor: pointer; }
+.beat { font: 500 13px/1 var(--mono); color: var(--ink); background: transparent; border: 1.5px solid var(--line); padding: 8px 10px; border-radius: 6px; cursor: pointer; font-variant-numeric: tabular-nums; }
+.beat[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--page); }
+.day-bar .hint { margin-left: auto; color: var(--muted); font-size: 14px; }
+
+/* ---------- Character sheets ---------- */
+.sheets { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+.sheet { background: var(--panel); border: 1px solid var(--line); display: grid; grid-template-rows: auto 1fr; }
+.sheet .stage { background: var(--stage); aspect-ratio: 1 / 1; display: grid; place-items: center; position: relative; }
+.sheet .stage > svg { width: 72%; height: auto; }
+.sheet .sil { position: absolute; right: 10px; top: 10px; width: 34px; }
+.sheet .sil svg { width: 100%; height: auto; }
+.sheet .sil svg * { fill: #111418 !important; stroke: #111418 !important; }
+.sheet .sil .sb-eye { display: none; }
+.sheet .body { padding: 16px 18px 18px; display: grid; gap: 10px; align-content: start; }
+.sheet h3 { font-size: 23px; font-weight: 750; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.sheet h3 small { font: 500 11px var(--mono); letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+.sheet .one { font-size: 15.5px; color: var(--ink-2); }
+.sheet dl { margin: 0; display: grid; gap: 6px; font-size: 14px; }
+.sheet dt { font: 500 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sheet dd { margin: 0 0 4px; color: var(--ink-2); }
+.states { display: flex; flex-wrap: wrap; gap: 5px; }
+.states button { font: 500 12px/1 var(--mono); color: var(--ink); background: transparent; border: 1px solid var(--line); padding: 6px 8px; border-radius: 5px; cursor: pointer; }
+.states button[aria-pressed="true"] { background: var(--ink); color: var(--page); border-color: var(--ink); }
+
+.rules { margin-top: 22px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.rulebox { background: var(--panel); border: 1px solid var(--line); padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.rulebox h3 { font-size: 17px; font-weight: 750; }
+.rulebox ul { margin: 0; padding-left: 18px; display: grid; gap: 5px; color: var(--ink-2); font-size: 15px; }
+.rulebox.dont h3 { color: var(--hivis-text); }
+
+.roles { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); font-size: 15px; }
+.roles th, .roles td { text-align: left; padding: 10px 14px; border-top: 1px solid var(--line); vertical-align: top; }
+.roles th { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border-top: 0; }
+.roles td:first-child { font-weight: 700; white-space: nowrap; }
+.scroll { overflow-x: auto; }
+
+/* ---------- Colour ---------- */
+.system { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0; border: 1px solid var(--line); background: var(--panel); }
+.sw { display: grid; grid-template-rows: 110px auto; }
+.sw .chipc { position: relative; }
+.sw .meta { padding: 12px 14px 14px; display: grid; gap: 3px; border-left: 1px solid var(--line); }
+.sw:first-child .meta { border-left: 0; }
+.sw .meta b { font-size: 16px; }
+.sw .meta span { color: var(--ink-2); font-size: 14px; }
+.sw .meta code { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.pairs { margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 8px; }
+.pair { display: flex; align-items: center; gap: 12px; background: var(--panel); border: 1px solid var(--line); padding: 10px 12px; font-size: 14.5px; }
+.pair i { font-style: normal; width: 44px; height: 30px; display: grid; place-items: center; font-weight: 800; font-size: 15px; border-radius: 4px; flex: none; }
+.pair .r { margin-left: auto; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.pair .r.fail { color: var(--hivis-text); }
+.considered { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.alt { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; align-items: center; background: var(--panel); border: 1px dashed var(--line); padding: 12px; }
+.alt .strip { display: grid; grid-template-columns: 2fr 1fr 1fr; height: 56px; }
+.alt p { font-size: 14.5px; color: var(--ink-2); }
+.alt b { color: var(--ink); }
+
+/* ---------- Type duel ---------- */
+.duel { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.spec { background: var(--panel); border: 1px solid var(--line); padding: 22px; display: grid; gap: 14px; align-content: start; }
+.face-a { font-family: "Source Sans 3", var(--sans); }
+.face-b { font-family: "Archivo", "Arial Narrow", var(--sans); font-stretch: 88%; }
+.spec .big { font-size: clamp(34px, 4vw, 48px); line-height: 1.02; font-weight: 760; letter-spacing: -.035em; }
+.spec .face-b.big { letter-spacing: -.03em; font-weight: 780; }
+.spec .mid { font-size: 21px; line-height: 1.35; font-weight: 500; }
+.spec .glyphs { font-size: 26px; letter-spacing: .04em; color: var(--ink-2); }
+.spec .eyebrow { font-size: 14px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--hivis-text); }
+.spec dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; font-size: 14.5px; color: var(--ink-2); }
+.spec dt { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 2px; }
+.spec dd { margin: 0; }
+
+/* ---------- Taglines ---------- */
+.lines { display: grid; gap: 10px; }
+.line { background: var(--panel); border: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 24px; padding: 16px 20px; align-items: center; }
+.line.pick { outline: 2px solid var(--ink); outline-offset: -2px; }
+.line q { quotes: none; font-family: var(--b-font); font-stretch: var(--b-head-stretch); font-size: 25px; line-height: 1.15; font-weight: 750; letter-spacing: -.02em; }
+.line .why { color: var(--ink-2); font-size: 15px; }
+.line .why b { color: var(--hivis-text); font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; display: block; margin-bottom: 2px; }
+
+/* ---------- Brand-font scope ---------- */
+.brand { --b-font: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif; --b-head-stretch: 100%; --b-head-weight: 760; --b-head-track: -0.035em; }
+.brand[data-font="archivo"] { --b-font: "Archivo", "Arial Narrow", system-ui, sans-serif; --b-head-stretch: 88%; --b-head-weight: 780; --b-head-track: -0.03em; }
+
+/* ---------- Templates ---------- */
+.templates { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; align-items: start; }
+.tpl { display: grid; gap: 10px; margin: 0; }
+.tpl figcaption { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.tpl figcaption b { font-size: 15px; }
+.canvas { container-type: inline-size; position: relative; overflow: hidden; max-width: 100%; font-family: var(--b-font); color: #111418; background: #FFFFFF; box-shadow: 0 1px 0 var(--line), 0 12px 30px -18px rgba(17,20,24,.45); }
+.canvas svg { display: block; }
+.r45 { aspect-ratio: 4 / 5; } .r11 { aspect-ratio: 1 / 1; } .rcover { aspect-ratio: 1640 / 624; } .rog { aspect-ratio: 1200 / 630; }
+.wide { grid-column: 1 / -1; }
+.span2 { grid-column: span 2; }
+.hd { font-stretch: var(--b-head-stretch); font-weight: var(--b-head-weight); letter-spacing: var(--b-head-track); line-height: 1.02; text-wrap: balance; }
+.eb { font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.sig { display: flex; align-items: center; gap: 1.6cqw; }
+.sig img { width: 6cqw; height: 6cqw; border-radius: 1.3cqw; }
+.sig span { font-weight: 700; font-size: 3.4cqw; letter-spacing: -.01em; }
+.tapeband { position: absolute; left: 0; right: 0; bottom: 0; height: 2.2cqw; background: linear-gradient(to bottom, transparent 38%, #C5CBD2 38%, #C5CBD2 62%, transparent 62%), #FF5A1F; }
+.pos { position: absolute; }
+
+.p1 { background: #1A2027; color: #EEF0F2; --cast-shadow: rgba(255,255,255,.07); }
+.p1 .copy { left: 7.4cqw; right: 7.4cqw; top: 8cqw; display: grid; gap: 3cqw; }
+.p1 .eb { font-size: 2.2cqw; color: #FF7A45; }
+.p1 .hd { font-size: 8.4cqw; }
+.p1 .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 22cqw; background: #252C35; }
+.p1 .who { right: 5cqw; bottom: 12cqw; width: 64cqw; }
+.p1 .foot { left: 7.4cqw; right: 7.4cqw; bottom: 6.5cqw; display: flex; justify-content: space-between; align-items: center; }
+.p1 .foot .sig span { color: #EEF0F2; }
+.p1 .url { font-size: 2.3cqw; font-weight: 600; color: #97A1AC; }
+
+.p2 .halves { position: absolute; inset: 0; display: grid; grid-template-rows: 1fr 1fr; }
+.p2 .half { position: relative; display: grid; align-content: center; padding-inline: 7.4cqw; gap: 1.6cqw; }
+.p2 .half:first-child { background: #E6E9EC; }
+.p2 .half:last-child { background: #2C5F7F; color: #FFFFFF; }
+.p2 .half .eb { font-size: 2.1cqw; opacity: .8; }
+.p2 .half .hd { font-size: 9.2cqw; max-width: 56cqw; }
+.p2 .half .who { right: 5cqw; bottom: 3cqw; width: 30cqw; }
+.p2 .or { left: 50%; top: 50%; translate: -50% -50%; width: 14cqw; height: 14cqw; border-radius: 50%; background: #FF5A1F; color: #111418; display: grid; place-items: center; font-weight: 800; font-size: 4.2cqw; z-index: 2; box-shadow: 0 0 0 1.4cqw #111418; }
+
+.p3 { background: #E6E9EC; }
+.p3 .copy { left: 7.4cqw; right: 7.4cqw; top: 8cqw; display: grid; gap: 2.4cqw; }
+.p3 .eb { font-size: 2.3cqw; color: #B63A0B; }
+.p3 .hd { font-size: 7.4cqw; }
+.p3 .stat { left: 7.4cqw; bottom: 9cqw; display: grid; gap: .6cqw; }
+.p3 .stat b { font-size: 28cqw; line-height: .9; font-weight: 800; letter-spacing: -.04em; font-variant-numeric: tabular-nums; font-stretch: var(--b-head-stretch); }
+.p3 .stat span { font-size: 2.6cqw; color: #56616E; font-weight: 600; }
+.p3 .who { right: 6cqw; bottom: 6cqw; width: 38cqw; }
+
+.cv { background: #111418; color: #FFFFFF; --cast-shadow: rgba(255,255,255,.07); }
+.cv .copy { left: 13%; top: 50%; translate: 0 -50%; width: 44cqw; display: grid; gap: 1.4cqw; }
+.cv .eb { font-size: 1.05cqw; color: #FF7A45; }
+.cv .hd { font-size: 3.9cqw; }
+.cv .castrow { left: 58%; bottom: 1.3cqw; width: 30cqw; height: 21cqw; }
+.cv .castrow .m { position: absolute; bottom: 0; }
+.cv .tapeband { height: 1.3cqw; }
+.safe { position: absolute; inset: 0; pointer-events: none; }
+.safe .band { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, rgba(255,255,255,.14) 0 6px, transparent 6px 12px); }
+.safe .l { left: 0; width: 10.98%; border-right: 1px dashed rgba(255,255,255,.55); }
+.safe .r { right: 0; width: 10.98%; border-left: 1px dashed rgba(255,255,255,.55); }
+.safe .tag { position: absolute; top: 6px; left: 50%; translate: -50% 0; font: 500 10px var(--mono); color: rgba(255,255,255,.75); letter-spacing: .08em; white-space: nowrap; }
+
+.av { background: #050609; display: grid; place-items: center; }
+.av img { width: 74%; }
+.av .circle { position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 100cqw color-mix(in srgb, var(--page) 82%, transparent); }
+
+.og { background: #FFFFFF; }
+.og .copy { left: 6cqw; top: 9cqw; width: 56cqw; display: grid; gap: 2.4cqw; }
+.og .hd { font-size: 6.2cqw; }
+.og .url { font-size: 2.2cqw; color: #56616E; font-weight: 600; }
+.og .who { right: 4cqw; bottom: 1.8cqw; width: 30cqw; }
+.og .tapeband { height: 1.8cqw; }
+
+/* ---------- Path ---------- */
+.path { display: grid; gap: 10px; counter-reset: s; padding: 0; margin: 0; }
+.path li { list-style: none; background: var(--panel); border: 1px solid var(--line); padding: 14px 18px 14px 60px; position: relative; color: var(--ink-2); }
+.path li > b, .path li > .who2 { display: block; }
+.path li > b { margin-block: 2px 4px; }
+.path li::before { counter-increment: s; content: counter(s); position: absolute; left: 18px; top: 14px; width: 26px; height: 26px; border: 1.5px solid var(--ink); display: grid; place-items: center; font: 500 12px var(--mono); color: var(--ink); }
+.path b { color: var(--ink); }
+.path .who2 { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--hivis-text); }
+
+footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; display: grid; gap: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .day-stage, .day-stage .floor, .day-stage .clock, .day-stage .caption, .day-stage .moon { transition: none; }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; padding-inline: 16px; }
+  .order { grid-template-columns: 1fr; }
+  .stamp { min-width: 0; }
+  .sec-head { grid-template-columns: 1fr; gap: 10px; }
+  .sec-head .no { width: 56px; }
+  .line { grid-template-columns: 1fr; }
+  .order .mark span { font-size: 36px; }
+  .span2 { grid-column: auto; }
+  .day-stage { aspect-ratio: 4 / 3; }
+  .day-stage .caption { font-size: 3.6cqw; max-width: 80%; top: calc(7% + 8cqw); }
+  .day-stage .clock { font-size: 7cqw; }
+  .day-stage .s-van { left: 3%; width: 36%; }
+  .day-stage .s-hat { left: 40%; width: 17%; }
+  .day-stage .s-box { left: 58%; width: 21%; }
+  .day-stage .s-note { left: 82%; width: 15%; }
+  .day-bar .hint { margin-left: 0; }
+}
+</style>
+
+<div class="wrap">
+  <header class="order">
+    <div>
+      <div class="mark"><img src="__ICON__" alt="Sporbók icon"><span>Sporbók</span></div>
+      <h1>Brand kit and Áhöfnin, second proposal</h1>
+      <p class="lede">One colour system, one typeface, a tagline, and a cast of four work objects running on the same character rig as Yarnkin. The cast is alive on this page and renders the social stills from the same code, so a post and the product can never drift apart.</p>
+    </div>
+    <div class="stamp mono" aria-label="Document facts">
+      <div><span>Verkbeiðni</span><span>SB-BRAND-02</span></div>
+      <div><span>Dagsett</span><span>2026-09-24</span></div>
+      <div><span>Staða</span><span>Tillaga</span></div>
+      <div><span>Rig</span><span>Yarnkin port</span></div>
+    </div>
+  </header>
+  <div class="tape" aria-hidden="true"></div>
+
+  <div class="controls">
+    <nav class="nav" aria-label="Sections">
+      <a href="#day">Dagurinn</a><a href="#cast">Áhöfnin</a><a href="#colour">Litir</a><a href="#type">Letur</a><a href="#lines">Slagorð</a><a href="#templates">Sniðmát</a><a href="#path">Næstu skref</a>
+    </nav>
+    <div class="seg" role="group" aria-label="Typeface for samples">
+      <span class="label">Typeface</span>
+      <button type="button" class="chip" id="font-ss" data-font="source" aria-pressed="true">Source Sans 3</button>
+      <button type="button" class="chip" id="font-ar" data-font="archivo" aria-pressed="false">Archivo</button>
+    </div>
+  </div>
+
+  <main class="brand" id="brand" data-font="source">
+
+    <section id="day" aria-labelledby="s-day">
+      <div class="sec-head">
+        <div class="no">01</div>
+        <div>
+          <h2 id="s-day">Dagur á verkstað</h2>
+          <p>The product in one working day. The cast reacts to what happens and never starts anything. At 17:00 every eye closes and the van's lamps go out: the promise that Sporbók switches off after work, performed instead of claimed.</p>
+        </div>
+      </div>
+      <div class="day">
+        <div class="day-stage" id="stage">
+          <div class="moon" aria-hidden="true"></div>
+          <div class="floor" aria-hidden="true"></div>
+          <div class="clock" id="clock" aria-live="polite">09:15</div>
+          <p class="caption" id="caption">Nótan fer beint á verkið.</p>
+          <div class="slot s-van" id="slot-van"></div>
+          <div class="slot s-hat" id="slot-hat"></div>
+          <div class="slot s-box" id="slot-box"></div>
+          <div class="slot s-note" id="slot-note"></div>
+        </div>
+        <div class="day-bar" role="group" aria-label="Time of day">
+          <button type="button" class="play" id="play">Spila daginn</button>
+          <button type="button" class="beat" data-beat="0" aria-pressed="false">07:40</button>
+          <button type="button" class="beat" data-beat="1" aria-pressed="true">09:15</button>
+          <button type="button" class="beat" data-beat="2" aria-pressed="false">12:30</button>
+          <button type="button" class="beat" data-beat="3" aria-pressed="false">16:05</button>
+          <button type="button" class="beat" data-beat="4" aria-pressed="false">17:00</button>
+          <span class="hint">Move the pointer near them; they look when it earns a look.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="cast" aria-labelledby="s-cast">
+      <div class="sec-head">
+        <div class="no">02</div>
+        <div>
+          <h2 id="s-cast">Áhöfnin: four objects, one rig</h2>
+          <p>Built exactly like the Yarnkin animals: rounded rectangles, circles and rounded triangles, flat fill, a round eye that never changes shape, lids that carry the feeling. Unlike Yarnkin there are no mouths and no limbs. Adults read competence from eyes and posture, and a mouth is what turns an object into a toy. Try each state.</p>
+        </div>
+      </div>
+      <div class="sheets" id="sheets"></div>
+
+      <div class="rules">
+        <div class="rulebox">
+          <h3>How they behave</h3>
+          <ul>
+            <li>A state is a pool of expressions on a random cadence, never one held face.</li>
+            <li>They react to the user's own events: a receipt logged, a job closed, the day ended.</li>
+            <li>The pointer has to come close and move to earn a look. Then the eyes go back to their own business.</li>
+            <li>Off duty, every eye closes. Nothing watches after hours.</li>
+            <li>Reduced motion: the pose still shows the state, nothing moves.</li>
+          </ul>
+        </div>
+        <div class="rulebox">
+          <h3>Where they appear</h3>
+          <ul>
+            <li>Social: about one post in three or four, one character per post, the full cast only for milestones.</li>
+            <li>Product: empty states, onboarding, a finished job, the off-duty screen.</li>
+            <li>Marketing: the cover, the share card, the landing page's day story.</li>
+            <li>Real photos of real sites stay the trust layer. The cast supports, it never replaces them.</li>
+          </ul>
+        </div>
+        <div class="rulebox dont">
+          <h3>Never</h3>
+          <ul>
+            <li>Mouths, teeth, arms, hands, thumbs-up, winks or blush.</li>
+            <li>Speech bubbles or sales copy. The cast does not speak; that is Oddur's job.</li>
+            <li>Watching, counting or timing a person. Hjálmurinn looks after the wearer, never at them.</li>
+            <li>Money, invoice errors, payment or legal screens.</li>
+            <li>Confetti, bouncing, or multi-wobble springs.</li>
+            <li>Kassinn in a lowered-lid stare. Eyes in a dark slot under a heavy lid is someone hiding in a box, watching.</li>
+            <li>AI-generated character art. Stills come from the rig, never from an image model.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin:34px 0 12px;font-size:20px">Áhöfnin and Oddur</h3>
+      <div class="scroll">
+        <table class="roles">
+          <thead><tr><th>Who</th><th>Job</th><th>Speaks</th><th>Lives</th></tr></thead>
+          <tbody>
+            <tr><td>Oddur</td><td>The assistant. One assistant projected into every PK product (ADR-0014); in Sporbók he helps fill in and find things.</td><td>Yes, in chat</td><td>The app's assistant button and chat, from <span class="mono">@outofcow/creatures</span></td></tr>
+            <tr><td>Áhöfnin</td><td>The brand's world: the van, the kit, the hat and the receipt that the product takes care of.</td><td>Never</td><td>Social, marketing, empty states, the off-duty screen</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="colour" aria-labelledby="s-colour">
+      <div class="sec-head">
+        <div class="no">03</div>
+        <div>
+          <h2 id="s-colour">Colour: Vinnugalli</h2>
+          <p>Ink and white from the mark, hi-vis orange from the work jacket, concrete for grounds, rain blue for weather and the van. Orange is already on the site as an accent, so this promotes it rather than inventing a colour, and it stops Sporbók looking like a Stripe clone.</p>
+        </div>
+      </div>
+      <div class="system">
+        <div class="sw"><div class="chipc" style="background:#111418"></div><div class="meta"><b>Ink</b><span>Text, the mark, dark grounds</span><code>#111418</code></div></div>
+        <div class="sw"><div class="chipc" style="background:#FF5A1F"></div><div class="meta"><b>Hi-vis</b><span>One accent per surface, large type, the tape</span><code>#FF5A1F</code></div></div>
+        <div class="sw"><div class="chipc" style="background:#B63A0B"></div><div class="meta"><b>Hi-vis text</b><span>Orange that small text can use</span><code>#B63A0B</code></div></div>
+        <div class="sw"><div class="chipc" style="background:#E6E9EC"></div><div class="meta"><b>Steypa</b><span>Grounds, panels, the floor</span><code>#E6E9EC</code></div></div>
+        <div class="sw"><div class="chipc" style="background:#2C5F7F"></div><div class="meta"><b>Rigning</b><span>Weather, secondary panels, Bíllinn</span><code>#2C5F7F</code></div></div>
+        <div class="sw"><div class="chipc" style="background:#C5CBD2"></div><div class="meta"><b>Endurskin</b><span>The silver stripe, rules, dividers</span><code>#C5CBD2</code></div></div>
+      </div>
+      <div class="pairs">
+        <div class="pair"><i style="background:#FFFFFF;color:#111418;border:1px solid #D5DAE0">Aa</i>Ink on white<span class="r">18.47 : 1</span></div>
+        <div class="pair"><i style="background:#111418;color:#FF5A1F">Aa</i>Hi-vis on ink<span class="r">5.92 : 1</span></div>
+        <div class="pair"><i style="background:#FFFFFF;color:#B63A0B;border:1px solid #D5DAE0">Aa</i>Hi-vis text on white<span class="r">5.83 : 1</span></div>
+        <div class="pair"><i style="background:#FFFFFF;color:#FF5A1F;border:1px solid #D5DAE0">Aa</i>Hi-vis on white, large only<span class="r fail">3.12 : 1</span></div>
+        <div class="pair"><i style="background:#FFFFFF;color:#2C5F7F;border:1px solid #D5DAE0">Aa</i>Rigning on white<span class="r">6.88 : 1</span></div>
+        <div class="pair"><i style="background:#E6E9EC;color:#111418">Aa</i>Ink on steypa<span class="r">15.15 : 1</span></div>
+      </div>
+      <div class="considered">
+        <div class="alt"><div class="strip"><span style="background:#16181B"></span><span style="background:#F7D117"></span><span style="background:#2A2E34"></span></div><p><b>Considered: Endurskin yellow.</b> Loudest in a feed, but it is every safety sign and machinery brand, so it is hard to own.</p></div>
+        <div class="alt"><div class="strip"><span style="background:#1D2733"></span><span style="background:#533AFD"></span><span style="background:#F7F8FA"></span></div><p><b>Considered: current indigo.</b> Cheapest, but it is Stripe's blurple, the logo never used it, and it fails on dark (2.81 : 1).</p></div>
+      </div>
+    </section>
+
+    <section id="type" aria-labelledby="s-type">
+      <div class="sec-head">
+        <div class="no">04</div>
+        <div>
+          <h2 id="s-type">Typeface: the same words, twice</h2>
+          <p>Both are free and have every Icelandic letter. One family runs everything. The toggle at the top switches the taglines and every template on this page.</p>
+        </div>
+      </div>
+      <div class="duel">
+        <div class="spec">
+          <span class="label">Source Sans 3 · on sporbok.is today</span>
+          <p class="face-a eyebrow">Mánudagur · 07:40</p>
+          <p class="face-a big">Nótan fór beint á verkið í Hafnarfirði.</p>
+          <p class="face-a mid">Þú vinnur verkið. Sporbók man söguna. Reikningsdrögin eru tilbúin áður en helgin byrjar.</p>
+          <p class="face-a glyphs">Þþ Ðð Ææ Öö Áá Éé Íí Óó Úú Ýý 0123456789</p>
+          <dl><dt>Feel</dt><dd>Calm, open, very legible small. Reads like good signage.</dd><dt>Risk</dt><dd>Quiet. Headlines need weight and tight tracking to hold a feed.</dd></dl>
+        </div>
+        <div class="spec">
+          <span class="label">Archivo · on the August covers</span>
+          <p class="face-b eyebrow">Mánudagur · 07:40</p>
+          <p class="face-b big">Nótan fór beint á verkið í Hafnarfirði.</p>
+          <p class="face-b mid">Þú vinnur verkið. Sporbók man söguna. Reikningsdrögin eru tilbúin áður en helgin byrjar.</p>
+          <p class="face-b glyphs">Þþ Ðð Ææ Öö Áá Éé Íí Óó Úú Ýý 0123456789</p>
+          <dl><dt>Feel</dt><dd>Grotesque with a width axis. Condensed headlines feel like lettering on a van door.</dd><dt>Risk</dt><dd>Louder. The product would need to switch too, or site and posts drift apart.</dd></dl>
+        </div>
+      </div>
+      <p class="note" style="margin-top:18px">Either way, Söhne comes out of the repo. It is a commercial Klim face committed to the showcase CSS without a licence on record.</p>
+    </section>
+
+    <section id="lines" aria-labelledby="s-lines">
+      <div class="sec-head">
+        <div class="no">05</div>
+        <div>
+          <h2 id="s-lines">Tagline</h2>
+          <p>Written from the voice guide, not translated. One of these replaces the three taglines in use today.</p>
+        </div>
+      </div>
+      <div class="lines">
+        <div class="line pick"><q>Þú vinnur verkið. Sporbók man söguna.</q><p class="why"><b>Recommended</b>The voice guide's own line. It carries the name: the <i>bók</i> keeps the <i>saga</i>. It speaks to the worker, not the office.</p></div>
+        <div class="line"><q>Vinnudagbók sem skrifar sig sjálf.</q><p class="why"><b>Clearest</b>Says exactly what the product is. Best as the subline under the name.</p></div>
+        <div class="line"><q>Lokaðu kassanum. Reikningsdrögin eru tilbúin.</q><p class="why"><b>Most concrete</b>An outcome at a moment everyone knows, and Kassinn acts it out. Strong for ads.</p></div>
+        <div class="line"><q>Á vakt á verkstað. Frítíminn er þinn.</q><p class="why"><b>Privacy pillar</b>Answers the fear first. Right for the privacy campaign; too defensive as the main line.</p></div>
+        <div class="line"><q>Hver mínúta skilar sér.</q><p class="why"><b>Shortest</b>Fair pay in four words. Loses the <i>log</i> idea.</p></div>
+        <div class="line"><q>Frá mætingu til uppgjörs.</q><p class="why"><b>Current site</b>Accurate but abstract. Describes the process, not what the worker gets back.</p></div>
+      </div>
+      <p class="note" style="margin-top:16px">Rejected: "Hvert spor skráð." A good pun on the name, but "every step recorded" is exactly the tracking fear the voice guide bans.</p>
+    </section>
+
+    <section id="templates" aria-labelledby="s-tpl">
+      <div class="sec-head">
+        <div class="no">06</div>
+        <div>
+          <h2 id="s-tpl">Templates, drawn by the rig</h2>
+          <p>Every character here is the same code as the live cast, frozen in a chosen expression and aimed at the headline. The export script renders these exact frames to PNG at full size for Postiz. Copy is real Icelandic, written to the social Skills: no bait, no link in the body, no signature line.</p>
+        </div>
+      </div>
+      <div class="templates">
+        <figure class="tpl">
+          <div class="canvas r45 p1">
+            <div class="floor"></div>
+            <div class="pos copy"><span class="eb">Föstudagur · 17:00</span><p class="hd">Vinnudegi lokið. Sporbók slekkur á sér.</p></div>
+            <div class="pos who" data-cast="van" data-mood="asleep"></div>
+            <div class="pos foot"><div class="sig"><img src="__ICON__" alt=""><span>Sporbók</span></div><span class="url">sporbok.is</span></div>
+            <div class="tapeband"></div>
+          </div>
+          <figcaption><b>Feed portrait · proof, off duty</b><span class="mono">1080 × 1350</span></figcaption>
+        </figure>
+
+        <figure class="tpl">
+          <div class="canvas r45 p2">
+            <div class="halves">
+              <div class="half"><span class="eb">Kostur 1</span><p class="hd">Blað á mælaborðinu</p><div class="pos who" data-cast="note" data-mood="worried" data-look="-0.9,-0.3"></div></div>
+              <div class="half"><span class="eb">Kostur 2</span><p class="hd">Spjaldtölva í rigningunni</p><div class="pos who" data-cast="box" data-mood="curious" data-look="-0.9,-0.4"></div></div>
+            </div>
+            <div class="pos or">eða</div>
+          </div>
+          <figcaption><b>Feed portrait · this-or-that</b><span class="mono">1080 × 1350</span></figcaption>
+        </figure>
+
+        <figure class="tpl">
+          <div class="canvas r11 p3">
+            <div class="pos copy"><span class="eb">Föstudagur · 16:05</span><p class="hd">Kassanum lokað. Reikningsdrögin eru tilbúin.</p></div>
+            <div class="pos stat"><b>0</b><span>nótur eftir í bílnum</span></div>
+            <div class="pos who" data-cast="box" data-mood="asleep" data-look="0,0"></div>
+          </div>
+          <figcaption><b>Feed square · proof</b><span class="mono">1080 × 1080</span></figcaption>
+        </figure>
+
+        <figure class="tpl wide">
+          <div class="canvas rcover cv">
+            <div class="pos copy"><span class="eb">Vinnudagbók sem skrifar sig sjálf</span><p class="hd">Þú vinnur verkið. Sporbók man söguna.</p></div>
+            <div class="pos castrow" id="castrow"></div>
+            <div class="tapeband"></div>
+            <div class="safe" aria-hidden="true"><div class="band l"></div><div class="band r"></div><span class="tag">MOBILE SAFE AREA · CENTRE 1280 × 624</span></div>
+          </div>
+          <figcaption><b>Facebook Page cover</b><span class="mono">1640 × 624 · hatched sides crop on phones</span></figcaption>
+        </figure>
+
+        <figure class="tpl">
+          <div class="canvas r11 av"><img src="__ICON__" alt=""><div class="circle"></div></div>
+          <figcaption><b>Page avatar · circle crop</b><span class="mono">720 × 720</span></figcaption>
+        </figure>
+
+        <figure class="tpl span2">
+          <div class="canvas rog og">
+            <div class="pos copy"><div class="sig"><img src="__ICON__" alt=""><span>Sporbók</span></div><p class="hd">Vinnudagbók sem skrifar sig sjálf.</p><span class="url">sporbok.is</span></div>
+            <div class="pos who" data-cast="van" data-mood="neutral" data-look="-0.5,-0.05"></div>
+            <div class="tapeband"></div>
+          </div>
+          <figcaption><b>Share card, replaces the placeholder dot</b><span class="mono">1200 × 630</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="path" aria-labelledby="s-path">
+      <div class="sec-head">
+        <div class="no">07</div>
+        <div>
+          <h2 id="s-path">From proposal to shipped</h2>
+          <p>Once you pick a typeface and a tagline and approve the cast, the rest is mechanical.</p>
+        </div>
+      </div>
+      <ol class="path">
+        <li><span class="who2">You</span><b>Pick the typeface and the tagline, and approve Vinnugalli and Áhöfnin.</b>Everything below waits on this.</li>
+        <li><span class="who2">available (sporbok.is)</span><b>Land the kit in the Sporbók repo.</b>Colour tokens replace the Stripe indigo; the cast's art data and a pose library of PNGs go under <span class="mono">/brand/cast/</span>; the brand README gets the cast rules; the share card, aurora and whale images, and Söhne go.</li>
+        <li><span class="who2">@outofcow/creatures</span><b>One rig for everyone.</b>Move the Yarnkin rig into the package as a data-driven <span class="mono">Mascot</span> API next to Oddur's engine, so Yarnkin and Sporbók art are data in their own repos and nobody forks the engine again. Needs its own plan and a major version.</li>
+        <li><span class="who2">OutOfCow media step</span><b>Render posts from the rig.</b>The social Flow picks a template, a character and a mood; the exporter renders the PNG at full size and uploads it to Postiz. No image model touches the characters.</li>
+        <li><span class="who2">postiz-app Skills</span><b>Teach the social Skills the cast.</b>Frequency, one character per post, the never-list, and the off-duty beat for Friday afternoons.</li>
+      </ol>
+    </section>
+
+    <footer>
+      <span>Rig lineage: a port of the Yarnkin mascot rig (yarnkin/web/src/web/components/creatures), which ports the OutOfCow creature engine. That engine carries GrokBot's state model and blink curve (BSD-3-Clause) and Moodie's expression numbers (MIT). The Sporbók drawings are original.</span>
+      <span>Sources: sporbok.is live CSS, available/docs/brand/tone-of-voice.md, available/public/brand/README.md, a 2026-09-24 research brief on object mascots. Cover crop numbers come from social-size references citing Meta; recheck before the first cover ships.</span>
+    </footer>
+  </main>
+</div>
+
+<script>/*CAST*/</script>
+<script>
+(function () {
+  "use strict";
+  var C = window.SporbokCast;
+  var reduced = C.reducedMotion();
+
+  /* ---------------- the day ---------------- */
+  var cast = {
+    van: C.mount(document.getElementById("slot-van"), "van", { behaviour: "avakt", look: { x: 0.6, y: 0 } }),
+    hat: C.mount(document.getElementById("slot-hat"), "hat", { behaviour: "avakt", look: { x: 0.4, y: 0 } }),
+    box: C.mount(document.getElementById("slot-box"), "box", { behaviour: "idle", look: { x: 0.5, y: -0.1 } }),
+    note: C.mount(document.getElementById("slot-note"), "note", { behaviour: "skrad", look: { x: -0.6, y: -0.2 } })
+  };
+  var BEATS = [
+    { clock: "07:40", caption: "Mætt á verkstað. Enginn stimplaði sig inn.", dusk: false,
+      set: { van: ["hissa", 0.6, 0], hat: ["avakt", -0.6, 0], box: ["idle", -0.6, 0], note: ["idle", -0.6, 0] } },
+    { clock: "09:15", caption: "Nótan fer beint á verkið.", dusk: false,
+      set: { van: ["avakt", 1, 0], hat: ["avakt", 1, 0], box: ["bidur", 1, 0], note: ["skrad", -0.8, -0.2] } },
+    { clock: "12:30", caption: "Unnið. Sporbók man hvað var gert.", dusk: false,
+      set: { van: ["idle", 0.4, 0], hat: ["avakt", 0.3, 0.2], box: ["avakt", -0.3, 0.2], note: ["idle", -0.4, 0] } },
+    { clock: "16:05", caption: "Kassanum lokað. Reikningsdrögin eru tilbúin.", dusk: false,
+      set: { van: ["idle", 0.8, 0], hat: ["skrad", 0.8, 0], box: ["skrad", 0, -0.2], note: ["skrad", -0.8, 0] } },
+    { clock: "17:00", caption: "Vinnudegi lokið. Sporbók slekkur á sér. Frítíminn er þinn.", dusk: true,
+      set: { van: ["fri", 0, 0.3], hat: ["fri", 0, 0.3], box: ["fri", 0, 0.3], note: ["fri", 0, 0.3] } }
+  ];
+  var stage = document.getElementById("stage");
+  var clockEl = document.getElementById("clock");
+  var captionEl = document.getElementById("caption");
+  var beatBtns = document.querySelectorAll(".beat");
+  var current = 1;
+  function goto(i) {
+    current = i;
+    var b = BEATS[i];
+    clockEl.textContent = b.clock;
+    captionEl.textContent = b.caption;
+    stage.classList.toggle("dusk", b.dusk);
+    Object.keys(b.set).forEach(function (k) {
+      var v = b.set[k];
+      cast[k].look(v[1], v[2]);
+      cast[k].set(v[0]);
+    });
+    beatBtns.forEach(function (btn) { btn.setAttribute("aria-pressed", +btn.getAttribute("data-beat") === i ? "true" : "false"); });
+  }
+  beatBtns.forEach(function (btn) { btn.addEventListener("click", function () { stopPlay(); goto(+btn.getAttribute("data-beat")); }); });
+  var timer = 0;
+  var playBtn = document.getElementById("play");
+  function stopPlay() { if (timer) { clearInterval(timer); timer = 0; playBtn.textContent = "Spila daginn"; } }
+  playBtn.addEventListener("click", function () {
+    if (timer) { stopPlay(); return; }
+    goto(0);
+    playBtn.textContent = "Stöðva";
+    timer = setInterval(function () {
+      if (current >= BEATS.length - 1) { stopPlay(); return; }
+      goto(current + 1);
+    }, reduced ? 2600 : 3400);
+  });
+  goto(1);
+
+  /* ---------------- character sheets ---------------- */
+  var SHEETS = [
+    { k: "van", size: "1,00", one: "Fyrstur á staðinn, síðastur heim. Hefur séð allt og kvartar aldrei.",
+      sig: "Andar frá sér á fjöðruninni þegar hann kemur. Ljósin slokkna þegar vaktinni lýkur.",
+      topics: "Akstur, veður, leiðir, dimmir morgnar.", start: "avakt" },
+    { k: "box", size: "0,55", one: "Nákvæmur og tilbúinn. Allt á sínum stað.",
+      sig: "Lokið er augnlokið. Hann gægist undan því og smellir því aftur í lok dags.",
+      topics: "Verklok, efni, verkfæri, reikningsdrög.", start: "skrad" },
+    { k: "hat", size: "0,42", one: "Sá stöðugi. Segir „komdu heill heim“ án þess að predika.",
+      sig: "Hallar skyggninu sem kinki. Horfir aldrei á fólk, gætir þess sem ber hann.",
+      topics: "Mæting, öryggi, fyrsti dagur á nýjum stað.", start: "idle" },
+    { k: "note", size: "0,50", one: "Man hverja skrúfu. Kvíðin fyrir að týnast, léttir þegar hún er skráð.",
+      sig: "Rifni endinn sveiflast á eftir. Sléttist út þegar hún er komin á verkið.",
+      topics: "Efni, nótur, byggingavöruverslunin, mánaðamót.", start: "ahyggjur" }
+  ];
+  var sheetsEl = document.getElementById("sheets");
+  var BEH = ["idle", "avakt", "skrad", "bidur", "hissa", "ahyggjur", "fri"];
+  SHEETS.forEach(function (d) {
+    var art = C.ART[d.k];
+    var card = document.createElement("article");
+    card.className = "sheet";
+    var st = document.createElement("div");
+    st.className = "stage";
+    var sil = document.createElement("div");
+    sil.className = "sil";
+    sil.title = "Silhouette test";
+    st.appendChild(sil);
+    card.appendChild(st);
+    var handle = C.mount(st, d.k, { behaviour: d.start });
+    C.mount(sil, d.k, { mood: "neutral", live: false });
+    var body = document.createElement("div");
+    body.className = "body";
+    body.innerHTML = "<h3>" + art.name + "<small>hæð " + d.size + "</small></h3>"
+      + '<p class="one">' + d.one + "</p>"
+      + "<dl><dt>Einkenni</dt><dd>" + d.sig + "</dd><dt>Í færslum um</dt><dd>" + d.topics + "</dd></dl>";
+    var row = document.createElement("div");
+    row.className = "states";
+    row.setAttribute("role", "group");
+    row.setAttribute("aria-label", art.name + " state");
+    BEH.forEach(function (b) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = C.BEHAVIOURS[b].label;
+      btn.setAttribute("aria-pressed", b === d.start ? "true" : "false");
+      btn.addEventListener("click", function () {
+        handle.set(b);
+        row.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === btn ? "true" : "false"); });
+      });
+      row.appendChild(btn);
+    });
+    body.appendChild(row);
+    card.appendChild(body);
+    sheetsEl.appendChild(card);
+  });
+
+  /* ---------------- templates: rig at rest ---------------- */
+  document.querySelectorAll("[data-cast]").forEach(function (el) {
+    var look = (el.getAttribute("data-look") || "0,0").split(",").map(Number);
+    C.mount(el, el.getAttribute("data-cast"), { mood: el.getAttribute("data-mood") || "neutral", look: { x: look[0], y: look[1] }, live: false });
+  });
+  var row = document.getElementById("castrow");
+  [["van", 0, 46, "neutral", -0.6, -0.05], ["hat", 46, 19, "calm", -0.7, -0.05], ["box", 64, 23, "happy", -0.7, -0.05], ["note", 87, 15, "happy", -0.8, -0.1]].forEach(function (m) {
+    var d = document.createElement("div");
+    d.className = "m";
+    d.style.left = m[1] + "%";
+    d.style.width = m[2] + "%";
+    row.appendChild(d);
+    C.mount(d, m[0], { mood: m[3], look: { x: m[4], y: m[5] }, live: false });
+  });
+
+  /* ---------------- typeface toggle ---------------- */
+  var brand = document.getElementById("brand");
+  function setFont(f) {
+    brand.setAttribute("data-font", f);
+    document.querySelectorAll("button[data-font]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-font") === f ? "true" : "false"); });
+    try { localStorage.setItem("sb-font", f); } catch (e) {}
+  }
+  document.querySelectorAll("button[data-font]").forEach(function (b) { b.addEventListener("click", function () { setFont(b.getAttribute("data-font")); }); });
+  try { var sf = localStorage.getItem("sb-font"); if (sf === "source" || sf === "archivo") setFont(sf); } catch (e) {}
+})();
+</script>
