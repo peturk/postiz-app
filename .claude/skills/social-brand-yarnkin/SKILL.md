@@ -31,8 +31,11 @@ Speak parent to parent, like a capable local adult, not a toy commercial or a tr
 
 Use only official assets:
 
-- wordmark: `yarnkin/web/src/web/assets/brand/yarnkin-wordmark.png`
-- yarnball: `yarnkin/native/android/design-drops/launcher/yarnball_launcher_1024.png`
+- wordmark: `web/src/web/assets/brand/yarnkin-wordmark.png`
+- the cast: four mascots drawn as flat shape data in `web/src/web/components/creatures/mascot-art.ts` - Refur (fox), Bangsi (bear), Ugla (owl), Kanína (rabbit)
+- story art: the existing catalog under `web/public/character-assets` (yarnkin skill `brand-art-direction`: character and story art is never generated)
+
+The yarnball is retired; never use it or any Icelandic word for it as a character.
 
 Facebook color backgrounds (locked; any other preset fails the checker):
 
@@ -40,10 +43,8 @@ Facebook color backgrounds (locked; any other preset fails the checker):
 - `1679248482160767` Light blue illustration
 - `323371698179784` Sunset red illustration
 
-The launcher PNG sits on a cream app tile; it is an identity reference, not an overlay.
-Never redraw the mascot or wordmark.
-The character has no approved Icelandic name.
-In Icelandic copy it is the common noun `garnhnykillinn` (lowercase), never a capitalized proper name, until an operator approves one.
+Never redraw, restyle, or generate the mascots or the wordmark; render them from the source shapes.
+In copy the mascots go by their names exactly as `mascot-art.ts` spells them, inflected as normal Icelandic nouns (Bangsi, Bangsa; Refur, Ref).
 Never generate letterforms.
 Never present photorealistic AI imagery as a real photograph; illustrated or stylized art only.
 
@@ -64,7 +65,7 @@ When a signature exists, append in one place only (Postiz signature or compose),
 ## Examples
 
 Ticket `brand: yarnkin`, topic `Dreki eða hafmeyja í kvöld?`
-Result: parent-facing bedtime choice in Icelandic, yarnball mentioned only as the official character, no download pitch.
+Result: parent-facing bedtime choice in Icelandic, a mascot from the cast mentioned by name at most once, no download pitch.
 
 ## Troubleshooting
 

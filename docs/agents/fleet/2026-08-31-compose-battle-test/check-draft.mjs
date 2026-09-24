@@ -11,7 +11,7 @@ const BRANDS = {
   yarnkin: {
     integration: "cmsng2l070001ho7cyp8tfrtd",
     presets: ["175493843120364", "1679248482160767", "323371698179784"],
-    forbidden: [/(?<!\p{L})jól/iu, /\bchristmas/i, /(?<!\p{L})sækja\s+app/iu, /\bdownload/i],
+    forbidden: [/(?<!\p{L})jól/iu, /\bchristmas/i, /(?<!\p{L})sækja\s+app/iu, /\bdownload/i, /garnhnyk/iu, /yarnball/i],
   },
   sporbok: {
     integration: "cmsnf6shm0001mk7nhrf52ohl",

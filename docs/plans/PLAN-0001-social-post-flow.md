@@ -164,7 +164,7 @@ Everything else below is planned; `social-compose` refuses a Ticket value until 
 - Audience: parents of young children, Iceland plus later international.
 - Voice: warm, bedtime, storybook, Reykjavik.
 - Talk to parents, not to children on Facebook.
-- Visuals: official wordmark PNG and yarnball PNG only.
+- Visuals: official wordmark and the four-mascot cast (Refur, Bangsi, Ugla, Kanína) from yarnkin `mascot-art.ts`; the yarnball is retired (2026-09-24).
 - Never redraw the mascot or wordmark.
 - Palette and chrome: Yarnkin `DESIGN.md` Cream and Starlight.
 - Forbidden: plum chrome, hard sell in the hook, Christmas cues unless the Ticket says so.
@@ -177,7 +177,7 @@ Everything else below is planned; `social-compose` refuses a Ticket value until 
 - Visuals: official icon, stacked lockup, and wordmark from `https://sporbok.is/brand/`; the horizontal lockup was removed 2026-08-10 and must never be reused (icon plus live text instead).
 - Photo is the trust layer.
 - Type and logo are composites, never generated glyphs.
-- Forbidden: tourism Iceland, aurora, puffins, yarnball energy.
+- Forbidden: tourism Iceland, aurora, puffins, Yarnkin storybook or mascot energy.
 - Signature: none on Icelandic posts; `Sporbók · field work, without the chaos` is reserved for English-market posts (brand Skill Step 4 owns this).
 
 ### Moves (marketing skills)
@@ -331,7 +331,7 @@ Corrected 2026-08-31 to the exact Postiz `CreatePostDto` wire shape (`libraries/
       "integration": { "id": "postiz-integration-id" },
       "value": [
         { "content": "Dreki eða hafmeyja í kvöld?", "image": [] },
-        { "content": "Garnhnykillinn heldur með drekanum í kvöld.", "image": [] }
+        { "content": "Refur heldur með drekanum í kvöld.", "image": [] }
       ],
       "settings": {
         "__type": "facebook",
@@ -648,7 +648,8 @@ Skill and rule gaps with no owner yet:
 - Sporbók launch sequence (`social-move-launch`).
 - Icelandic holiday and quiet-day calendar, content pillars (`meta.pillar` is used but undefined), evergreen library, UTM rule for links.
 - Instagram and LinkedIn channel Skills; type Skills assume Facebook's first comment.
-- Operator decisions: approved Icelandic name for the Yarnkin character, and whether the Sporbók brand kit is final.
+- Resolved 2026-09-24: the seven stale drafts were deleted; the Yarnkin yarnball is retired in favor of the four-mascot cast (Refur, Bangsi, Ugla, Kanína).
+- Sporbók has no brand kit; building one (logo usage, palette, type, photo direction, social templates) is in progress and feeds the media step.
 
 ## Decisions against
 
@@ -732,7 +733,7 @@ when: next weekday 19:00 Atlantic/Reykjavik
 Expected compose (revised 2026-08-31: Icelandic per Marketing Act 44/2026 art. 14, no bait per fb-mechanics research):
 
 - Post: `Dreki eða hafmeyja í kvöld?`
-- First comment: optional flavor, e.g. `Garnhnykillinn heldur með drekanum í kvöld.` - never a voting instruction
+- First comment: optional flavor, e.g. `Refur heldur með drekanum í kvöld.` - never a voting instruction
 - No media
 - A warm Facebook background preset
 - No signature until an Icelandic variant is approved (brand Skill rule)

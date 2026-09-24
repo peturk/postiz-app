@@ -31,7 +31,7 @@ The payoff or a link, never a question.
 
 ## Examples
 
-`BEAT`: `Í kvöld leitar garnhnykillinn að tunglinu. Það hefur falið sig bak við ský.`
+`BEAT`: `Í kvöld leitar Ugla að tunglinu. Það hefur falið sig bak við ský.`
 No comment.
 
 ## Troubleshooting

@@ -61,7 +61,7 @@ When a signature exists, append in one place only.
 ### Step 5: Forbidden
 
 - aurora, puffins, waterfalls, Ring Road
-- yarnball energy
+- Yarnkin storybook or mascot energy
 - generic happy-clipboard stock
 - surveillance framing or worker scoring
 - belittling paper or phone workflows, dispatchers, or crews

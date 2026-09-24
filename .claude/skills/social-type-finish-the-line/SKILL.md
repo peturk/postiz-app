@@ -32,7 +32,7 @@ Never an instruction.
 ## Examples
 
 `HOOK`: `Besta kvöldið er þegar sagan endar og ...`
-`FLAVOR`: `... garnhnykillinn er löngu sofnaður.`
+`FLAVOR`: `... Bangsi er löngu sofnaður.`
 
 ## Troubleshooting
 

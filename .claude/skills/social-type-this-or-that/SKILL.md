@@ -35,7 +35,7 @@ Do not repeat a sales pitch.
 ## Examples
 
 `HOOK`: `Dreki eða hafmeyja í kvöld?`
-`FLAVOR`: `Garnhnykillinn heldur með drekanum í kvöld.`
+`FLAVOR`: `Refur heldur með drekanum í kvöld.`
 
 ## Troubleshooting
 

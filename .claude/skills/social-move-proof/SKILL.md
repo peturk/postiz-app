@@ -21,7 +21,7 @@ No question. No CTA. No "what about you?".
 
 One concrete moment beats any adjective.
 A wet dashboard beats "reliable in all weather".
-A yarnball hiding from the moon beats "magical stories".
+Ugla looking for the moon behind a cloud beats "magical stories".
 Never fabricate a customer, a job, or a testimonial.
 
 ### Step 3: First comment

@@ -33,7 +33,7 @@ Never an instruction on how to answer.
 ## Examples
 
 `HOOK`: `Hvaða saga á alltaf að vera síðust á kvöldin hjá ykkur?`
-`FLAVOR`: `Hjá garnhnyklinum er það alltaf sagan um tunglið.`
+`FLAVOR`: `Hjá Bangsa er það alltaf sagan um tunglið.`
 
 ## Troubleshooting
 
