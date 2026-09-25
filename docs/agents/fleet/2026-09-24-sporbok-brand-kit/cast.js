@@ -296,6 +296,9 @@
 
   var subs = [];
   var raf = 0, last = 0, clock = 0;
+  /* Manual mode: a renderer owns time. No rAF, no pointer; `step(dt)` advances
+     every live cast member by exactly dt, so a video frame is reproducible. */
+  var manual = false;
   function frame(ms) {
     var now = ms / 1000;
     var dt = last ? Math.min(0.05, now - last) : 1 / 60;
@@ -304,6 +307,7 @@
     raf = subs.length ? requestAnimationFrame(frame) : 0;
   }
   function start() {
+    if (manual) return;
     if (!raf && subs.length && typeof document !== "undefined" && !document.hidden) { last = 0; raf = requestAnimationFrame(frame); }
   }
   function stop() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
@@ -427,7 +431,10 @@
     s.fxZ = lerp(s.fxZ, preset.zzz ? 1 : 0, atRest ? 1 : Math.min(1, dt * 2));
 
     var lookScale = art.eye.r;
-    if (!atRest) {
+    if (!atRest && manual) {
+      s.gazeX += (s.lookX * lookScale + Math.cos(t * 0.5 + s.phase) * 3 - s.gazeX) * Math.min(1, dt * 6);
+      s.gazeY += (s.lookY * lookScale + Math.sin(t * 0.37 + s.phase * 1.7) * 2 - s.gazeY) * Math.min(1, dt * 6);
+    } else if (!atRest) {
       var box = svg.getBoundingClientRect();
       var cx0 = box.left + box.width / 2, cy0 = box.top + box.height * 0.42;
       pointer.speed *= 0.86;
@@ -570,7 +577,7 @@
     var lamps = svg.querySelectorAll(".lamp, .lamp-glow");
     for (var m = 0; m < lamps.length; m++) {
       var isGlow = lamps[m].getAttribute("class") === "lamp-glow";
-      lamps[m].setAttribute("opacity", (isGlow ? Math.min(1, (0.35 + s.bright * 2.4) * lampOn) : 0.28 + 0.72 * lampOn).toFixed(3));
+      lamps[m].setAttribute("opacity", (isGlow ? Math.min(1, (0.35 + s.bright * 2.4) * lampOn) : 0.14 + 0.86 * lampOn).toFixed(3));
     }
 
     var pose = preset.pose;
@@ -645,7 +652,7 @@
     if (opts.look) { s.lookX = opts.look.x; s.lookY = opts.look.y; }
     drawFrame(svg, kind, s, 0, 1 / 60, rhythm.breath, true);
 
-    var live = opts.live !== false && !reducedMotion();
+    var live = opts.live !== false && (manual || !reducedMotion());
     function tick(t, dt) {
       var score = behaviour ? BEHAVIOURS[behaviour] : null;
       if (!s.started) {
@@ -692,6 +699,9 @@
   root.SporbokCast = {
     ART: ART, EXPRESSIONS: EXPRESSIONS, BEHAVIOURS: BEHAVIOURS, RHYTHMS: RHYTHMS, MOUTHS: MOUTHS,
     KINDS: ["van", "box", "hat", "note"], mount: mount, reducedMotion: reducedMotion,
-    options: { hatBand: false }
+    options: { hatBand: false },
+    manual: function (on) { manual = !!on; if (manual) stop(); },
+    step: function (dt) { clock += dt; for (var i = 0; i < subs.length; i++) subs[i](clock, dt); },
+    now: function () { return clock; }
   };
 })(typeof window !== "undefined" ? window : this);

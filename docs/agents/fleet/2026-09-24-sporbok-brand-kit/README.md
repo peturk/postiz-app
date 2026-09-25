@@ -44,3 +44,19 @@ The fix, calibrated against `research-expression.md` and two independent critiqu
 - Joy lifts the lower lid and keeps the upper lid up; misery starts when the upper lid comes down, so working states keep u at or below 0.15 with a small eye-smile.
 - A warm resting face, a small second glint on warm expressions, one emanata at a time (sparkles, a sweat drop, a z), and body cues (hop, hum, nod, wiggle, jolt) scaled by each object's material.
 - The exporter reads the mood list from the rig, so a renamed expression cannot silently break the pose library.
+
+## Shorts: Áhöfnin on video
+
+Five silent shorts (17:00, Undir sætinu, 07:40, Sunnudagskvöld, Tvö verk), 10 to 13 seconds each, in Reels 9:16 and feed 4:5.
+Review page: https://claude.ai/artifact/2bH17gBGUDf945rPtrPpe9 (private until shared).
+
+- `video.html`: the stage and one timeline per film (`VIDEOS.*`); `cast.js` runs in manual-clock mode with a seeded `Math.random`, so every render is identical.
+- `render-video.cjs`: steps each film at 30 fps and pipes the frames straight into ffmpeg (no frame files), H.264 `yuv420p` with `+faststart`.
+  Needs a static ffmpeg at `~/.local/bin/ffmpeg`; `node render-video.cjs [name...] [--feed]`.
+- `contact.sh`: a one-row contact sheet of frames at given times, for review.
+- `grok-video-pitches.md` and `grok-video-review.md`: Grok 4.7's independent pitches and its review of the first renders.
+  Its review caught two bugs (a finished tween kept overwriting later ones; the end card faded in over the scene) and a caption that read as worker scoring.
+- `shorts-page.html`: the review page source; the MP4s are build products and are not committed.
+
+Direction: object theatre.
+The company stays serious; the cast is the kit, it never speaks, and the joke is a day the viewer has already had.

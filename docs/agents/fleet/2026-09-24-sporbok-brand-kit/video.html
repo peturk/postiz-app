@@ -1,0 +1,341 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Source+Sans+3:wght@400..900&display=swap">
+<style>
+  html, body { margin: 0; background: #111418; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #E6E9EC; font-family: "Source Sans 3", system-ui, sans-serif; }
+  #stage.feed { height: 1350px; }
+  .layer { position: absolute; inset: 0; }
+  .cast { position: absolute; }
+  .cast svg { width: 100%; height: auto; display: block; }
+  .clock { position: absolute; left: 80px; top: 150px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 500; font-size: 150px; letter-spacing: -4px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .kicker { position: absolute; left: 84px; top: 110px; font-weight: 700; font-size: 34px; letter-spacing: .14em; text-transform: uppercase; }
+  .cap { position: absolute; left: 80px; right: 80px; top: 340px; font-weight: 780; font-size: 86px; line-height: 1.02; letter-spacing: -2.4px; text-wrap: balance; }
+  .tape { position: absolute; left: 0; right: 0; bottom: 0; height: 30px; background: linear-gradient(to bottom, transparent 38%, #C5CBD2 38%, #C5CBD2 62%, transparent 62%), #FF5A1F; }
+  .card { position: absolute; background: #fff; border-radius: 22px; box-shadow: 0 18px 40px -20px rgba(17,20,24,.5); padding: 30px 34px; font-weight: 700; }
+  .end { position: absolute; inset: 0; z-index: 20; background: #111418; color: #EEF0F2; display: grid; place-items: center; }
+  .end .inner { display: grid; justify-items: center; gap: 44px; }
+  .end .mark { display: flex; align-items: center; gap: 30px; }
+  .end .mark img { width: 150px; height: 150px; border-radius: 34px; }
+  .end .mark span { font-weight: 700; font-size: 104px; letter-spacing: -2px; }
+  .end .line { font-weight: 760; font-size: 64px; letter-spacing: -1.6px; line-height: 1.08; text-align: center; max-width: 860px; }
+  .end .url { font-weight: 600; font-size: 40px; color: #97A1AC; }
+</style>
+<div id="stage"></div>
+<script>
+  /* Deterministic randomness: every render of a video is identical. */
+  (function () {
+    var seed = 20260924;
+    Math.random = function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  })();
+</script>
+<script src="cast.js"></script>
+<script>
+(function () {
+  "use strict";
+  var C = window.SporbokCast;
+  C.manual(true);
+  var ICON = "__ICON__";
+  var stage = document.getElementById("stage");
+  var params = new URLSearchParams(location.search);
+  var FEED = params.get("fmt") === "feed";
+  if (FEED) stage.classList.add("feed");
+  var H = FEED ? 1350 : 1920;
+  var FLOOR = FEED ? 1090 : 1340; /* y of the floor line */
+  var K = FEED ? 0.82 : 1.2; /* cast scale for the format */
+
+  /* ---------------- timeline ---------------- */
+  var events = [], tweens = [], ticks = [];
+  function at(t, fn) { events.push({ t: t, fn: fn, done: false }); }
+  function tween(t0, t1, fn, ease) { tweens.push({ t0: t0, t1: t1, fn: fn, ease: ease || smooth }); }
+  function every(fn) { ticks.push(fn); }
+  function smooth(p) { return p * p * (3 - 2 * p); }
+  function out(p) { return 1 - Math.pow(1 - p, 3); }
+  function lerp(a, b, p) { return a + (b - a) * p; }
+  function mix(c1, c2, p) {
+    var a = parseInt(c1.slice(1), 16), b = parseInt(c2.slice(1), 16);
+    var r = Math.round(lerp(a >> 16, b >> 16, p)), g = Math.round(lerp(a >> 8 & 255, b >> 8 & 255, p)), bl = Math.round(lerp(a & 255, b & 255, p));
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + bl).toString(16).slice(1);
+  }
+
+  function el(html, cls) {
+    var d = document.createElement("div");
+    if (cls) d.className = cls;
+    d.innerHTML = html || "";
+    stage.appendChild(d);
+    return d;
+  }
+  /* A cast member standing with its feet on y=floorY, centred on x, w wide. */
+  function cast(kind, x, w, opts) {
+    w = w * K;
+    var host = el("", "cast");
+    host.style.width = w + "px";
+    var h = w * 1.25;
+    function place(cx, fy, rot) {
+      host.style.left = (cx - w / 2) + "px";
+      host.style.top = (fy - h * 0.97) + "px";
+      host.style.transform = rot ? "rotate(" + rot + "deg)" : "";
+      host.style.transformOrigin = "50% 100%";
+    }
+    place(x, opts && opts.floor != null ? opts.floor : FLOOR);
+    var handle = C.mount(host, kind, Object.assign({ live: true }, opts || {}));
+    handle.host = host; handle.place = place;
+    return handle;
+  }
+  function caption(t0, t1, text, style) {
+    var d = el(text, "cap");
+    if (style) Object.assign(d.style, style);
+    d.style.opacity = 0;
+    tween(t0, t0 + 0.35, function (p) { d.style.opacity = p; d.style.transform = "translateY(" + (1 - p) * 24 + "px)"; }, out);
+    if (t1 != null) tween(t1 - 0.3, t1, function (p) { d.style.opacity = 1 - p; });
+    return d;
+  }
+  function endCard(t0) {
+    var d = el('<div class="inner" style="opacity:0"><div class="mark"><img src="' + ICON + '" alt=""><span>Sporbók</span></div>'
+      + '<div class="line">Þú vinnur verkið.<br>Sporbók man söguna.</div><div class="url">sporbok.is</div></div><div class="tape"></div>', "end");
+    d.style.opacity = 0;
+    var inner = d.querySelector(".inner");
+    tween(t0, t0 + 0.4, function (p) { d.style.opacity = p; });
+    tween(t0 + 0.4, t0 + 0.75, function (p) { inner.style.opacity = p; inner.style.transform = "translateY(" + (1 - p) * 16 + "px)"; }, out);
+    return d;
+  }
+  function background(color) {
+    var bg = el("", "layer"); bg.style.background = color;
+    return bg;
+  }
+  function floor(color) {
+    var f = el("", "layer");
+    f.style.top = FLOOR + "px"; f.style.background = color;
+    return f;
+  }
+  /* A low, flat Reykjavík skyline: pitched roofs, no landmarks. */
+  function skyline(color, y) {
+    var svg = '<svg viewBox="0 0 1080 260" width="1080" height="260" style="position:absolute;left:0;top:' + (y - 260) + 'px"><g fill="' + color + '">'
+      + '<rect x="0" y="150" width="210" height="110"/><path d="M0 150 L105 92 L210 150Z"/>'
+      + '<rect x="250" y="120" width="170" height="140"/><path d="M250 120 L335 70 L420 120Z"/>'
+      + '<rect x="470" y="170" width="240" height="90"/>'
+      + '<rect x="760" y="130" width="150" height="130"/><path d="M760 130 L835 84 L910 130Z"/>'
+      + '<rect x="930" y="160" width="150" height="100"/><path d="M930 160 L1005 118 L1080 160Z"/>'
+      + '</g></svg>';
+    return el(svg, "layer");
+  }
+  function moon(x, y, r, color, bgc) {
+    var m = el("", "layer");
+    m.style.cssText += "left:" + (x - r) + "px;top:" + (y - r) + "px;width:" + 2 * r + "px;height:" + 2 * r + "px;right:auto;bottom:auto;border-radius:50%;background:" + color + ";box-shadow:inset " + (-r * 0.5) + "px " + (r * 0.25) + "px 0 0 " + bgc + ";opacity:0";
+    return m;
+  }
+  /* Rain: seeded streaks on a canvas, advanced by the timeline clock. */
+  function rain(density, color, alpha) {
+    var cv = document.createElement("canvas"); cv.width = 1080; cv.height = H; cv.className = "layer";
+    stage.appendChild(cv);
+    var ctx = cv.getContext("2d"), drops = [];
+    for (var i = 0; i < density; i++) drops.push({ x: Math.random() * 1200, y: Math.random() * H, v: 1500 + Math.random() * 900, l: 26 + Math.random() * 30 });
+    var state = { alpha: alpha };
+    every(function (t, dt) {
+      ctx.clearRect(0, 0, 1080, H);
+      ctx.strokeStyle = color; ctx.globalAlpha = state.alpha; ctx.lineWidth = 4; ctx.lineCap = "round";
+      ctx.beginPath();
+      for (var i = 0; i < drops.length; i++) {
+        var d = drops[i]; d.y += d.v * dt; d.x -= d.v * dt * 0.18;
+        if (d.y > H) { d.y -= H + 60; d.x = Math.random() * 1200; }
+        ctx.moveTo(d.x, d.y); ctx.lineTo(d.x + d.l * 0.18, d.y - d.l);
+      }
+      ctx.stroke();
+    });
+    return state;
+  }
+
+  /* ---------------- the videos ---------------- */
+  var VIDEOS = {};
+
+  /* 1. 17:00. Friday dusk: the day ends, and so does Sporbók. */
+  VIDEOS.fimm = function () {
+    var bg = background("#E6E9EC");
+    var sky = skyline("#D5DAE0", FLOOR);
+    var mn = moon(900, FEED ? 170 : 240, 46, "#E6E9EC", "#1A2027");
+    var fl = floor("#CFD5DB");
+    var kick = el("Föstudagur", "kicker"); kick.style.color = "#B63A0B";
+    var clock = el("16:58", "clock"); clock.style.color = "#111418";
+    var van = cast("van", 290, 440, { behaviour: "avakt", look: { x: 0.5, y: 0 } });
+    var hat = cast("hat", 660, 200, { behaviour: "avakt", look: { x: -0.5, y: 0 } });
+    var box = cast("box", 900, 240, { mood: "busy", look: { x: -0.3, y: 0.3 } });
+    var c0 = caption(0.4, 4.2, "Eitt enn."); c0.style.color = "#111418";
+    at(1.6, function () { clock.textContent = "16:59"; });
+    at(3.2, function () { clock.textContent = "17:00"; hat.look(0.6, 0); box.look(-0.7, -0.1); box.setMood("relieved"); });
+    /* The goodnight, tight: the lid snaps, the hat, then the van's lamps. */
+    at(4.2, function () { box.setMood("asleep"); });
+    at(4.7, function () { hat.setMood("asleep"); });
+    at(5.2, function () { van.setMood("asleep"); });
+    tween(4.2, 6.6, function (p) {
+      bg.style.background = mix("#E6E9EC", "#1A2027", p);
+      fl.style.background = mix("#CFD5DB", "#252C35", p);
+      sky.querySelector("g").setAttribute("fill", mix("#D5DAE0", "#20272F", p));
+      clock.style.color = mix("#111418", "#EEF0F2", p);
+      mn.style.opacity = p * 0.9;
+      stage.style.setProperty("--cast-shadow", p > 0.5 ? "rgba(255,255,255,.07)" : "#C9CFD6");
+    });
+    var c1 = caption(5.6, 9.2, "Sporbók slekkur á sér."); c1.style.color = "#EEF0F2";
+    endCard(9.2);
+    return 12.7;
+  };
+
+  /* 2. Nótan: a receipt that nearly got lost finds its job. */
+  VIDEOS.notan = function () {
+    var bg = background("#1C232B");
+    var fl = floor("#151A20");
+    var kick = el("Í bílnum · 07:52", "kicker"); kick.style.color = "#FF9A6B"; kick.style.zIndex = 8;
+    /* The underside of the van's seat, filling the top of the frame. */
+    var seat = el('<svg viewBox="0 0 1080 900" width="1080" height="900"><rect x="-40" y="0" width="1160" height="760" rx="90" fill="#2A3440"/><rect x="60" y="700" width="960" height="70" rx="35" fill="#222B35"/><rect x="180" y="760" width="40" height="' + (FLOOR - 1000 + 240) + '" rx="12" fill="#11161B"/><rect x="860" y="760" width="40" height="' + (FLOOR - 1000 + 240) + '" rx="12" fill="#11161B"/></svg>', "layer");
+    seat.style.top = (FLOOR - 1000) + "px"; seat.style.zIndex = 6;
+    var c1 = caption(0.3, 3.0, "Undir sætinu aftur."); c1.style.color = "#EEF0F2"; c1.style.zIndex = 8;
+    /* Wedged: bigger than the gap, so the seat edge covers her top. */
+    var note = cast("note", 520, 330, { mood: "oops", look: { x: 0.3, y: -0.2 } });
+    note.host.style.zIndex = 5;
+    stage.style.setProperty("--cast-shadow", "rgba(255,255,255,.05)");
+    note.play("wiggle");
+    at(1.3, function () { note.play("wiggle"); });
+    at(2.3, function () { note.setMood("surprised"); });
+    /* The seat lifts away and the day comes in: she is found. */
+    tween(2.6, 3.4, function (p) {
+      seat.style.top = lerp(FLOOR - 1000, -1100, p) + "px";
+      bg.style.background = mix("#1C232B", "#E6E9EC", p);
+      fl.style.background = mix("#151A20", "#CFD5DB", p);
+      kick.style.color = mix("#FF9A6B", "#B63A0B", p);
+      stage.style.setProperty("--cast-shadow", p > 0.5 ? "#C9CFD6" : "rgba(255,255,255,.05)");
+    });
+    tween(2.9, 3.4, function (p) { note.place(lerp(520, 300, p), FLOOR, 0); });
+    at(3.4, function () { kick.textContent = "Hafnarstræti 12 · 07:58"; });
+    var card = el('<div style="font:500 26px IBM Plex Mono,monospace;letter-spacing:.08em;color:#56616E">VERK</div>'
+      + '<div style="font-size:56px;letter-spacing:-1px;margin-top:6px">Hafnarstræti 12</div>'
+      + '<div style="font-size:34px;color:#56616E;font-weight:600;margin-top:4px">Pípulögn · baðherbergi</div>'
+      + '<div class="bar" style="height:10px;border-radius:5px;background:#C5CBD2;margin-top:26px;width:160px"></div>', "card");
+    card.style.width = "440px"; card.style.top = (FLOOR - 470) + "px"; card.style.left = "1180px";
+    tween(3.3, 4.0, function (p) { card.style.left = lerp(1180, 580, p) + "px"; }, out);
+    at(3.6, function () { note.setMood("curious"); note.look(0.8, 0); });
+    /* She crosses and steps up onto the card: a slide, then the one joy beat. */
+    tween(4.2, 5.4, function (p) {
+      note.place(lerp(300, 800, p), FLOOR - 430 * Math.min(1, p * 1.25), lerp(0, 3, p));
+    }, smooth);
+    at(5.5, function () { note.setMood("joy"); note.look(0, 0); card.querySelector(".bar").style.background = "#FF5A1F"; });
+    at(6.6, function () { note.setMood("content"); });
+    caption(5.6, 8.8, "Komin á rétt verk.").style.color = "#111418";
+    endCard(8.9);
+    return 12.4;
+  };
+
+  /* 3. 07:40. A dark, cold morning; nobody clocked in. */
+  VIDEOS.morgunn = function () {
+    var bg = background("#141B26");
+    var sky = skyline("#1B2531", FLOOR);
+    var mn = moon(860, FEED ? 170 : 250, 40, "#DDE3E9", "#141B26"); mn.style.opacity = 0.9;
+    var fl = floor("#26303C");
+    var frost = el("", "layer"); frost.style.cssText += "top:" + FLOOR + "px;height:10px;bottom:auto;background:#DDE6EE;opacity:.6";
+    var clock = el("07:39", "clock"); clock.style.color = "#EEF0F2";
+    var van = cast("van", 360, 460, { mood: "asleep" });
+    var hat = cast("hat", 850, 210, { mood: "asleep" });
+    stage.style.setProperty("--cast-shadow", "rgba(255,255,255,.06)");
+    at(1.3, function () { clock.textContent = "07:40"; });
+    at(1.5, function () { van.setMood("surprised"); });
+    at(2.2, function () { hat.setMood("curious"); hat.look(-0.6, 0); });
+    at(2.6, function () { van.setMood("neutral"); van.play("nod"); van.look(0.5, 0); });
+    at(3.4, function () { hat.setMood("content"); hat.play("nod"); });
+    tween(1.5, 4.5, function (p) {
+      bg.style.background = mix("#141B26", "#3E5566", p);
+      fl.style.background = mix("#26303C", "#5E6E7B", p);
+      sky.querySelector("g").setAttribute("fill", mix("#1B2531", "#4A6072", p));
+      mn.style.opacity = 0.9 * (1 - p);
+    });
+    caption(2.2, 7.2, "Á staðnum.").style.color = "#EEF0F2";
+    endCard(7.2);
+    return 10.7;
+  };
+
+  /* 4. Sunnudagskvöld. The kitchen table, before and after. */
+  VIDEOS.sunnudagur = function () {
+    var bg = background("#2A2521");
+    var lamp = el("", "layer"); lamp.style.background = "radial-gradient(circle at 50% 30%, rgba(255,214,150,.22), transparent 60%)";
+    var table = el("", "layer"); table.style.cssText += "top:" + FLOOR + "px;background:#6E4B33";
+    var edge = el("", "layer"); edge.style.cssText += "top:" + FLOOR + "px;height:18px;bottom:auto;background:#825A3E";
+    var kick = el("Sunnudagur · 22:14", "kicker"); kick.style.color = "#FF9A6B";
+    var c1 = caption(0.4, 4.6, "Sunnudagskvöld."); c1.style.color = "#F3EDE6";
+    var cup = el('<svg viewBox="0 0 120 120" width="150" height="150"><rect x="14" y="26" width="76" height="84" rx="14" fill="#E6E9EC"/><rect x="82" y="44" width="30" height="40" rx="15" fill="none" stroke="#E6E9EC" stroke-width="10"/><rect x="24" y="36" width="56" height="10" rx="5" fill="#6E4B33"/></svg>', "cast");
+    cup.style.left = "840px"; cup.style.top = (FLOOR - 142) + "px";
+    /* The pile is tired, not frantic: it is the evening that is the problem. */
+    var pile = [];
+    [[170, 220, -9, "thinking"], [360, 240, 5, "neutral"], [545, 215, -3, "calm"], [700, 230, 10, "thinking"], [270, 200, 14, "neutral"]].forEach(function (p, i) {
+      var n = cast("note", p[0], p[1], { mood: p[3], look: { x: (i % 3 - 1) * 0.5, y: 0.2 } });
+      n.place(p[0], FLOOR - (i === 4 ? 60 : 0), p[2]);
+      pile.push(n);
+    });
+    at(2.2, function () { pile[1].setMood("oops"); });
+    /* A short hi-vis wipe, then the same table. */
+    var wipe = el("", "layer"); wipe.style.cssText += "left:-1200px;width:1200px;right:auto;background:linear-gradient(to right, transparent 0, transparent 40px, #FF5A1F 40px, #FF5A1F 120px, #C5CBD2 120px, #C5CBD2 150px, #FF5A1F 150px, #FF5A1F 230px, #2A2521 230px)";
+    tween(4.7, 5.2, function (p) { wipe.style.left = lerp(-1200, 1080, p) + "px"; }, smooth);
+    at(4.95, function () {
+      pile.forEach(function (n, i) { if (i) n.host.style.display = "none"; });
+      pile[0].place(440, FLOOR, -4); pile[0].setMood("relieved");
+    });
+    var c2 = caption(5.4, 9.0, "Reikningurinn er tilbúinn."); c2.style.color = "#F3EDE6";
+    at(6.2, function () { pile[0].setMood("content"); });
+    endCard(9.0);
+    return 12.5;
+  };
+
+  /* 5. Tvö verk. One receipt, two jobs; it lands on the right one. */
+  VIDEOS.tvo = function () {
+    background("#E6E9EC");
+    floor("#CFD5DB");
+    var kick = el("Byggingavöruverslunin · 12:10", "kicker"); kick.style.color = "#B63A0B";
+    caption(0.3, 4.2, "Tvö verk. Ein nóta.").style.color = "#111418";
+    function jobCard(x, title, sub) {
+      var c = el('<div style="font:500 24px IBM Plex Mono,monospace;letter-spacing:.08em;color:#56616E">VERK</div>'
+        + '<div style="font-size:46px;letter-spacing:-1px;margin-top:6px">' + title + '</div>'
+        + '<div style="font-size:30px;color:#56616E;font-weight:600;margin-top:4px">' + sub + '</div>'
+        + '<div class="bar" style="height:10px;border-radius:5px;background:#C5CBD2;margin-top:22px;width:130px"></div>', "card");
+      c.style.width = "330px"; c.style.left = x + "px"; c.style.top = (FLOOR - 470) + "px";
+      return c;
+    }
+    var left = jobCard(24, "Hafnarstræti 12", "Pípulögn · bað");
+    var right = jobCard(726, "Laugavegur 88", "Pípulögn · eldhús");
+    var note = cast("note", 540, 205, { mood: "thinking", look: { x: -0.8, y: 0 } });
+    note.host.style.zIndex = 5;
+    at(1.4, function () { note.look(0.8, 0); });
+    at(2.5, function () { note.look(-0.8, 0); note.setMood("curious"); });
+    at(3.4, function () { note.play("jolt"); note.setMood("alert"); });
+    /* A slide up onto the card, not a hop. */
+    tween(3.9, 4.9, function (p) {
+      note.place(lerp(540, 190, p), FLOOR - 410 * Math.min(1, p * 1.3), lerp(0, -4, p));
+    }, smooth);
+    at(5.0, function () { note.setMood("relieved"); note.play("nod"); left.querySelector(".bar").style.background = "#FF5A1F"; });
+    caption(5.2, 8.2, "Rétt verk. Sjálfkrafa.").style.color = "#111418";
+    endCard(8.2);
+    return 11.7;
+  };
+
+  /* ---------------- driver ---------------- */
+  var name = params.get("v") || "fimm";
+  var duration = VIDEOS[name]();
+  window.__duration = duration;
+  var lastT = 0;
+  window.__frame = function (t) {
+    var dt = t - lastT; lastT = t;
+    for (var i = 0; i < events.length; i++) if (!events[i].done && t >= events[i].t) { events[i].done = true; events[i].fn(); }
+    /* A tween writes while it runs and once more at its end, then stops; a
+       finished tween that kept writing its end value overrode later ones. */
+    for (var j = 0; j < tweens.length; j++) {
+      var w = tweens[j];
+      if (w.done || t < w.t0) continue;
+      var pp = Math.min(1, (t - w.t0) / Math.max(1e-6, w.t1 - w.t0));
+      w.fn(w.ease(pp));
+      if (pp >= 1) w.done = true;
+    }
+    for (var k = 0; k < ticks.length; k++) ticks[k](t, dt);
+    C.step(dt > 0 ? dt : 1 / 30);
+  };
+})();
+</script>

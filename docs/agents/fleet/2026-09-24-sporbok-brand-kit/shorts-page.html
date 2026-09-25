@@ -1,0 +1,176 @@
+<title>Áhöfnin Shorts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400..900&display=swap">
+<style>
+:root {
+  --page: #EEF0F2; --panel: #FFFFFF; --ink: #111418; --ink-2: #3B434D; --muted: #56616E; --line: #D5DAE0;
+  --hivis: #FF5A1F; --hivis-text: #B63A0B; --focus: #2C5F7F;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Source Sans 3", "Source Sans Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --page: #0C0E11; --panel: #161A1F; --ink: #EEF0F2; --ink-2: #C4CAD2; --muted: #97A1AC; --line: #2A3038; --hivis-text: #FF7A45; --focus: #7FB3D5; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --page: #0C0E11; --panel: #161A1F; --ink: #EEF0F2; --ink-2: #C4CAD2; --muted: #97A1AC; --line: #2A3038; --hivis-text: #FF7A45; --focus: #7FB3D5; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--page); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.55; padding-inline: 20px; padding-block: 0 80px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+header { padding-block: 44px 26px; border-bottom: 2px solid var(--ink); display: grid; gap: 14px; }
+header .label { font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--hivis-text); }
+header h1 { font-size: clamp(32px, 4.6vw, 54px); line-height: 1.04; letter-spacing: -.02em; font-weight: 760; }
+header .lede { color: var(--ink-2); max-width: 70ch; }
+.tape { height: 14px; background: linear-gradient(to bottom, transparent 5px, #C5CBD2 5px, #C5CBD2 9px, transparent 9px), var(--hivis); }
+
+.spin { margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.spin div { background: var(--panel); border: 1px solid var(--line); padding: 18px 20px; display: grid; gap: 6px; align-content: start; }
+.spin b { font-size: 17px; }
+.spin span { color: var(--ink-2); font-size: 15.5px; }
+
+.bar { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; }
+.bar .l { font: 500 11.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.chip { font: 600 14px/1 var(--sans); color: var(--ink); background: var(--panel); border: 1.5px solid var(--line); padding: 9px 12px; border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--page); border-color: var(--ink); }
+
+.films { margin-top: 22px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; align-items: start; }
+.film { background: var(--panel); border: 1px solid var(--line); display: grid; }
+.film video { width: 100%; height: auto; display: block; background: #111418; aspect-ratio: 9 / 16; }
+.films.feed .film video { aspect-ratio: 4 / 5; }
+.film .meta { padding: 16px 18px 18px; display: grid; gap: 10px; }
+.film h2 { font-size: 23px; font-weight: 760; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.film h2 small { font: 500 11.5px var(--mono); letter-spacing: .06em; color: var(--muted); }
+.film .beat { color: var(--ink-2); font-size: 15.5px; }
+.film dl { margin: 0; display: grid; gap: 4px; font-size: 14.5px; }
+.film dt { font: 500 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+.film dd { margin: 0; color: var(--ink-2); }
+.film q { quotes: none; font-weight: 700; color: var(--ink); }
+.rank { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--hivis-text); }
+
+section { margin-top: 54px; }
+section h2.s { font-size: clamp(22px, 2.8vw, 30px); font-weight: 760; letter-spacing: -.015em; margin-bottom: 14px; }
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.note { background: var(--panel); border: 1px solid var(--line); padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.note h3 { font-size: 17px; font-weight: 750; }
+.note ul { margin: 0; padding-left: 18px; display: grid; gap: 5px; color: var(--ink-2); font-size: 15px; }
+footer { margin-top: 54px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+@media (max-width: 640px) { body { font-size: 16px; padding-inline: 16px; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="label">Sporbók · Áhöfnin · first five shorts</span>
+    <h1>Serious company, deadpan cast</h1>
+    <p class="lede">Five silent shorts, 10 to 12 seconds each, rendered frame by frame from the same rig as the brand kit, so every character is exactly on model. Directed here, with Grok 4.7 as co-director: its independent pitches and ours converged on the same three stories, five of its lines made the final cut, and its review of the first renders caught two timing bugs and a caption that read as worker scoring. Captions carry the meaning with the sound off. Each ends on the icon and the tagline.</p>
+  </header>
+  <div class="tape" aria-hidden="true"></div>
+
+  <div class="spin">
+    <div><b>The spin: object theatre</b><span>The cast is the kit, and the person stays the adult in the room. Each object only moves the way that thing moves: a lid, a headlight, a paper edge. Luxo Jr. is the grammar; Michelin's Bibendum proves a serious trade company can keep a character for a century.</span></div>
+    <div><b>The joke is a day you already had</b><span>07:40 in the dark, a receipt under the seat, Sunday night at the kitchen table. The product is the punchline, never the pitch, and nobody speaks.</span></div>
+    <div><b>Restraint is the brand</b><span>No people drawn, no tourism, no confetti. One caption line per shot, no exclamation marks. One joy peak per film at most.</span></div>
+  </div>
+
+  <div class="bar" role="group" aria-label="Format">
+    <span class="l">Format</span>
+    <button type="button" class="chip" id="fmt-reel" data-fmt="1080x1920" aria-pressed="true">Reels 9:16</button>
+    <button type="button" class="chip" id="fmt-feed" data-fmt="1080x1350" aria-pressed="false">Feed 4:5</button>
+  </div>
+
+  <div class="films" id="films">
+    <article class="film">
+      <video data-name="tvo" src="sporbok-tvo-1080x1920.mp4" poster="poster-tvo.jpg" controls muted playsinline loop preload="metadata"></video>
+      <div class="meta">
+        <span class="rank">Post first</span>
+        <h2>Tvö verk <small>11.7 s</small></h2>
+        <p class="beat">One receipt between two plumbing jobs, looking from one to the other. A small jolt, it slides onto the right one, and the card lights up.</p>
+        <dl><dt>Captions</dt><dd><q>Tvö verk. Ein nóta.</q> · <q>Rétt verk. Sjálfkrafa.</q></dd>
+        <dt>Who sends it</dt><dd>Anyone running two sites in a day, to whoever does the costing: a receipt on the wrong job is real money.</dd></dl>
+      </div>
+    </article>
+    <article class="film">
+      <video data-name="fimm" src="sporbok-fimm-1080x1920.mp4" poster="poster-fimm.jpg" controls muted playsinline loop preload="metadata"></video>
+      <div class="meta">
+        <span class="rank">Post second · a Friday</span>
+        <h2>17:00 <small>12.7 s</small></h2>
+        <p class="beat">Friday, one more thing. The clock turns, the toolbox clacks shut, the hat nods off, the van's lamps go out, dusk falls. The privacy promise, performed.</p>
+        <dl><dt>Captions</dt><dd><q>Eitt enn.</q> · <q>Sporbók slekkur á sér.</q></dd>
+        <dt>Who sends it</dt><dd>The crew, on a Friday, because the kit goes dark when the day ends and nothing watches the weekend.</dd></dl>
+      </div>
+    </article>
+    <article class="film">
+      <video data-name="notan" src="sporbok-notan-1080x1920.mp4" poster="poster-notan.jpg" controls muted playsinline loop preload="metadata"></video>
+      <div class="meta">
+        <span class="rank">Post third</span>
+        <h2>Undir sætinu <small>12.4 s</small></h2>
+        <p class="beat">Found under the van seat, worried and wiggling. The seat lifts, the day comes in, a job card slides in, and the receipt steps up onto it: the film's one joy beat.</p>
+        <dl><dt>Captions</dt><dd><q>Undir sætinu aftur.</q> · <q>Komin á rétt verk.</q></dd>
+        <dt>Who sends it</dt><dd>Every driver has a receipt graveyard under the seat, and the bookkeeper is who they send it to.</dd></dl>
+      </div>
+    </article>
+    <article class="film">
+      <video data-name="sunnudagur" src="sporbok-sunnudagur-1080x1920.mp4" poster="poster-sunnudagur.jpg" controls muted playsinline loop preload="metadata"></video>
+      <div class="meta">
+        <span class="rank">Post fourth · a Sunday evening</span>
+        <h2>Sunnudagskvöld <small>12.5 s</small></h2>
+        <p class="beat">22:14, a kitchen table covered in tired receipts. A strip of hi-vis tape wipes across, and it is the same table with one cup and one relieved receipt.</p>
+        <dl><dt>Captions</dt><dd><q>Sunnudagskvöld.</q> · <q>Reikningurinn er tilbúinn.</q></dd>
+        <dt>Who sends it</dt><dd>The person who does the books on Sunday sends it to the owner.</dd></dl>
+      </div>
+    </article>
+    <article class="film">
+      <video data-name="morgunn" src="sporbok-morgunn-1080x1920.mp4" poster="poster-morgunn.jpg" controls muted playsinline loop preload="metadata"></video>
+      <div class="meta">
+        <span class="rank">Post fifth · a Monday morning</span>
+        <h2>07:40 <small>10.7 s</small></h2>
+        <p class="beat">Dark and frosty. The van and the hard hat wake as the clock turns 07:40, the lamps come on, the morning lightens, and both give one nod. Arrival is simply there, and nobody is accused.</p>
+        <dl><dt>Captions</dt><dd><q>Á staðnum.</q></dd>
+        <dt>Who sends it</dt><dd>Whoever is always first on site drops it in the crew chat and writes nothing under it.</dd></dl>
+      </div>
+    </article>
+  </div>
+
+  <section aria-labelledby="h-plan">
+    <h2 class="s" id="h-plan">How they go out</h2>
+    <div class="notes">
+      <div class="note"><h3>Cadence</h3><ul>
+        <li>One short a week, alongside the text posts, so the cast is in about one post in three.</li>
+        <li>Timed to its day: 17:00 on a Friday afternoon, Sunnudagskvöld on Sunday evening, 07:40 on a Monday morning.</li>
+        <li>Reels cut to Reels, the 4:5 cut to the feed. Same film, framed for each.</li>
+      </ul></div>
+      <div class="note"><h3>Through the pipeline</h3><ul>
+        <li>Each film goes into Postiz as a draft through the social Flow, like every other post, and waits for approval.</li>
+        <li>Post copy follows the social Skills: Icelandic, no bait, no link in the body, the link in the first comment.</li>
+        <li>New films are rendered from the same timeline file, so the cast can never drift off model.</li>
+      </ul></div>
+      <div class="note"><h3>Not yet</h3><ul>
+        <li>Sound. The films are silent-first; a later mix would be foley only: rain, a paper slide, a lid, a relay click.</li>
+        <li>Grok's other ideas are on file for the next batch: rain on the open site, and last one home.</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <footer>Rendered at 30 fps from the Áhöfnin rig (a port of the Yarnkin mascot rig) with a seeded clock, H.264, 0.3 to 1.1 MB each. Characters are never generated by an image or video model.</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var films = document.getElementById("films");
+  var buttons = document.querySelectorAll("button[data-fmt]");
+  function setFormat(fmt) {
+    films.classList.toggle("feed", fmt === "1080x1350");
+    films.querySelectorAll("video").forEach(function (v) {
+      var name = v.getAttribute("data-name");
+      v.src = "sporbok-" + name + "-" + fmt + ".mp4";
+    });
+    buttons.forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-fmt") === fmt ? "true" : "false"); });
+    try { localStorage.setItem("shorts-fmt", fmt); } catch (e) {}
+  }
+  buttons.forEach(function (b) { b.addEventListener("click", function () { setFormat(b.getAttribute("data-fmt")); }); });
+  try { var f = localStorage.getItem("shorts-fmt"); if (f === "1080x1350") setFormat(f); } catch (e) {}
+})();
+</script>
