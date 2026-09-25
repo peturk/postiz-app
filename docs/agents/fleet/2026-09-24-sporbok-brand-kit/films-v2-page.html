@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="is">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sporbók Feature Films</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400..900&display=swap">
+<style>
+:root {
+  --page: #EEF0F2; --panel: #FFFFFF; --ink: #111418; --ink-2: #3B434D; --muted: #56616E; --line: #D5DAE0;
+  --hivis: #FF5A1F; --hivis-text: #B63A0B; --focus: #2C5F7F; --ok: #1F7A4A;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Source Sans 3", "Source Sans Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --page: #0C0E11; --panel: #161A1F; --ink: #EEF0F2; --ink-2: #C4CAD2; --muted: #97A1AC; --line: #2A3038; --hivis-text: #FF7A45; --focus: #7FB3D5; --ok: #5CC98C; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --page: #0C0E11; --panel: #161A1F; --ink: #EEF0F2; --ink-2: #C4CAD2; --muted: #97A1AC; --line: #2A3038; --hivis-text: #FF7A45; --focus: #7FB3D5; --ok: #5CC98C; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.55; padding-inline: 20px; padding-block: 0 80px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.label { font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--hivis-text); }
+header { padding-block: 44px 26px; border-bottom: 2px solid var(--ink); display: grid; gap: 14px; }
+header h1 { font-size: clamp(32px, 4.6vw, 54px); line-height: 1.04; letter-spacing: -.02em; font-weight: 760; }
+header .lede { color: var(--ink-2); max-width: 72ch; }
+.tape { height: 14px; background: linear-gradient(to bottom, transparent 5px, #C5CBD2 5px, #C5CBD2 9px, transparent 9px), var(--hivis); }
+section { margin-top: 54px; }
+h2.s { font-size: clamp(22px, 2.8vw, 30px); font-weight: 760; letter-spacing: -.015em; margin-bottom: 8px; }
+.sub { color: var(--ink-2); max-width: 72ch; margin-bottom: 18px; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin-bottom: 16px; }
+.bar .l { font: 500 11.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.chip { font: 600 14px/1 var(--sans); color: var(--ink); background: var(--panel); border: 1.5px solid var(--line); padding: 9px 12px; border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--page); border-color: var(--ink); }
+.films { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; align-items: start; }
+.film { background: var(--panel); border: 1px solid var(--line); display: grid; }
+.film video { width: 100%; height: auto; display: block; background: #111418; aspect-ratio: 9 / 16; }
+.films.feed .film video { aspect-ratio: 4 / 5; }
+.film .meta { padding: 16px 18px 18px; display: grid; gap: 8px; }
+.film h3 { font-size: 22px; font-weight: 760; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.film h3 small { font: 500 11.5px var(--mono); color: var(--muted); }
+.film .beat { color: var(--ink-2); font-size: 15.5px; }
+.film ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 15px; display: grid; gap: 3px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.card h3 { font-size: 18px; font-weight: 750; }
+.card ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; color: var(--ink-2); font-size: 15px; }
+.card p { color: var(--ink-2); font-size: 15.5px; }
+.card.ask { border: 2px solid var(--hivis); }
+.status { font: 500 11.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.status.ok { color: var(--ok); }
+.status.wait { color: var(--hivis-text); }
+table { border-collapse: collapse; width: 100%; background: var(--panel); border: 1px solid var(--line); font-size: 15px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 11.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.tablewrap { overflow-x: auto; }
+footer { margin-top: 54px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+@media (max-width: 640px) { body { font-size: 16px; padding-inline: 16px; } }
+</style>
+<body>
+<div class="wrap">
+  <header>
+    <span class="label">Sporbók · feature films v2 · Grok image-to-video</span>
+    <h1>Four films that show what Sporbók does</h1>
+    <p class="lede">Each film follows one real part of the working day: arriving at the job, the stop at the supplier, the invoice draft, and ending the shift. Grok 4.7 animates the cast from keyframes rendered by our rig. The app screens, text and sounds are ours, drawn on top, so every label is real Sporbók wording. The whole story is told in 20 seconds, followed by a 3-second end card.</p>
+  </header>
+  <div class="tape" aria-hidden="true"></div>
+
+  <section aria-labelledby="h-films">
+    <h2 class="s" id="h-films">The films</h2>
+    <p class="sub">Sound on: a music bed plus a tap, pop or chime on every app action. The voiceover is written, but the Gemini key needs billing before it can be generated (see below).</p>
+    <div class="bar" role="group" aria-label="Format">
+      <span class="l">Format</span>
+      <button class="chip" type="button" data-fmt="1080x1920" aria-pressed="true">Reels 9:16</button>
+      <button class="chip" type="button" data-fmt="1080x1350" aria-pressed="false">Feed 4:5</button>
+    </div>
+    <div class="films" id="films">
+      <article class="film">
+        <video data-name="maett" src="sporbok-maett-v2-1080x1920.mp4" poster="poster-maett.jpg" controls playsinline loop preload="metadata" aria-label="Mætt"></video>
+        <div class="meta">
+          <h3>Mætt <small>07:48 → 07:52</small></h3>
+          <p class="beat">The van reaches the job at dawn; Sporbók records the arrival by itself.</p>
+          <ul><li>Geofence ring, "Mætt 07:52", "Á vakt"</li><li>Time counts up to 4 klst. 10 mín. on the right job</li><li>You confirm the day with one tap</li></ul>
+        </div>
+      </article>
+      <article class="film">
+        <video data-name="nota" src="sporbok-nota-v2-1080x1920.mp4" poster="poster-nota.jpg" controls playsinline loop preload="metadata" aria-label="Nótan"></video>
+        <div class="meta">
+          <h3>Nótan <small>12:10</small></h3>
+          <p class="beat">A stop at the builders' merchant: one tap, and the receipt is read and put on the right job.</p>
+          <ul><li>"Þú komst við hjá birgja. Hvert var erindið?"</li><li>Receipt read: BYKO, 14.820 kr.</li><li>"Passar við verk", nothing left unbilled</li></ul>
+        </div>
+      </article>
+      <article class="film">
+        <video data-name="drog" src="sporbok-drog-v2-1080x1920.mp4" poster="poster-drog.jpg" controls playsinline loop preload="metadata" aria-label="Drögin"></video>
+        <div class="meta">
+          <h3>Drögin <small>verklok</small></h3>
+          <p class="beat">The job is done and the invoice draft builds itself: labour, materials and receipts, mileage.</p>
+          <ul><li>Lines fill in and add up: 69.678 kr. before VAT</li><li>"Senda í Reiknís", then "Reikningur sendur"</li><li>Only live integrations are shown</li></ul>
+        </div>
+      </article>
+      <article class="film">
+        <video data-name="fri2" src="sporbok-fri2-v2-1080x1920.mp4" poster="poster-fri2.jpg" controls playsinline loop preload="metadata" aria-label="Frítíminn er þinn"></video>
+        <div class="meta">
+          <h3>Frítíminn <small>17:30</small></h3>
+          <p class="beat">You end the shift, location switches off, and the evening belongs to you.</p>
+          <ul><li>"Ljúka vakt", then "Utan vaktar"</li><li>Sunset, then a moon that stays in view</li><li>Summary 9 klst. 38 mín. (07:52 to 17:30)</li></ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-fixed">
+    <h2 class="s" id="h-fixed">What changed since the last round</h2>
+    <div class="grid2">
+      <div class="card"><span class="status ok">Fixed</span><h3>They show the product</h3><ul><li>Real Sporbók screens in every film: clock, geofence, notification, receipt scan, invoice draft, shift end</li><li>Something new happens every 1.5 to 3 seconds</li><li>Text sits in fixed zones, so nothing collides, and it stays inside the 4:5 crop</li></ul></div>
+      <div class="card"><span class="status ok">Fixed</span><h3>Sun and moon</h3><ul><li>The moon is now a lit crescent with a glow, so it stays visible against the night sky</li><li>The sun sets behind the ground instead of fading out</li><li>Headlines use the left column only, so they never cross the sun or moon</li></ul></div>
+      <div class="card"><span class="status ok">Fixed</span><h3>Sound</h3><ul><li>A music bed, generated by Grok and picked by a Gemini listening pass</li><li>Every tap, pop, notification and chime lands on its app action</li><li>Mastered to -14 LUFS with a steady level; no dips or clicks at the shot joins</li></ul></div>
+      <div class="card"><span class="status ok">Fixed</span><h3>After an independent review</h3><ul><li>Numbers agree everywhere: hours, the invoice total and the day summary add up</li><li>Cards sit 90 px in from the edge and never cover the sun</li><li>Faces stay open-eyed and friendly: no grey eyes, glares or lids that shut over a face</li><li>Frítíminn cuts straight to the lit home instead of a double-exposure dissolve</li><li>Less dead time: something new happens every 1.5 to 3 seconds</li></ul></div>
+      <div class="card"><span class="status ok">Checked</span><h3>Frame by frame</h3><ul><li>40 generated picture takes for 12 final shots</li><li>Takes rejected for invented objects: a trolley, a door, scaffolding, a floating house, a second house</li><li>Also rejected for an all-black clip and a character waking up again</li><li>Two stretches Grok could not keep clean (Mætt 7-14 s, Frítíminn 4-7 s) are rendered by our own rig, cut in on the same pinned frames</li></ul></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-vo">
+    <h2 class="s" id="h-vo">Voiceover: ready, waiting on a paid key</h2>
+    <p class="sub">The voice is Gemini TTS <b>Alnilam</b>. It was ranked first in a blind casting of Icelandic takes and had the fewest pronunciation slips. The script is short and dry, and it ends on the tagline over the end card.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Film</th><th>Lines</th></tr></thead>
+        <tbody>
+          <tr><td>Mætt</td><td>Þú mætir á verkstað. · Sporbók skráir mætinguna. Enginn stimpill. · Tíminn safnast á rétt verk. · Í lok dags staðfestir þú. Búið.</td></tr>
+          <tr><td>Nótan</td><td>Komið við hjá birgja? · Einn smellur. Sótti efni. · Sporbók les nótuna og setur hana á rétt verk. · Ekkert efni gleymist.</td></tr>
+          <tr><td>Drögin</td><td>Verkinu er lokið. · Vinna, efni og akstur raða sér í reikningsdrög. · Þú ferð yfir og sendir beint í Reiknís. · Engin kvöld við eldhúsborðið.</td></tr>
+          <tr><td>Frítíminn</td><td>Vinnudegi lokið. · Þú lýkur vaktinni. Staðsetningin slokknar. · Dagurinn er skráður. · Frítíminn er þinn.</td></tr>
+          <tr><td>All</td><td>Þú vinnur verkið. Sporbók man söguna.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <div class="card ask"><span class="status wait">Needs a decision</span><h3>Enable billing for the voice</h3><p>The key in git/env (wtd) is on the free tier: 10 voice requests a day, and the EEA terms do not cover commercial use. Once billing is on, one command generates every line, checks each take by transcribing it back, and times it to the picture. That also unlocks Lyria for music. The wtd key also still needs rotating.</p></div>
+      <div class="card"><span class="status ok">Ready</span><h3>One command once it is paid</h3><p><code>node vo.mjs all</code> writes the lines, then <code>assemble2.cjs</code> ducks the music under the voice and remasters.</p></div>
+    </div>
+  </section>
+
+  <footer>Sources and the full process: postiz-app, docs/agents/fleet/2026-09-24-sporbok-brand-kit (i2v/README.md, v2 section). Earlier films: the Áhöfnin page.</footer>
+</div>
+<script>
+(function () {
+  var chips = document.querySelectorAll(".chip[data-fmt]"), grid = document.getElementById("films");
+  function set(fmt) {
+    chips.forEach(function (c) { c.setAttribute("aria-pressed", String(c.dataset.fmt === fmt)); });
+    grid.classList.toggle("feed", fmt === "1080x1350");
+    grid.querySelectorAll("video").forEach(function (v) {
+      var n = v.dataset.name;
+      v.src = "sporbok-" + n + "-v2-" + fmt + ".mp4";
+      v.poster = "poster-" + n + (fmt === "1080x1350" ? "-feed" : "") + ".jpg";
+    });
+    try { localStorage.setItem("fmt", fmt); } catch (e) {}
+  }
+  chips.forEach(function (c) { c.addEventListener("click", function () { set(c.dataset.fmt); }); });
+  var saved = null; try { saved = localStorage.getItem("fmt"); } catch (e) {}
+  if (saved === "1080x1350") set(saved);
+  var vids = document.querySelectorAll("video");
+  vids.forEach(function (v) { v.addEventListener("play", function () { vids.forEach(function (o) { if (o !== v) o.pause(); }); }); });
+})();
+</script>
+</body>
+</html>

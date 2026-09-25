@@ -1,0 +1,261 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Source+Sans+3:wght@400..900&display=swap">
+<style>
+  /* The UI layer of the v2 feature films: the app's own vocabulary drawn over
+     the generated picture. Everything here is ours; no model draws a letter.
+     Coordinates are in the 1080 x 1920 master; every element sits inside the
+     4:5 feed window (y 285-1635), so both cuts share one layout. */
+  html, body { margin: 0; background: transparent; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Source Sans 3", system-ui, sans-serif; color: #111418; }
+  #stage.feed { height: 1350px; }
+  #layer { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  .el { position: absolute; opacity: 0; will-change: transform, opacity; box-sizing: border-box; }
+  .head { left: 80px; right: 380px; font-weight: 800; font-size: 78px; line-height: 1.02; letter-spacing: -2.4px; text-wrap: balance; }
+  .kick { left: 84px; font-weight: 700; font-size: 32px; letter-spacing: .14em; text-transform: uppercase; }
+  .clock { left: 80px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 500; font-size: 120px; letter-spacing: -3px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .chip { display: flex; align-items: center; gap: 16px; padding: 18px 28px 18px 22px; border-radius: 999px; background: #fff; font-weight: 700; font-size: 40px; box-shadow: 0 14px 34px -16px rgba(17,20,24,.55); white-space: nowrap; }
+  .chip i { width: 22px; height: 22px; border-radius: 50%; background: #1F9D55; flex: none; }
+  .chip.hivis i { background: #FF5A1F; }
+  .chip.grey { background: #E6E9EC; color: #56616E; }
+  .chip.grey i { background: #97A1AC; }
+  .card { background: #fff; border-radius: 30px; padding: 30px 34px; box-shadow: 0 22px 50px -22px rgba(17,20,24,.6); }
+  .card .t { font: 500 30px "IBM Plex Mono", monospace; letter-spacing: .08em; color: #3B434D; text-transform: uppercase; }
+  .card .h { font-weight: 800; font-size: 50px; letter-spacing: -1px; margin-top: 6px; }
+  .card .s { font-weight: 600; font-size: 32px; color: #3B434D; margin-top: 4px; }
+  .row { display: flex; justify-content: space-between; gap: 20px; font-size: 34px; font-weight: 600; padding: 14px 0; border-top: 2px solid #E6E9EC; opacity: 0; }
+  .row b { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .total { display: flex; justify-content: space-between; font-size: 48px; font-weight: 800; padding-top: 18px; border-top: 3px solid #111418; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .btn { display: inline-block; margin-top: 22px; background: #FF5A1F; color: #111418; font-weight: 800; font-size: 38px; padding: 18px 30px; border-radius: 18px; }
+  .notif { display: flex; gap: 22px; align-items: flex-start; background: rgba(255,255,255,.97); border-radius: 34px; padding: 26px 30px; box-shadow: 0 24px 50px -22px rgba(17,20,24,.6); }
+  .notif img { width: 84px; height: 84px; border-radius: 20px; }
+  .notif .a { font: 500 28px "IBM Plex Mono", monospace; letter-spacing: .08em; color: #56616E; text-transform: uppercase; }
+  .notif .b { font-weight: 800; font-size: 40px; margin-top: 4px; line-height: 1.1; }
+  .notif .opts { display: flex; gap: 14px; margin-top: 16px; }
+  .notif .opt { font-weight: 700; font-size: 32px; padding: 12px 22px; border-radius: 14px; background: #E6E9EC; }
+  .notif .opt.on { background: #FF5A1F; }
+  .ring { border: 8px dashed rgba(255,255,255,.95); border-radius: 50%; box-shadow: 0 0 0 4px rgba(31,157,85,.0); }
+  .scan { position: absolute; left: 0; right: 0; height: 6px; background: #FF5A1F; box-shadow: 0 0 22px #FF5A1F; }
+  .tap { position: absolute; width: 90px; height: 90px; border-radius: 50%; border: 6px solid #fff; }
+  .end { position: absolute; inset: 0; background: #111418; color: #EEF0F2; display: grid; place-items: center; opacity: 0; }
+  .end .inner { display: grid; justify-items: center; gap: 44px; }
+  .end .mark { display: flex; align-items: center; gap: 30px; }
+  .end .mark img { width: 150px; height: 150px; border-radius: 34px; }
+  .end .mark span { font-weight: 700; font-size: 104px; letter-spacing: -2px; }
+  .end .line { font-weight: 760; font-size: 64px; letter-spacing: -1.6px; line-height: 1.08; text-align: center; }
+  .end .url { font-weight: 600; font-size: 40px; color: #97A1AC; }
+  .end .tape { position: absolute; left: 0; right: 0; bottom: 0; height: 30px; background: linear-gradient(to bottom, transparent 38%, #C5CBD2 38%, #C5CBD2 62%, transparent 62%), #FF5A1F; }
+  .shadowtext { text-shadow: 0 2px 18px rgba(0,0,0,.18); }
+</style>
+<div id="stage"><div id="layer"></div></div>
+<script>
+(function () {
+  "use strict";
+  var ICON = "__ICON__";
+  var params = new URLSearchParams(location.search);
+  var FEED = params.get("fmt") === "feed";
+  var stage = document.getElementById("stage"), layer = document.getElementById("layer");
+  if (FEED) stage.classList.add("feed");
+  function clamp(p) { return p < 0 ? 0 : p > 1 ? 1 : p; }
+  function out3(p) { return 1 - Math.pow(1 - p, 3); }
+  function back(p) { var c = 1.6; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); }
+  function lerp(a, b, p) { return a + (b - a) * p; }
+  function mix(c1, c2, p) {
+    var a = parseInt(c1.slice(1), 16), b = parseInt(c2.slice(1), 16);
+    var r = Math.round(lerp(a >> 16, b >> 16, p)), g = Math.round(lerp(a >> 8 & 255, b >> 8 & 255, p)), bl = Math.round(lerp(a & 255, b & 255, p));
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + bl).toString(16).slice(1);
+  }
+  function el(cls, html, x, y, w) {
+    var d = document.createElement("div"); d.className = "el " + cls; d.innerHTML = html || "";
+    if (x != null) d.style.left = x + "px";
+    if (y != null) d.style.top = y + "px";
+    if (w != null) d.style.width = w + "px";
+    layer.appendChild(d); return d;
+  }
+  var items = [];
+  /* Sound events for the mixer: {t, k} with k in pop, tap, notif, chime. */
+  var SFX = []; window.__sfx = SFX;
+  function sfx(t, k) { SFX.push({ t: +t.toFixed(3), k: k }); }
+  /* Standard entrance: rise and pop with a slight overshoot; exit: fade. */
+  function show(d, from, to, opts) {
+    opts = opts || {};
+    items.push(function (t) {
+      var a = clamp((t - from) / 0.32), z = to == null ? 1 : clamp((to - t) / 0.25);
+      var e = back(clamp((t - from) / 0.42));
+      d.style.opacity = Math.min(a, z);
+      var dy = opts.drop ? (1 - out3(clamp((t - from) / 0.45))) * -160 : (1 - e) * 40;
+      d.style.transform = "translateY(" + dy + "px) scale(" + (opts.pop ? lerp(0.86, 1, e) : 1) + ")";
+    });
+    return d;
+  }
+  /* Ink that reads on the measured picture brightness (set by the assembler). */
+  var SIDE = null;
+  window.__setLum = function (arr) {
+    var sm = arr.map(function (v, i) { var s = 0, n = 0; for (var k = i - 4; k <= i + 4; k++) if (k >= 0 && k < arr.length) { s += arr[k]; n++; } return s / n; });
+    var dark = sm[0] >= 118;
+    SIDE = sm.map(function (v) { if (dark && v < 110) dark = false; else if (!dark && v > 126) dark = true; return dark ? 1 : 0; });
+  };
+  function ink(t, darkC, lightC) {
+    if (!SIDE) return darkC;
+    var i = Math.min(SIDE.length - 1, Math.max(0, Math.round(t * 30))), s = 0, n = 0;
+    for (var k = i - 2; k <= i + 1; k++) if (k >= 0 && k < SIDE.length) { s += SIDE[k]; n++; }
+    return mix(lightC, darkC, s / n);
+  }
+  function inked(d, accent) { items.push(function (t) { d.style.color = accent ? ink(t, "#B63A0B", "#FF9A6B") : ink(t, "#111418", "#F4F6F8"); }); return d; }
+  function head(text, from, to, y) { return inked(show(el("head shadowtext", text, 80, y || 440), from, to)); }
+  function kick(text, from, to) { return inked(show(el("kick", text, 84, 345), from, to), true); }
+  function clock(steps, from, to) {
+    var d = inked(show(el("clock", steps[0][1], 80, 380), from, to));
+    items.push(function (t) { var s = steps[0][1]; steps.forEach(function (x) { if (t >= x[0]) s = x[1]; }); d.textContent = s; });
+    return d;
+  }
+  function chip(text, x, y, from, to, cls) { sfx(from, "pop"); return show(el("chip " + (cls || ""), "<i></i>" + text, x, y), from, to, { pop: true }); }
+  function notif(app, body, opts, x, y, w, from, to, pickAt) {
+    var html = '<img src="' + ICON + '" alt=""><div><div class="a">' + app + '</div><div class="b">' + body + '</div>'
+      + (opts ? '<div class="opts">' + opts.map(function (o, i) { return '<span class="opt" data-i="' + i + '">' + o + '</span>'; }).join("") + '</div>' : '') + '</div>';
+    sfx(from, "notif"); if (pickAt != null) sfx(pickAt, "tap");
+    var d = show(el("notif", html, x, y, w), from, to, { drop: true });
+    if (pickAt != null) items.push(function (t) { var o = d.querySelector('.opt[data-i="0"]'); if (o) o.classList.toggle("on", t >= pickAt); });
+    return d;
+  }
+  function tap(x, y, at) {
+    sfx(at, "tap");
+    var d = el("tap", "", x - 45, y - 45);
+    items.push(function (t) { var p = clamp((t - at) / 0.45); d.style.opacity = t < at ? 0 : 1 - p; d.style.transform = "scale(" + lerp(0.4, 1.6, p) + ")"; });
+  }
+  function ring(cx, cy, r, from, to, okAt) {
+    var d = el("ring", "", cx - r, cy - r, 2 * r); d.style.height = 2 * r + "px";
+    items.push(function (t) {
+      var a = clamp((t - from) / 0.4) * (to == null ? 1 : clamp((to - t) / 0.3));
+      d.style.opacity = a; d.style.transform = "rotate(" + (t * 12) + "deg) scale(" + lerp(1.08, 1, clamp((t - from) / 0.5)) + ")";
+      d.style.borderColor = t >= okAt ? "rgba(31,157,85,.95)" : "rgba(255,255,255,.95)";
+    });
+  }
+  function counter(d, sel, fromV, toV, t0, t1, fmt) {
+    sfx(t1, "chime");
+    items.push(function (t) { var v = lerp(fromV, toV, out3(clamp((t - t0) / (t1 - t0)))); d.querySelector(sel).textContent = fmt(v); });
+  }
+  function rows(d, times) { items.push(function (t) { d.querySelectorAll(".row").forEach(function (r, i) { var p = clamp((t - times[i]) / 0.3); r.style.opacity = p; r.style.transform = "translateX(" + (1 - out3(p)) * 40 + "px)"; }); }); }
+  function kr(v) { return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " kr."; }
+
+  /* Layout zones (1920 master; all inside the 4:5 window y 285-1635):
+       Z1 y 330-480   clock or kicker, never both
+       Z2 y 500-680   exactly one headline at a time, left column only, so it
+                      never crosses the sun or the moon (right, y 340-720)
+       Z3 y 720+      cards and chips, only where the film's picture is free:
+                      measured per film from the keyframes (see comments).
+     Every card is inset 90 px from the frame edge. Numbers agree across a
+     film: the counter, the card after it and the clock tell one story. */
+  var Z2 = 505, R = 510, RW = 480, L = 90;
+  function hm(v) { var m = Math.round(v); return Math.floor(m / 60) + " klst. " + (m % 60) + " mín."; }
+  var FILMS = {
+    /* Mætt. Free: right column x 510-990, y 720-1100 (van left, house and
+       cast from y 1120). 07:52 arrival; the day card counts the morning. */
+    maett: function () {
+      clock([[0, "07:48"], [4.4, "07:52"]], 0.2, 9.4);
+      head("Á leið í verk.", 0.6, 4.4, Z2);
+      ring(840, 1340, 330, 2.6, 7.4, 4.6);
+      chip("Hafnarstræti 12", 540, 880, 2.8, 7.4, "grey");
+      chip("Mætt 07:52", 570, 980, 4.6, 9.4);
+      head("Sporbók skráir mætinguna.", 4.6, 9.4, Z2);
+      chip("Á vakt", R, 760, 7.6, 9.4, "hivis");
+      var c = show(el("card", '<div class="t">Vinnusaga · í dag</div><div class="h" data-v>0 klst. 0 mín.</div><div class="s">Hafnarstræti 12</div>', R, 720, RW), 9.8, 16.4, { pop: true });
+      counter(c, "[data-v]", 0, 250, 10.0, 13.0, hm);
+      head("Enginn stimpill.", 9.8, 13.2, Z2);
+      chip("Akstur · 38 km", R, 1010, 13.4, 16.4, "grey");
+      head("Engin skrifblokk.", 13.2, 16.4, Z2);
+      kick("Yfirferð dagsins", 16.6, 19.9);
+      show(el("card", '<div class="t">Í dag</div><div class="h">4 klst. 10 mín.</div><span class="btn">Staðfesta</span>', R, 720, RW), 16.6, 19.9, { pop: true });
+      tap(680, 905, 18.2);
+      head("Þú staðfestir. Búið.", 16.8, 19.9, Z2);
+      return { duration: 23, end: 20.0 };
+    },
+    /* Nótan. Free: y 720-1140 above the store roof (1160); the sun sits at
+       x 856-940, y 576-660 with its glow to ~720, so nothing starts above 720. */
+    nota: function () {
+      kick("Byggingavöruverslunin · 12:10", 0.3, 7.2);
+      head("Komið við hjá birgja.", 0.4, 3.4, Z2);
+      notif("Sporbók", "Þú komst við hjá birgja. Hvert var erindið?", ["Sótti efni", "Ekkert"], L, 730, 900, 3.6, 7.2, 5.2);
+      tap(L + 240, 925, 5.1);
+      head("Einn smellur.", 3.6, 7.2, Z2);
+      var r = show(el("card", '<div class="t">Ný kvittun</div><div class="h">Les kvittun…</div><div class="s" data-l>&nbsp;</div><div class="s" data-a>&nbsp;</div><div class="scan"></div>', R, 740, RW), 7.4, 13.8, { pop: true });
+      items.push(function (t) {
+        var sc = r.querySelector(".scan"); var p = clamp((t - 7.8) / 1.6); sc.style.top = (40 + p * 230) + "px"; sc.style.opacity = t > 9.6 ? 0 : 1;
+        r.querySelector(".h").textContent = t < 9.5 ? "Les kvittun…" : "BYKO";
+        r.querySelector("[data-l]").textContent = t < 9.5 ? " " : "Timbur og festingar";
+        r.querySelector("[data-a]").textContent = t < 9.5 ? " " : "14.820 kr.";
+      });
+      sfx(9.5, "pop");
+      head("Sporbók les nótuna.", 7.6, 10.6, Z2);
+      chip("Passar við verk", R, 1060, 10.6, 13.8);
+      head("Og setur hana á rétt verk.", 10.6, 13.8, Z2);
+      show(el("card", '<div class="t">Verk · Hafnarstræti 12</div><div class="h">Efni &amp; kvittanir</div><div class="s"><b>14.820 kr.</b> · 1 kvittun</div>', R, 740, RW), 14.0, 19.9, { pop: true });
+      sfx(14.0, "chime");
+      chip("Óreikningsfært: 0", R, 1030, 15.6, 19.9, "grey");
+      head("Ekkert efni gleymist.", 14.2, 17.0, Z2);
+      head("Allt fer á reikninginn.", 17.0, 19.9, Z2);
+      return { duration: 23, end: 20.0 };
+    },
+    /* Drögin. Free: full width y 700-1130 (house roof at 1140, cast lower).
+       Numbers add up: 4,5 klst. x 11.000 + 14.820 + 38 km x 141 = 69.678. */
+    drog: function () {
+      head("Verkinu er lokið.", 0.4, 3.4, Z2);
+      chip("Verklok · Hafnarstræti 12", L, 740, 1.2, 3.4, "hivis");
+      var d = show(el("card", '<div class="t">Reikningsdrög · Hafnarstræti 12</div>'
+        + '<div class="row"><span>Vinna · 4,5 klst.</span><b>49.500 kr.</b></div>'
+        + '<div class="row"><span>Efni &amp; kvittanir</span><b>14.820 kr.</b></div>'
+        + '<div class="row"><span>Akstur · 38 km</span><b>5.358 kr.</b></div>'
+        + '<div class="total"><span>Samtals án vsk.</span><span data-v>0 kr.</span></div>', L, 700, 900), 3.6, 9.4, { pop: true });
+      rows(d, [4.4, 5.4, 6.4]);
+      [4.4, 5.4, 6.4].forEach(function (x) { sfx(x, "pop"); });
+      counter(d, "[data-v]", 0, 69678, 7.0, 8.8, kr);
+      head("Drögin skrifa sig sjálf.", 3.6, 9.4, Z2);
+      show(el("card", '<div class="t">Reikningsdrög</div><div class="h">69.678 kr.</div><span class="btn">Senda í Reiknís</span>', L, 720, 620), 9.6, 14.6, { pop: true });
+      tap(L + 190, 905, 11.2);
+      chip("Sent í Reiknís", L, 1010, 11.6, 14.6);
+      head("Þú ferð yfir og sendir.", 9.6, 14.6, Z2);
+      show(el("card", '<div class="t">Reiknís</div><div class="h">Reikningur sendur</div><div class="s">Hafnarstræti 12 · 69.678 kr.</div>', L, 720, 720), 14.8, 19.9, { pop: true });
+      sfx(14.8, "chime");
+      head("Engin kvöld við eldhúsborðið.", 14.8, 19.9, Z2);
+      return { duration: 23, end: 20.0 };
+    },
+    /* Frítíminn er þinn. Free: right column x 510-990, y 720-1100 (van left,
+       home and hat from 1140). The setting sun crosses the card's rows
+       (y 720-1000) until ~1.8 s, so the shift card waits for it. Hard cut to the
+       home at 7.0; the moon sits at x 790-890, y 470-570. 07:52-17:30 is
+       9 klst. 38 mín. */
+    fri2: function () {
+      clock([[0, "17:28"], [2.6, "17:30"]], 0.2, 6.8);
+      show(el("card", '<div class="t">Vaktin</div><div class="h">Á vakt síðan 07:52</div><span class="btn">Ljúka vakt</span>', R, 720, RW), 2.0, 4.4, { pop: true });
+      tap(680, 950, 3.4);
+      head("Vinnudegi lokið.", 0.6, 4.4, Z2);
+      chip("Utan vaktar", R, 760, 4.4, 9.8, "grey");
+      head("Þú lýkur vaktinni.", 4.4, 7.0, Z2);
+      head("Staðsetningin slokknar.", 7.0, 9.8, Z2);
+      show(el("card", '<div class="t">Samantekt dagsins</div><div class="h">9 klst. 38 mín.</div><div class="s">1 verk · 1 kvittun · 38 km</div>', R, 720, RW), 9.8, 13.2, { pop: true });
+      head("Dagurinn er skráður.", 9.8, 13.2, Z2);
+      head("Frítíminn er þinn.", 13.2, 19.9, Z2);
+      chip("Ekkert skráð utan vaktar", L, 720, 14.8, 19.9, "grey");
+      return { duration: 23, end: 20.0 };
+    }
+  };
+
+  var name = params.get("v");
+  var film = FILMS[name]();
+  window.__duration = film.duration;
+  window.__feedY = 285;
+  window.__cardRef = 0;
+  window.__cardRects = [];
+  var end = document.createElement("div"); end.className = "end";
+  end.innerHTML = '<div class="inner"><div class="mark"><img src="' + ICON + '" alt=""><span>Sporbók</span></div><div class="line">Þú vinnur verkið.<br>Sporbók man söguna.</div><div class="url">sporbok.is</div></div><div class="tape"></div>';
+  if (FEED) { end.style.top = "285px"; end.style.height = "1350px"; }
+  layer.appendChild(end);
+  if (FEED) layer.style.top = "-285px";
+  window.__frame = function (t) {
+    for (var i = 0; i < items.length; i++) items[i](t);
+    end.style.opacity = clamp((t - film.end) / 0.4);
+    var inner = end.querySelector(".inner"); var ip = clamp((t - film.end - 0.35) / 0.35);
+    inner.style.opacity = ip; inner.style.transform = "translateY(" + (1 - ip) * 16 + "px)";
+  };
+})();
+</script>

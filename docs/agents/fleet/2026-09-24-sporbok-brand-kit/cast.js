@@ -213,6 +213,11 @@
     curious: { cue: "notice", eye: 1.06, gaze: [0.34, -0.12], lids: lids(0.08, -6, 0.06), lidsRight: lids(0, 0, 0.06), pupil: 1.12, mouth: "small", pose: { rotate: 6 } },
     alert: { cue: "doubleTake", eye: 1.07, gaze: [0, -0.1], lids: lids(0, 0, 0.08, 4), pupil: 1.06, mouth: "small", pose: { scaleY: 1.015, y: -3 } },
     happy: { eye: 1.03, gaze: [0, -0.1], lids: lids(0, -5, 0.4, 12), pupil: 1.1, mouth: "grin", sparkle: true, bright: 0.12, pose: { rotate: 3, y: -4 } },
+    /* An open-eyed smile. Raised lower lids read as a smile on the van and
+       the hat, but on the receipt (grey lids on white paper) and the toolbox
+       (the lid already crops the eyes) they read as ghost eyes or a smug
+       squint, and generated in-betweens turn them into half-lids. */
+    glad: { eye: 1.05, gaze: [0, -0.12], lids: lids(0, -3, 0.1, 8), pupil: 1.12, mouth: "grin", sparkle: true, bright: 0.14, pose: { rotate: 3, y: -4 } },
     proud: { eye: 1.05, gaze: [0.1, -0.34], lids: lids(0, -2, 0.36, 12), pupil: 1.1, mouth: "grin", mouthScale: 1.1, sparkle: true, bright: 0.12, pose: { rotate: -5, scaleY: 1.03, y: -6 } },
     /* Joy: shut from below into ^^, the upper lid stays open. A hop and
        sparkles. The one place the open smile is allowed. */
@@ -412,9 +417,11 @@
     /* Keyframes for generated video never catch a blink: a pinned mid-blink
        frame forces slit eyes into the clip. */
     if (atRest || (root.SporbokCast && root.SporbokCast.options.noBlink)) return 0;
+    /* A blink is open, then shut for 0.1 s, then open: no in-betweens. At
+       30 fps a ramped blink landed on half-shut frames, and a half lid under
+       a mood's tilted lids reads as a glare. */
     var bt = t - s.blinkStart;
-    if (bt < 0 || bt >= 0.2) return 0;
-    return clamp01(bt < 0.07 ? bt / 0.07 : (bt < 0.09 ? 1 : 1 - (bt - 0.09) / 0.11));
+    return bt >= 0 && bt < 0.1 ? 1 : 0;
   }
 
   function drawFrame(svg, kind, s, t, dt, breathAmp, atRest) {
