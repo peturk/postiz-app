@@ -1,0 +1,168 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="rig/creatures.css">
+<style>
+  /* The picture layer of the Yarnkin films: set dressing built from flat
+     shapes in the brand palette, and the real Yarnkin mascots rendered by the
+     product's own <Mascot> component (never generated or redrawn). Story art
+     appears only in the UI layer, as real catalog pages. */
+  html, body { margin: 0; background: #000; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  .l { position: absolute; }
+  .m { position: absolute; transform-origin: 50% 100%; }
+  .m svg { display: block; }
+</style>
+<div id="stage"></div>
+<script src="rig/yk-rig.js"></script>
+<script>
+(function () {
+  "use strict";
+  var stage = document.getElementById("stage");
+  var film = new URLSearchParams(location.search).get("v");
+  function clamp(p) { return p < 0 ? 0 : p > 1 ? 1 : p; }
+  function lerp(a, b, p) { return a + (b - a) * p; }
+  function ease(p) { return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; }
+  function mix(c1, c2, p) {
+    var a = parseInt(c1.slice(1), 16), b = parseInt(c2.slice(1), 16);
+    var r = Math.round(lerp(a >> 16, b >> 16, p)), g = Math.round(lerp(a >> 8 & 255, b >> 8 & 255, p)), bl = Math.round(lerp(a & 255, b & 255, p));
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + bl).toString(16).slice(1);
+  }
+  var items = [];
+  function tween(t0, t1, fn, e) { items.push(function (t) { fn((e || ease)(clamp((t - t0) / (t1 - t0)))); }); }
+  function at(t0, fn) { var done = false; items.push(function (t) { if (!done && t >= t0) { done = true; fn(); } }); }
+  function el(html, css) { var d = document.createElement("div"); d.className = "l"; d.innerHTML = html || ""; if (css) d.style.cssText += css; stage.appendChild(d); return d; }
+  function svg(w, h, body, x, y) { return el('<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '">' + body + "</svg>", "left:" + x + "px;top:" + y + "px"); }
+
+  /* Palette (yarnkin web/src/web/styles/tokens.css). */
+  var C = { parchment: "#F6EEDD", card: "#FBF4E4", ink: "#33261E", gold: "#F5C542", coral: "#A34633", forest: "#5E8A72", sky: "#7D8DA8", navy: "#0C1221", night: "#060A11", espresso: "#2B221B", wood: "#8A6446", rug: "#E3D2B4" };
+
+  /* Room: wall, window with sky, floor, rug, lamp, shelf. */
+  var FLOOR = 1560;
+  function room(o) {
+    var wall = el("", "left:0;top:0;width:1080px;height:" + FLOOR + "px;background:" + o.wall);
+    var win = el('<div class="sky" style="position:absolute;inset:14px;border-radius:90px 90px 8px 8px;background:' + o.sky + ';overflow:hidden"></div>',
+      "left:810px;top:300px;width:230px;height:300px;border-radius:90px 90px 12px 12px;background:" + C.card);
+    var sill = el("", "left:796px;top:596px;width:258px;height:22px;border-radius:11px;background:" + C.rug);
+    var floor = el("", "left:0;top:" + FLOOR + "px;width:1080px;height:" + (1920 - FLOOR) + "px;background:" + o.floor);
+    var rug = el("", "left:90px;top:" + (FLOOR + 30) + "px;width:900px;height:90px;border-radius:45px;background:" + o.rug);
+    return { wall: wall, win: win, sky: win.querySelector(".sky"), floor: floor, rug: rug };
+  }
+  function moon(host, x, y, r) {
+    var d = document.createElement("div"); d.style.cssText = "position:absolute;left:" + (x - r * 2) + "px;top:" + (y - r * 2) + "px;width:" + r * 4 + "px;height:" + r * 4 + "px";
+    d.innerHTML = '<svg width="' + r * 4 + '" height="' + r * 4 + '"><defs><radialGradient id="mh"><stop offset=".3" stop-color="#FFF4C8" stop-opacity=".55"/><stop offset="1" stop-color="#FFF4C8" stop-opacity="0"/></radialGradient>'
+      + '<mask id="mm"><rect width="100%" height="100%" fill="white"/><circle cx="' + (r * 2 + r * 0.55) + '" cy="' + (r * 2 - r * 0.3) + '" r="' + r * 0.92 + '" fill="black"/></mask></defs>'
+      + '<circle cx="' + r * 2 + '" cy="' + r * 2 + '" r="' + r * 2 + '" fill="url(#mh)"/><circle cx="' + r * 2 + '" cy="' + r * 2 + '" r="' + r + '" fill="' + C.gold + '" mask="url(#mm)"/></svg>';
+    host.appendChild(d); return d;
+  }
+  function stars(host, n, seed) {
+    var s = seed || 7, out = [];
+    for (var i = 0; i < n; i++) {
+      s = (s * 9301 + 49297) % 233280; var x = 16 + (s / 233280) * 170; s = (s * 9301 + 49297) % 233280; var y = 20 + (s / 233280) * 250;
+      var d = document.createElement("div"); d.style.cssText = "position:absolute;left:" + x + "px;top:" + y + "px;width:6px;height:6px;border-radius:3px;background:#FFF4C8";
+      host.appendChild(d); out.push(d);
+    }
+    return out;
+  }
+  function lamp(x) {
+    var glow = el("", "left:" + (x - 230) + "px;top:" + (FLOOR - 760) + "px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle, rgba(245,197,66,.42), rgba(245,197,66,0) 68%)");
+    var body = svg(160, 560, '<rect x="74" y="120" width="12" height="420" rx="6" fill="' + C.espresso + '"/><rect x="40" y="530" width="80" height="18" rx="9" fill="' + C.espresso + '"/>'
+      + '<path d="M30 130 L60 30 L100 30 L130 130 Z" fill="' + C.gold + '"/>', x - 80, FLOOR - 548);
+    return { glow: glow, body: body };
+  }
+  function shelf(x, y) {
+    var books = [["#A34633", 22, 120], ["#5E8A72", 30, 104], ["#7D8DA8", 20, 128], ["#F5C542", 26, 110], ["#8A6446", 24, 118], ["#A34633", 18, 96]];
+    var b = "", cx = 10;
+    books.forEach(function (k) { b += '<rect x="' + cx + '" y="' + (140 - k[2]) + '" width="' + k[1] + '" height="' + k[2] + '" rx="4" fill="' + k[0] + '"/>'; cx += k[1] + 6; });
+    return svg(300, 160, b + '<rect x="0" y="140" width="300" height="16" rx="8" fill="' + C.wood + '"/>', x, y);
+  }
+
+  /* The cast: the product's own <Mascot>, held moods, live breath and blinks. */
+  var cast = {};
+  function mascot(name, x, w, props) {
+    var d = document.createElement("div"); d.className = "m";
+    var h = w * 300 / 240; d.style.cssText = "left:" + x + "px;top:" + (FLOOR + 30 - h) + "px;width:" + w + "px";
+    stage.appendChild(d);
+    var cur = Object.assign({ name: name, live: true }, props);
+    /* No upward gaze past -0.25 (under the lids it reads as an eye-roll) and
+       no sideways gaze past 0.45 (pupils in the corners read as side-eye). */
+    function render() { if (cur.look) cur.look = { x: Math.max(-0.45, Math.min(0.45, cur.look.x)), y: Math.max(-0.25, cur.look.y) }; YK.render(d, cur); }
+    render();
+    cast[name] = { el: d, set: function (p) { cur = Object.assign({}, cur, p); if (p.behaviour === undefined && p.mood) delete cur.behaviour; render(); } };
+    return cast[name];
+  }
+
+  var FILMS = {
+    /* Saga fyrir kvöldið: an evening, a free book opened straight away. */
+    kvold: function () {
+      var r = room({ wall: "#EBDFC6", sky: "#7D8DA8", floor: "#D9C7A6", rug: "#CDB58F" });
+      var st = stars(r.sky, 9, 3); st.forEach(function (s) { s.style.opacity = 0; });
+      var mn = moon(r.sky, 120, 90, 34); mn.style.opacity = 0;
+      shelf(70, 640);
+      var lp = lamp(640);
+      var bear = mascot("bear", 40, 380, { mood: "neutral", look: { x: 0.6, y: 0 } });
+      var rabbit = mascot("rabbit", 760, 250, { mood: "neutral", look: { x: -0.7, y: 0 } });
+      tween(0, 6, function (p) { r.sky.style.background = mix("#7D8DA8", "#1E2A44", p); st.forEach(function (s, i) { s.style.opacity = clamp(p * 1.6 - i * 0.08); }); mn.style.opacity = p; });
+      tween(0, 4, function (p) { lp.glow.style.opacity = 0.4 + 0.6 * p; });
+      at(3.4, function () { rabbit.set({ mood: "curious", look: { x: -0.4, y: -0.6 } }); bear.set({ mood: "curious", look: { x: 0.5, y: -0.6 } }); });
+      at(7.4, function () { rabbit.set({ mood: "excited", look: { x: -0.3, y: -0.6 } }); bear.set({ mood: "excited", look: { x: 0.4, y: -0.6 } }); });
+      at(10.2, function () { bear.set({ mood: "love", hold: { kind: "book" }, look: { x: 0, y: 0.1 } }); rabbit.set({ mood: "curious", look: { x: -0.8, y: 0.1 } }); });
+      at(14.2, function () { rabbit.set({ mood: "love", look: { x: -0.8, y: 0 } }); bear.set({ mood: "love", look: { x: 0.1, y: 0.1 } }); });
+      return 20;
+    },
+    /* Lesum saman: reading together, page by page. */
+    saman: function () {
+      var r = room({ wall: "#EFE3CB", sky: "#27334F", floor: "#D9C7A6", rug: "#C9A57E" });
+      moon(r.sky, 120, 90, 32); stars(r.sky, 8, 11);
+      var lp = lamp(700);
+      var owl = mascot("owl", 20, 260, { mood: "neutral", look: { x: 0.6, y: -0.2 } });
+      var bear = mascot("bear", 290, 330, { mood: "love", hold: { kind: "book" }, look: { x: 0, y: 0.1 } });
+      var rabbit = mascot("rabbit", 820, 220, { mood: "curious", look: { x: -0.8, y: 0 } });
+      at(4.0, function () { rabbit.set({ mood: "excited", look: { x: -0.8, y: 0 } }); });
+      at(8.6, function () { owl.set({ mood: "curious", look: { x: 0.7, y: -0.1 } }); });
+      at(11.0, function () { owl.set({ mood: "love", look: { x: 0.6, y: -0.1 } }); rabbit.set({ mood: "excited", look: { x: -0.8, y: -0.1 } }); });
+      at(14.6, function () { rabbit.set({ mood: "love", look: { x: -0.8, y: 0 } }); owl.set({ mood: "neutral", look: { x: 0.5, y: 0 } }); });
+      return 20;
+    },
+    /* Á íslensku og ensku: the language switch. */
+    tunga: function () {
+      var r = room({ wall: "#EFE3CB", sky: "#27334F", floor: "#D9C7A6", rug: "#CDB58F" });
+      moon(r.sky, 120, 90, 32); stars(r.sky, 8, 17);
+      lamp(690);
+      shelf(70, 640);
+      var fox = mascot("fox", 40, 340, { mood: "neutral", look: { x: 0.6, y: -0.3 } });
+      var rabbit = mascot("rabbit", 790, 240, { mood: "neutral", look: { x: -0.6, y: -0.3 } });
+      at(3.6, function () { fox.set({ mood: "curious", look: { x: 0.6, y: -0.5 } }); });
+      at(6.2, function () { fox.set({ mood: "surprised", look: { x: 0.5, y: -0.5 } }); rabbit.set({ mood: "curious", look: { x: -0.5, y: -0.5 } }); });
+      at(7.4, function () { fox.set({ mood: "love", look: { x: 0.4, y: -0.2 } }); });
+      at(10.8, function () { rabbit.set({ mood: "love", look: { x: -0.4, y: -0.2 } }); });
+      at(14.4, function () { fox.set({ mood: "love", look: { x: 0.7, y: 0 } }); rabbit.set({ mood: "love", look: { x: -0.7, y: 0 } }); });
+      return 20;
+    },
+    /* Góða nótt: the book ends, nothing plays next, lights down. */
+    nott: function () {
+      var r = room({ wall: "#E6D8BC", sky: "#1E2A44", floor: "#CDB894", rug: "#B99A73" });
+      moon(r.sky, 120, 90, 34); stars(r.sky, 10, 5);
+      var owl = mascot("owl", 10, 220, { mood: "neutral", look: { x: 0.4, y: 0 } });
+      var rabbit = mascot("rabbit", 250, 170, { mood: "sleepy", look: { x: 0.3, y: 0 } });
+      var bear = mascot("bear", 440, 300, { mood: "neutral", look: { x: 0, y: 0 } });
+      var fox = mascot("fox", 770, 240, { mood: "neutral", look: { x: -0.4, y: 0 } });
+      /* Lights down is a night, not grey: deep navy with a warm pool where the
+         cast sleeps (a flat dim over parchment read as grey). The
+         window is repeated above it, so the moon never fades into the night. */
+      var dark = el("", "left:0;top:0;width:1080px;height:1920px;background:radial-gradient(ellipse 60% 22% at 50% 78%, rgba(58,38,20,.35), rgba(9,17,44,.95) 75%);opacity:0");
+      var winTop = r.win.cloneNode(true); winTop.style.opacity = 0; stage.appendChild(winTop); moon(winTop.querySelector(".sky"), 120, 90, 34); stars(winTop.querySelector(".sky"), 10, 5);
+      at(6.4, function () { rabbit.set({ mood: "asleep" }); });
+      at(8.4, function () { fox.set({ mood: "sleepy", look: { x: -0.2, y: 0.2 } }); bear.set({ mood: "sleepy", look: { x: 0, y: 0.2 } }); });
+      at(11.2, function () { fox.set({ mood: "asleep" }); });
+      tween(12.6, 14.4, function (p) { dark.style.opacity = 0.85 * p; winTop.style.opacity = p; });
+      at(13.4, function () { bear.set({ mood: "asleep" }); });
+      at(15.6, function () { owl.set({ mood: "asleep" }); });
+      return 20;
+    }
+  };
+  var dur = FILMS[film]();
+  window.__duration = dur;
+  window.__frame = function (t) { items.forEach(function (f) { f(t); }); };
+  window.__frame(0);
+})();
+</script>

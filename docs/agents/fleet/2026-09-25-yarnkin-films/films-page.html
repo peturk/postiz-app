@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="is">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yarnkin Films</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Source+Sans+3:wght@400..900&display=swap">
+<style>
+:root {
+  --page: #F6EEDD; --panel: #FBF4E4; --ink: #33261E; --ink-2: #5A4A3E; --muted: #79695B; --line: #E3D2B4;
+  --hivis: #F5C542; --hivis-text: #8A5A12; --focus: #2C5F7F; --ok: #3F6B53;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Source Sans 3", "Source Sans Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --page: #1B1511; --panel: #241C16; --ink: #F6EEDD; --ink-2: #D8C9B3; --muted: #B8A58F; --line: #3A2E24; --hivis-text: #F5C542; --focus: #7FB3D5; --ok: #8CC7A5; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --page: #1B1511; --panel: #241C16; --ink: #F6EEDD; --ink-2: #D8C9B3; --muted: #B8A58F; --line: #3A2E24; --hivis-text: #F5C542; --focus: #7FB3D5; --ok: #8CC7A5; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.55; padding-inline: 20px; padding-block: 0 80px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+h1, h2, h3 { margin: 0; text-wrap: balance; font-family: "Source Serif 4", Georgia, serif; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.label { font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--hivis-text); }
+header { padding-block: 44px 26px; border-bottom: 2px solid var(--ink); display: grid; gap: 14px; }
+header h1 { font-size: clamp(32px, 4.6vw, 54px); line-height: 1.04; letter-spacing: -.02em; font-weight: 760; }
+header .lede { color: var(--ink-2); max-width: 72ch; }
+.tape { height: 6px; background: var(--hivis); border-radius: 3px; }
+section { margin-top: 54px; }
+h2.s { font-size: clamp(22px, 2.8vw, 30px); font-weight: 760; letter-spacing: -.015em; margin-bottom: 8px; }
+.sub { color: var(--ink-2); max-width: 72ch; margin-bottom: 18px; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin-bottom: 16px; }
+.bar .l { font: 500 11.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.chip { font: 600 14px/1 var(--sans); color: var(--ink); background: var(--panel); border: 1.5px solid var(--line); padding: 9px 12px; border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--page); border-color: var(--ink); }
+.films { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; align-items: start; }
+.film { background: var(--panel); border: 1px solid var(--line); display: grid; }
+.film video { width: 100%; height: auto; display: block; background: #111418; aspect-ratio: 9 / 16; }
+.films.feed .film video { aspect-ratio: 4 / 5; }
+.film .meta { padding: 16px 18px 18px; display: grid; gap: 8px; }
+.film h3 { font-size: 22px; font-weight: 760; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.film h3 small { font: 500 11.5px var(--mono); color: var(--muted); }
+.film .beat { color: var(--ink-2); font-size: 15.5px; }
+.film ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 15px; display: grid; gap: 3px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.card h3 { font-size: 18px; font-weight: 750; }
+.card ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; color: var(--ink-2); font-size: 15px; }
+.card p { color: var(--ink-2); font-size: 15.5px; }
+.card.ask { border: 2px solid var(--hivis); }
+.status { font: 500 11.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.status.ok { color: var(--ok); }
+.status.wait { color: var(--hivis-text); }
+table { border-collapse: collapse; width: 100%; background: var(--panel); border: 1px solid var(--line); font-size: 15px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 11.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.tablewrap { overflow-x: auto; }
+footer { margin-top: 54px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+@media (max-width: 640px) { body { font-size: 16px; padding-inline: 16px; } }
+</style>
+<body>
+<div class="wrap">
+  <header>
+    <span class="label">Yarnkin · four films · the real cast and real books</span>
+    <h1>Bedtime films, drawn by the product itself</h1>
+    <p class="lede">Four short films in the same spirit as the Sporbók ones, each showing one true part of reading with Yarnkin: an open book tonight, reading together, two languages, and good night. The mascots are rendered frame by frame by Yarnkin's own character component, the pages are real catalog pages of <i>Óskar telur ræturnar</i>, and every word on a screen is the app's own Icelandic.</p>
+  </header>
+  <div class="tape" aria-hidden="true"></div>
+
+  <section aria-labelledby="h-films">
+    <h2 class="s" id="h-films">The films</h2>
+    <p class="sub">Sound on: an original lullaby score per film and a soft sound on every tap and page turn. No voice yet; the films read without it.</p>
+    <div class="bar" role="group" aria-label="Format">
+      <span class="l">Format</span>
+      <button class="chip" type="button" data-fmt="1080x1920" aria-pressed="true">Reels 9:16</button>
+      <button class="chip" type="button" data-fmt="1080x1350" aria-pressed="false">Feed 4:5</button>
+    </div>
+    <div class="films" id="films">
+      <article class="film">
+        <video data-name="kvold" src="yarnkin-kvold-1080x1920.mp4" poster="poster-kvold.jpg" controls playsinline loop preload="metadata" aria-label="Saga fyrir kvöldið"></video>
+        <div class="meta"><h3>Saga fyrir kvöldið</h3><p class="beat">Dusk turns to night; three open books; one tap and the story begins.</p>
+          <ul><li>The three open books, whole covers</li><li>"Opna bókina" and the reader, pages 1-2</li><li>"Byrjaðu strax í kvöld, án innskráningar."</li></ul></div>
+      </article>
+      <article class="film">
+        <video data-name="saman" src="yarnkin-saman-1080x1920.mp4" poster="poster-saman.jpg" controls playsinline loop preload="metadata" aria-label="Lesið saman"></video>
+        <div class="meta"><h3>Lesið saman</h3><p class="beat">Bangsi reads, Ugla and Kanína listen, page by page.</p>
+          <ul><li>Page turns through pages 1-4</li><li>"Halda áfram á síðu 4?"</li><li>"Og á morgun heldur sagan áfram."</li></ul></div>
+      </article>
+      <article class="film">
+        <video data-name="tunga" src="yarnkin-tunga-1080x1920.mp4" poster="poster-tunga.jpg" controls playsinline loop preload="metadata" aria-label="Á íslensku og ensku"></video>
+        <div class="meta"><h3>Á íslensku og ensku</h3><p class="beat">One tap on "Skipta um tungumál" and Óskar counts in English.</p>
+          <ul><li>"Bank, bank, bank." becomes "Tap, tap, tap."</li><li>And back to Icelandic</li><li>"Sama saga, tvö tungumál."</li></ul></div>
+      </article>
+      <article class="film">
+        <video data-name="nott" src="yarnkin-nott-1080x1920.mp4" poster="poster-nott.jpg" controls playsinline loop preload="metadata" aria-label="Góða nótt"></video>
+        <div class="meta"><h3>Góða nótt</h3><p class="beat">The last page, "Endir", the light goes out and the cast falls asleep.</p>
+          <ul><li>Page 12: "Góða nótt, bjartar stjörnur."</li><li>"Lesa aftur · Fleiri sögur · Loka"</li><li>A night room with the moon in the window</li></ul></div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-how">
+    <h2 class="s" id="h-how">How they were made</h2>
+    <div class="grid2">
+      <div class="card"><span class="status ok">Brand rule</span><h3>Nothing generated in the picture</h3><ul><li>Yarnkin's brand rules forbid generating or redrawing the mascots or story art, so there is no image-to-video step</li><li>The cast is Yarnkin's own &lt;Mascot&gt; component, unchanged, played frame by frame under a controlled clock</li><li>The book art is the real catalog: the three open books and their pages</li></ul></div>
+      <div class="card"><span class="status ok">Checked</span><h3>Faces, words, layout</h3><ul><li>Faces cast from a grid of real rig poses; no eye-rolls, side-eye or squints (an independent review caught the first ones)</li><li>Every on-screen string is from the app; the no-login line is its pricing copy, verified against the open books</li><li>Everything sits inside the 4:5 crop; cards clear every face</li></ul></div>
+      <div class="card"><span class="status ok">Scored</span><h3>A lullaby for each film</h3><ul><li>Lyria, one palette: felt piano, celesta, nylon guitar, pizzicato, clarinet, music box, and a falling four-note signature</li><li>Three takes per film, picked in two blind listening passes with the order reversed</li><li>Each cue cut on its own bar lines so its final chord lands on the end card; mastered to -14 LUFS</li></ul></div>
+    </div>
+  </section>
+
+  <footer>Sources and the full process: postiz-app, docs/agents/fleet/2026-09-25-yarnkin-films (README.md) and the shared playbook in 2026-09-24-sporbok-brand-kit/PIPELINE.md.</footer>
+</div>
+<script>
+(function () {
+  var chips = document.querySelectorAll(".chip[data-fmt]"), grid = document.getElementById("films");
+  function set(fmt) {
+    chips.forEach(function (c) { c.setAttribute("aria-pressed", String(c.dataset.fmt === fmt)); });
+    grid.classList.toggle("feed", fmt === "1080x1350");
+    grid.querySelectorAll("video").forEach(function (v) {
+      var n = v.dataset.name;
+      v.src = "yarnkin-" + n + "-" + fmt + ".mp4";
+      v.poster = "poster-" + n + (fmt === "1080x1350" ? "-feed" : "") + ".jpg";
+    });
+    try { localStorage.setItem("fmt", fmt); } catch (e) {}
+  }
+  chips.forEach(function (c) { c.addEventListener("click", function () { set(c.dataset.fmt); }); });
+  var saved = null; try { saved = localStorage.getItem("fmt"); } catch (e) {}
+  if (saved === "1080x1350") set(saved);
+  var vids = document.querySelectorAll("video");
+  vids.forEach(function (v) { v.addEventListener("play", function () { vids.forEach(function (o) { if (o !== v) o.pause(); }); }); });
+})();
+</script>
+</body>
+</html>

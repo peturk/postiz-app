@@ -1,0 +1,162 @@
+{
+ "sb_factory_721fd4722f0db3": {
+  "title_is": "Óskar telur ræturnar",
+  "title": "Oskar Counts the Roots",
+  "pages": [
+   {
+    "n": 1,
+    "is": "Óskar telur. Einar rótardyr.",
+    "en": "Oskar counts. One root door.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 2,
+    "is": "Óskar telur. Hve margar dyr?",
+    "en": "Oskar counts. How many doors?",
+    "layout": "image-top-text-bottom"
+   },
+   {
+    "n": 3,
+    "is": "Óskar telur. Einn hnappur.",
+    "en": "Oskar counts. One button.",
+    "layout": "text-left-image-right"
+   },
+   {
+    "n": 4,
+    "is": "Óskar telur. Bank, bank, bank.",
+    "en": "Oskar counts. Tap, tap, tap.",
+    "layout": "image-left-text-right"
+   },
+   {
+    "n": 5,
+    "is": "Óskar telur. Ein bjarkarskífa.",
+    "en": "Oskar counts. One birchbark disc.",
+    "layout": "text-left-image-right"
+   },
+   {
+    "n": 6,
+    "is": "Óskar telur. Tveir hringir. Sko!",
+    "en": "Oskar counts. Two circles. Look!",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 12,
+    "is": "Óskar telur. Góða nótt, bjartar stjörnur.",
+    "en": "Oskar counts. Goodnight, bright stars.",
+    "layout": "vignette"
+   }
+  ],
+  "files": {
+   "cover": "sb_factory_721fd4722f0db3-cover.png",
+   "p1": "sb_factory_721fd4722f0db3-p1.webp",
+   "p2": "sb_factory_721fd4722f0db3-p2.webp",
+   "p3": "sb_factory_721fd4722f0db3-p3.webp",
+   "p4": "sb_factory_721fd4722f0db3-p4.webp",
+   "p5": "sb_factory_721fd4722f0db3-p5.webp",
+   "p6": "sb_factory_721fd4722f0db3-p6.webp",
+   "p12": "sb_factory_721fd4722f0db3-p12.webp"
+  }
+ },
+ "sb_1782458330480_f89riq": {
+  "title_is": "Geturðu fundið vettlinginn?",
+  "title": "Can You Find the Mitten?",
+  "pages": [
+   {
+    "n": 1,
+    "is": "Sjáðu básinn á Maker Fair! Geturðu fundið rjómalitaða pappírsvettlinginn?",
+    "en": "Look at the Maker Fair booth! Can you find the cream paper mitten?",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 2,
+    "is": "Fræið er mjög lítið. Geturðu komið auga á litla, brúna fræið í moldinni? Hvað skyldi vaxa upp af því?",
+    "en": "The seed is very small. Can you spot the tiny brown seed in the soil? What will it grow into?",
+    "layout": "image-top-text-bottom"
+   },
+   {
+    "n": 3,
+    "is": "Árni vill smíða vaxtarvél. Geturðu valið hringlaga, bláa tannhjólið sem passar í raufina?",
+    "en": "Ari wants to build a growth machine. Can you choose the round blue gear that fits the slot?",
+    "layout": "text-left-image-right"
+   },
+   {
+    "n": 4,
+    "is": "Plöntur þurfa vatn. Geturðu fylgt slóð vatnsdropanna niður í moldina?",
+    "en": "Plants need water. Can you trace the line of water drops to the soil?",
+    "layout": "image-left-text-right"
+   },
+   {
+    "n": 5,
+    "is": "Sjáðu! Fræið varð að laufgrænni plöntu. Geturðu talið appelsínugulu gulræturnar? Flettu við til að sjá þær skína!",
+    "en": "Look! The seed grew into a leafy green plant. Can you count the orange carrots? Turn the page to see them shine!",
+    "layout": "text-left-image-right"
+   },
+   {
+    "n": 6,
+    "is": "Hver biti á sér sögu! Geturðu parað bleiku gulrótaskálina við vélmennið?",
+    "en": "Every bite has a story! Can you match the pink bowl of carrots to the robot?",
+    "layout": "full-bleed"
+   }
+  ],
+  "files": {
+   "cover": "sb_1782458330480_f89riq-cover.png",
+   "p1": "sb_1782458330480_f89riq-p1.webp",
+   "p2": "sb_1782458330480_f89riq-p2.webp",
+   "p3": "sb_1782458330480_f89riq-p3.webp",
+   "p4": "sb_1782458330480_f89riq-p4.webp",
+   "p5": "sb_1782458330480_f89riq-p5.webp",
+   "p6": "sb_1782458330480_f89riq-p6.webp"
+  }
+ },
+ "sb_factory_8665093d8f331d": {
+  "title_is": "Litirnir á flóamarkaði áarsteinanna",
+  "title": "The Colors of Secondhand River-stone Market",
+  "pages": [
+   {
+    "n": 1,
+    "is": "Sjáðu ána. Plask! Plask!",
+    "en": "See the river. Splash! Splash!",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 2,
+    "is": "Sjáðu steinana. Tikk, tikk.",
+    "en": "See the stones. Tap, tap.",
+    "layout": "image-top-text-bottom"
+   },
+   {
+    "n": 3,
+    "is": "Sjáðu víðinn. Svisj, svisj.",
+    "en": "See the willow. Swish, swish.",
+    "layout": "text-left-image-right"
+   },
+   {
+    "n": 4,
+    "is": "Sjáðu Leif. Rauð stígvél ganga.",
+    "en": "See Leif. Red wellies walk.",
+    "layout": "image-left-text-right"
+   },
+   {
+    "n": 5,
+    "is": "Sjáðu markaðinn. Suð, suð.",
+    "en": "See the market. Hum, hum.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 6,
+    "is": "Sjáðu Leif beygja sig. Horfðu niður!",
+    "en": "See Leif crouch. Look down!",
+    "layout": "full-bleed"
+   }
+  ],
+  "files": {
+   "cover": "sb_factory_8665093d8f331d-cover.png",
+   "p1": "sb_factory_8665093d8f331d-p1.webp",
+   "p2": "sb_factory_8665093d8f331d-p2.webp",
+   "p3": "sb_factory_8665093d8f331d-p3.webp",
+   "p4": "sb_factory_8665093d8f331d-p4.webp",
+   "p5": "sb_factory_8665093d8f331d-p5.webp",
+   "p6": "sb_factory_8665093d8f331d-p6.webp"
+  }
+ }
+}

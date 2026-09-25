@@ -1,7 +1,7 @@
 # Feature-film pipeline: mascot rig, Grok image-to-video, our UI, scored sound
 
 How the Sporbók v2 films were made, written so any brand with a mascot rig can make the same kind of film again.
-Built 2026-09-24/25; first reuse is Yarnkin.
+Built 2026-09-24/25 for Sporbók; reused for Yarnkin in `../2026-09-25-yarnkin-films/`, where the brand forbids generated mascots, so the rig renders every frame (`render-scene.cjs` drives the product's own React component under Playwright's fake clock) and `cue_edit.py` automates the music edit.
 Everything named here lives in this folder unless a path says otherwise.
 
 ## What a film is

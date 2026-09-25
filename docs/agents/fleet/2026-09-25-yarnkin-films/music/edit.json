@@ -1,0 +1,46 @@
+{
+ "kvold": {
+  "src": "kvold-b.mp3",
+  "bpm": 80.0,
+  "bar": 3.0,
+  "phase": 0.07,
+  "cadence_judged": 21.8,
+  "cadence_snapped": 21.07,
+  "trim": 0.07,
+  "tempo": 1.037,
+  "lands": 20.25
+ },
+ "saman": {
+  "src": "saman-a.mp3",
+  "bpm": 84.5,
+  "bar": 2.84,
+  "phase": 0.02,
+  "cadence_judged": 22.8,
+  "cadence_snapped": 22.74,
+  "trim": 2.86,
+  "tempo": 0.9817,
+  "lands": 20.25
+ },
+ "tunga": {
+  "src": "tunga-a.mp3",
+  "bpm": 60.6,
+  "bar": 3.96,
+  "phase": 0.02,
+  "cadence_judged": 21.0,
+  "cadence_snapped": 19.82,
+  "trim": 0.0,
+  "tempo": 0.9788,
+  "lands": 20.25
+ },
+ "nott": {
+  "src": "nott-b.mp3",
+  "bpm": 72.3,
+  "bar": 3.32,
+  "phase": 0.02,
+  "cadence_judged": 23.1,
+  "cadence_snapped": 23.26,
+  "trim": 3.34,
+  "tempo": 0.9837,
+  "lands": 20.25
+ }
+}

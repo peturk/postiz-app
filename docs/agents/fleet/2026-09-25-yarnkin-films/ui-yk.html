@@ -1,0 +1,248 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400..800&display=swap">
+<style>
+  /* The UI layer of the Yarnkin films: the product's own screens and words
+     over the rig picture. Palette and type from yarnkin tokens.css: parchment
+     cards, espresso ink, moon gold only for actions (never as text), Source
+     Serif 4 for display and story text, Source Sans 3 for UI. The reader is
+     its real night navy. Coordinates are the 1080 x 1920 master; everything
+     sits inside the 4:5 window (y 285-1635). */
+  html, body { margin: 0; background: transparent; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Source Sans 3", system-ui, sans-serif; color: #33261E; }
+  #stage.feed { height: 1350px; }
+  #layer { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  .el { position: absolute; opacity: 0; will-change: transform, opacity; box-sizing: border-box; }
+  .head { left: 80px; width: 700px; font-family: "Source Serif 4", Georgia, serif; font-weight: 650; font-size: 74px; line-height: 1.04; letter-spacing: -1px; text-wrap: balance; }
+  .kick { left: 84px; font-weight: 700; font-size: 30px; letter-spacing: .14em; text-transform: uppercase; }
+  .chip { display: flex; align-items: center; gap: 16px; padding: 18px 28px 18px 22px; border-radius: 999px; background: #FBF4E4; font-weight: 700; font-size: 38px; box-shadow: 0 14px 34px -16px rgba(51,38,30,.5); white-space: nowrap; }
+  .chip i { width: 22px; height: 22px; border-radius: 50%; background: #F5C542; flex: none; }
+  .card { background: #FBF4E4; border-radius: 30px; padding: 30px 34px; box-shadow: 0 22px 50px -22px rgba(51,38,30,.55); }
+  .card .t { font-weight: 700; font-size: 30px; letter-spacing: .1em; color: #79695B; text-transform: uppercase; }
+  .card .h { font-family: "Source Serif 4", Georgia, serif; font-weight: 650; font-size: 46px; margin-top: 6px; line-height: 1.1; }
+  .btn { display: inline-block; background: #F5C542; color: #33261E; font-weight: 800; font-size: 36px; padding: 18px 30px; border-radius: 999px; }
+  .btn.ghost { background: #EFE3CB; }
+  .covers { display: flex; gap: 22px; margin-top: 22px; }
+  .cover .img { height: 180px; border-radius: 14px; display: block; box-shadow: 0 10px 22px -12px rgba(51,38,30,.6); }
+  .cover .n { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 28px; line-height: 1.15; margin-top: 12px; }
+  .covers { align-items: flex-start; }
+  .reader { background: linear-gradient(180deg, #0C1221, #2B221B); border-radius: 36px; padding: 26px 26px 22px; box-shadow: 0 26px 60px -24px rgba(6,10,17,.8); color: #F6EEDD; }
+  .reader .bar { display: flex; justify-content: space-between; align-items: center; height: 56px; }
+  .reader .lang { font-weight: 700; font-size: 30px; padding: 12px 20px; border-radius: 999px; background: rgba(246,238,221,.14); }
+  .reader .lang.on { background: #F5C542; color: #33261E; }
+  .reader .pg { font-weight: 700; font-size: 30px; color: #C9B79F; }
+  .reader .pic { position: relative; width: 380px; height: 380px; margin: 14px auto 0; border-radius: 18px; overflow: hidden; }
+  .reader .pic div { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .reader .txt { font-family: "Source Serif 4", Georgia, serif; font-weight: 500; font-size: 38px; line-height: 1.2; text-align: center; margin-top: 14px; min-height: 92px; }
+  .end2 { text-align: center; }
+  .end2 .row2 { display: flex; gap: 16px; justify-content: center; margin-top: 22px; }
+  .tap { position: absolute; width: 90px; height: 90px; border-radius: 50%; border: 6px solid #F5C542; }
+  .end { position: absolute; inset: 0; background: #1B1511; color: #F6EEDD; display: grid; place-items: center; opacity: 0; }
+  .end .inner { display: grid; justify-items: center; gap: 46px; }
+  .end .mark img { width: 600px; height: auto; display: block; }
+  .end .line { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 60px; letter-spacing: -.5px; line-height: 1.18; text-align: center; }
+  .end .url { font-weight: 600; font-size: 40px; color: #B8A58F; }
+  .end .moon { width: 70px; height: 70px; }
+  .shadowtext { text-shadow: 0 2px 18px rgba(246,238,221,.35); }
+</style>
+<div id="stage"><div id="layer"></div></div>
+<script>
+(function () {
+  "use strict";
+  var ICON = "__ICON__";
+  var params = new URLSearchParams(location.search);
+  var FEED = params.get("fmt") === "feed";
+  var stage = document.getElementById("stage"), layer = document.getElementById("layer");
+  if (FEED) stage.classList.add("feed");
+  function clamp(p) { return p < 0 ? 0 : p > 1 ? 1 : p; }
+  function out3(p) { return 1 - Math.pow(1 - p, 3); }
+  function back(p) { var c = 1.6; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); }
+  function lerp(a, b, p) { return a + (b - a) * p; }
+  function mix(c1, c2, p) {
+    var a = parseInt(c1.slice(1), 16), b = parseInt(c2.slice(1), 16);
+    var r = Math.round(lerp(a >> 16, b >> 16, p)), g = Math.round(lerp(a >> 8 & 255, b >> 8 & 255, p)), bl = Math.round(lerp(a & 255, b & 255, p));
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + bl).toString(16).slice(1);
+  }
+  function el(cls, html, x, y, w) {
+    var d = document.createElement("div"); d.className = "el " + cls; d.innerHTML = html || "";
+    if (x != null) d.style.left = x + "px";
+    if (y != null) d.style.top = y + "px";
+    if (w != null) d.style.width = w + "px";
+    layer.appendChild(d); return d;
+  }
+  var items = [];
+  /* Sound events for the mixer: {t, k} with k in pop, tap, notif, chime. */
+  var SFX = []; window.__sfx = SFX;
+  function sfx(t, k) { SFX.push({ t: +t.toFixed(3), k: k }); }
+  /* Standard entrance: rise and pop with a slight overshoot; exit: fade. */
+  function show(d, from, to, opts) {
+    opts = opts || {};
+    items.push(function (t) {
+      var a = clamp((t - from) / 0.32), z = to == null ? 1 : clamp((to - t) / 0.25);
+      var e = back(clamp((t - from) / 0.42));
+      d.style.opacity = Math.min(a, z);
+      var dy = opts.drop ? (1 - out3(clamp((t - from) / 0.45))) * -160 : (1 - e) * 40;
+      d.style.transform = "translateY(" + dy + "px) scale(" + (opts.pop ? lerp(0.86, 1, e) : 1) + ")";
+    });
+    return d;
+  }
+  /* Ink that reads on the measured picture brightness (set by the assembler). */
+  var SIDE = null;
+  window.__setLum = function (arr) {
+    var sm = arr.map(function (v, i) { var s = 0, n = 0; for (var k = i - 4; k <= i + 4; k++) if (k >= 0 && k < arr.length) { s += arr[k]; n++; } return s / n; });
+    var dark = sm[0] >= 118;
+    SIDE = sm.map(function (v) { if (dark && v < 110) dark = false; else if (!dark && v > 126) dark = true; return dark ? 1 : 0; });
+  };
+  function ink(t, darkC, lightC) {
+    if (!SIDE) return darkC;
+    var i = Math.min(SIDE.length - 1, Math.max(0, Math.round(t * 30))), s = 0, n = 0;
+    for (var k = i - 2; k <= i + 1; k++) if (k >= 0 && k < SIDE.length) { s += SIDE[k]; n++; }
+    return mix(lightC, darkC, s / n);
+  }
+  function inked(d, accent) { items.push(function (t) { d.style.color = accent ? ink(t, "#8A5A12", "#F5C542") : ink(t, "#33261E", "#F6EEDD"); }); return d; }
+  function head(text, from, to, y) { return inked(show(el("head", text, 80, y || 360), from, to)); }
+  function kick(text, from, to) { return inked(show(el("kick", text, 84, 310), from, to), true); }
+  function clock(steps, from, to) {
+    var d = inked(show(el("clock", steps[0][1], 80, 380), from, to));
+    items.push(function (t) { var s = steps[0][1]; steps.forEach(function (x) { if (t >= x[0]) s = x[1]; }); d.textContent = s; });
+    return d;
+  }
+  function chip(text, x, y, from, to, cls) { sfx(from, "pop"); return show(el("chip " + (cls || ""), "<i></i>" + text, x, y), from, to, { pop: true }); }
+  function notif(app, body, opts, x, y, w, from, to, pickAt) {
+    var html = '<img src="' + ICON + '" alt=""><div><div class="a">' + app + '</div><div class="b">' + body + '</div>'
+      + (opts ? '<div class="opts">' + opts.map(function (o, i) { return '<span class="opt" data-i="' + i + '">' + o + '</span>'; }).join("") + '</div>' : '') + '</div>';
+    sfx(from, "notif"); if (pickAt != null) sfx(pickAt, "tap");
+    var d = show(el("notif", html, x, y, w), from, to, { drop: true });
+    if (pickAt != null) items.push(function (t) { var o = d.querySelector('.opt[data-i="0"]'); if (o) o.classList.toggle("on", t >= pickAt); });
+    return d;
+  }
+  function tap(x, y, at) {
+    sfx(at, "tap");
+    var d = el("tap", "", x - 45, y - 45);
+    items.push(function (t) { var p = clamp((t - at) / 0.45); d.style.opacity = t < at ? 0 : 1 - p; d.style.transform = "scale(" + lerp(0.4, 1.6, p) + ")"; });
+  }
+  function ring(cx, cy, r, from, to, okAt) {
+    var d = el("ring", "", cx - r, cy - r, 2 * r); d.style.height = 2 * r + "px";
+    items.push(function (t) {
+      var a = clamp((t - from) / 0.4) * (to == null ? 1 : clamp((to - t) / 0.3));
+      d.style.opacity = a; d.style.transform = "rotate(" + (t * 12) + "deg) scale(" + lerp(1.08, 1, clamp((t - from) / 0.5)) + ")";
+      d.style.borderColor = t >= okAt ? "rgba(31,157,85,.95)" : "rgba(255,255,255,.95)";
+    });
+  }
+  function counter(d, sel, fromV, toV, t0, t1, fmt) {
+    sfx(t1, "chime");
+    items.push(function (t) { var v = lerp(fromV, toV, out3(clamp((t - t0) / (t1 - t0)))); d.querySelector(sel).textContent = fmt(v); });
+  }
+  function rows(d, times) { items.push(function (t) { d.querySelectorAll(".row").forEach(function (r, i) { var p = clamp((t - times[i]) / 0.3); r.style.opacity = p; r.style.transform = "translateX(" + (1 - out3(p)) * 40 + "px)"; }); }); }
+  function kr(v) { return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " kr."; }
+
+  /* Layout zones (1920 master, all inside the 4:5 window y 285-1635):
+       y 360-500    one headline, left column x 80-780 (the window is x 810+)
+       y 530-1110   one product screen, centred (reader) or full width (shelf)
+       y 1115+      the cast; nothing overlaps a face.
+     Every string on a screen is the product's own (web/src/web/locales/is.ts,
+     HeroSection.tsx); the book art and text are real catalog pages. */
+  var ART = "art/", OSK = "sb_factory_721fd4722f0db3", VET = "sb_1782458330480_f89riq", LIT = "sb_factory_8665093d8f331d";
+  var PAGES = { 1: ["Óskar telur. Einar rótardyr.", "Oskar counts. One root door."], 2: ["Óskar telur. Hve margar dyr?", "Oskar counts. How many doors?"],
+    3: ["Óskar telur. Einn hnappur.", "Oskar counts. One button."], 4: ["Óskar telur. Bank, bank, bank.", "Oskar counts. Tap, tap, tap."],
+    5: ["Óskar telur. Ein bjarkarskífa.", "Oskar counts. One birchbark disc."], 6: ["Óskar telur. Tveir hringir. Sko!", "Oskar counts. Two circles. Look!"],
+    12: ["Óskar telur. Góða nótt, bjartar stjörnur.", "Oskar counts. Goodnight, bright stars."] };
+  var RX = 290, RY = 540, RW = 500;  /* bottom edge ~1100: clear of every head */
+  /* The reader: a list of [time, page, lang] states; a page turn cross-fades the picture. */
+  function reader(from, to, states, withLang) {
+    var d = show(el("reader", '<div class="bar"><span class="lang' + (withLang ? '' : '" style="visibility:hidden') + '">Skipta um tungumál</span><span class="pg"></span></div>'
+      + '<div class="pic"><div class="a"></div><div class="b"></div></div><div class="txt"></div>', RX, RY, RW), from, to, { pop: true });
+    var a = d.querySelector(".a"), b = d.querySelector(".b"), txt = d.querySelector(".txt"), pg = d.querySelector(".pg"), lang = d.querySelector(".lang");
+    states.forEach(function (s, i) { if (i && s[1] !== states[i - 1][1]) sfx(s[0], "page"); if (i && s[2] !== states[i - 1][2]) sfx(s[0], "tap"); });
+    var shown = null;
+    items.push(function (t) {
+      var k = 0; for (var i = 0; i < states.length; i++) if (t >= states[i][0]) k = i;
+      var s = states[k], prev = states[Math.max(0, k - 1)];
+      var img = "url(" + ART + OSK + "-p" + s[1] + ".webp)";
+      if (shown !== img + k) { b.style.backgroundImage = "url(" + ART + OSK + "-p" + prev[1] + ".webp)"; a.style.backgroundImage = img; shown = img + k; }
+      var p = k ? clamp((t - s[0]) / 0.45) : 1;
+      a.style.opacity = s[1] !== prev[1] ? p : 1; a.style.transform = s[1] !== prev[1] ? "translateX(" + (1 - out3(p)) * 60 + "px)" : "none";
+      b.style.opacity = s[1] !== prev[1] ? 1 - p : 0;
+      var tp = k ? clamp((t - s[0]) / 0.3) : 1;
+      txt.textContent = PAGES[s[1]][s[2] === "en" ? 1 : 0]; txt.style.opacity = s[2] !== prev[2] || s[1] !== prev[1] ? tp : 1;
+      pg.textContent = (s[1] !== prev[1] && p < 0.5 ? prev[1] : s[1]) + " / 12";
+      lang.classList.toggle("on", withLang && t >= (withLang.on || 99) && t < (withLang.off || 99));
+    });
+    return d;
+  }
+  var FILMS = {
+    /* Saga fyrir kvöldið: an evening, a free book opened straight away. */
+    kvold: function () {
+      head("Saga fyrir kvöldið.", 0.5, 3.4);
+      var sh = show(el("card", '<div class="covers" style="margin-top:0">'
+        + [[OSK, "Óskar telur ræturnar", 180], [VET, "Geturðu fundið vettlinginn?", 320], [LIT, "Litirnir á flóamarkaði áarsteinanna", 320]].map(function (c) {
+          return '<div class="cover" style="width:' + c[2] + 'px"><img class="img" src="' + ART + c[0] + '-cover.png" style="width:' + c[2] + 'px"><div class="n">' + c[1] + '</div></div>'; }).join("")
+        + '</div>', 90, 600, 900), 3.6, 7.6, { pop: true });
+      head("Lestu ókeypis bók.", 3.6, 7.6);
+      tap(214, 720, 6.6);
+      show(el("card", '<div style="display:flex;gap:30px;align-items:center"><div style="width:300px;height:300px;border-radius:20px;background:url(' + ART + OSK + '-cover.png) center/cover;flex:none"></div>'
+        + '<div><div class="h">Óskar telur ræturnar</div><span class="btn" style="margin-top:26px">Opna bókina</span></div></div>', 90, 620, 900), 7.8, 10.6, { pop: true });
+      tap(590, 868, 9.6);
+      head("Byrjaðu strax í kvöld, án innskráningar.", 7.8, 10.6);
+      reader(10.8, 15.8, [[10.8, 1, "is"], [13.3, 2, "is"]]);
+      head("Enginn rekur á eftir þér.", 10.8, 15.8);
+      chip("Engar auglýsingar", 400, 600, 16.0, 19.9);
+      chip("Fyrir 0-10 ára", 400, 710, 16.6, 19.9);
+      head("Myndabækur til að lesa saman.", 16.0, 19.9);
+      return { duration: 23, end: 20.0 };
+    },
+    /* Lesum saman: reading together, page by page, and tomorrow it continues. */
+    saman: function () {
+      head("Lesið saman í kvöld.", 0.4, 3.6);
+      reader(0.6, 14.6, [[0.6, 1, "is"], [4.0, 2, "is"], [7.6, 3, "is"], [11.2, 4, "is"]]);
+      head("Lestu með barninu.", 3.6, 7.4);
+      head("Enginn rekur á eftir þér.", 7.4, 11.0);
+      head("Blaðsíðu fyrir blaðsíðu.", 11.0, 14.6);
+      show(el("card end2", '<div class="h">Halda áfram á síðu 4?</div><div class="row2"><span class="btn">Halda áfram</span><span class="btn ghost">Byrja upp á nýtt</span></div>', 130, 700, 820), 14.8, 19.9, { pop: true });
+      tap(335, 868, 17.2);
+      head("Og á morgun heldur sagan áfram.", 14.8, 19.9);
+      return { duration: 23, end: 20.0 };
+    },
+    /* Á íslensku og ensku: the language switch. */
+    tunga: function () {
+      head("Á íslensku og ensku.", 0.4, 5.8);
+      reader(0.6, 19.9, [[0.6, 4, "is"], [6.0, 4, "en"], [9.2, 5, "en"], [12.4, 5, "is"], [15.6, 6, "is"]], { on: 6.0, off: 12.4 });
+      tap(RX + 150, RY + 54, 5.6); tap(RX + 150, RY + 54, 12.0);
+      head("Og nú á ensku.", 6.0, 12.2);
+      head("Og aftur á íslensku.", 12.4, 15.4);
+      head("Sama saga, tvö tungumál.", 15.6, 19.9);
+      return { duration: 23, end: 20.0 };
+    },
+    /* Góða nótt: the book ends, nothing plays next, lights down. */
+    nott: function () {
+      head("Síðasta blaðsíðan.", 0.4, 4.0);
+      reader(0.6, 4.4, [[0.6, 12, "is"]]);
+      show(el("card end2", '<div class="t">Óskar telur ræturnar</div><div class="h" style="font-size:64px">Endir</div><div class="row2"><span class="btn">Lesa aftur</span><span class="btn ghost">Fleiri sögur</span></div>'
+        + '<div class="row2"><span class="btn ghost">Loka</span></div>', 170, 640, 740), 4.6, 9.0, { pop: true });
+      tap(540, 1003, 8.4);
+      head("Og svo er sagan búin.", 4.6, 9.0);
+      head("Og svo slökkvum við ljósið.", 9.2, 14.2);
+      head("Góða nótt.", 14.4, 19.9);
+      return { duration: 23, end: 20.0 };
+    }
+  };
+
+  var name = params.get("v");
+  var film = FILMS[name]();
+  window.__duration = film.duration;
+  window.__feedY = 285;
+  window.__cardRef = 0;
+  window.__cardRects = [];
+  var end = document.createElement("div"); end.className = "end";
+  end.innerHTML = '<div class="inner"><div class="mark"><img src="' + ICON + '" alt="Yarnkin"></div><div class="line">Lesum saman.<br>Hlustum saman.<br>Dreymum saman.</div><div class="url">yarnkin.com</div></div>';
+  if (FEED) { end.style.top = "285px"; end.style.height = "1350px"; }
+  layer.appendChild(end);
+  if (FEED) layer.style.top = "-285px";
+  window.__frame = function (t) {
+    for (var i = 0; i < items.length; i++) items[i](t);
+    end.style.opacity = clamp((t - film.end) / 0.4);
+    var inner = end.querySelector(".inner"); var ip = clamp((t - film.end - 0.35) / 0.35);
+    inner.style.opacity = ip; inner.style.transform = "translateY(" + (1 - ip) * 16 + "px)";
+  };
+})();
+</script>

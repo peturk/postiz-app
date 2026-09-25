@@ -1,0 +1,9 @@
+{
+  "common": "Instrumental only, no vocals, no choir, no humming, no whistling. Score for a 23-second animated film for Yarnkin, a calm picture-book reading app for families in Reykjavík: bedtime, storybook, cosy, warm and quiet, like a parent reading by lamplight. Sound palette shared by the whole series: soft felt piano, celesta, nylon-string guitar, gentle pizzicato strings, a warm low clarinet, and a small music box. Key of F major. Intimate, uncluttered, gentle dynamics, never cutesy, never a toy commercial, never epic. The piece must END: around 0:20 a soft final F major chord with a small falling four-note music-box lullaby signature (C, A, G, F), then let it ring out naturally to silence.",
+  "films": {
+    "kvold": "Early evening, a story about to begin. 80 bpm. 0:00-0:04 hushed felt piano and celesta, like the lamp being switched on. From 0:04 the nylon guitar and pizzicato join, a small hopeful melody as a book is chosen. A soft lift at 0:10 as the book opens, 0:11-0:20 warm and settled.",
+    "saman": "Reading a picture book together, page by page. 84 bpm, a gentle, steady turning-pages pulse in pizzicato and nylon guitar under a simple felt piano melody that could be sung, with little celesta sparkles every few bars. Warm and unhurried throughout, a quiet smile in it.",
+    "tunga": "Two languages, one story: a playful, curious little tune. 92 bpm, the melody passes from felt piano to clarinet and back, like a question and an answer, over light pizzicato and nylon guitar. Light-footed and friendly, never silly.",
+    "nott": "The last page, lights down, sleep. 0:00-0:07 slow and tender, felt piano and nylon guitar at 72 bpm. 0:07-0:14 slower and softer, the pulse falls away. 0:14-0:20 a hushed lullaby on music box and celesta over a low clarinet, peaceful and safe. The final chord and signature are very soft."
+  }
+}
