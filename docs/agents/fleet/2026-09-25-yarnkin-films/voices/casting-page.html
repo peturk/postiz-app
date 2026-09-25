@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="is">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yarnkin Voice Casting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&family=Source+Sans+3:wght@400..800&display=swap">
+<style>
+:root { --page: #F6EEDD; --panel: #FBF4E4; --ink: #33261E; --ink-2: #5A4A3E; --muted: #79695B; --line: #E3D2B4; --gold: #F5C542; --gold-text: #8A5A12; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --page: #1B1511; --panel: #241C16; --ink: #F6EEDD; --ink-2: #D8C9B3; --muted: #B8A58F; --line: #3A2E24; --gold-text: #F5C542; color-scheme: dark; } }
+:root[data-theme="dark"] { --page: #1B1511; --panel: #241C16; --ink: #F6EEDD; --ink-2: #D8C9B3; --muted: #B8A58F; --line: #3A2E24; --gold-text: #F5C542; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.55 "Source Sans 3", system-ui, sans-serif; padding: 0 20px 80px; }
+.wrap { max-width: 980px; margin: 0 auto; }
+header { padding: 44px 0 24px; border-bottom: 2px solid var(--ink); display: grid; gap: 12px; }
+.label { font-weight: 700; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-text); }
+h1, h2, h3 { font-family: "Source Serif 4", Georgia, serif; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(30px, 4.4vw, 48px); line-height: 1.05; }
+.lede { color: var(--ink-2); max-width: 70ch; margin: 0; }
+.line { margin-top: 28px; padding: 18px 22px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; font-family: "Source Serif 4", Georgia, serif; font-size: 22px; }
+.grid { margin-top: 22px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.v { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; display: grid; gap: 10px; }
+.v h3 { font-size: 22px; }
+.v .k { font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.v p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+audio { width: 100%; }
+footer { margin-top: 40px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); padding-top: 14px; }
+@media (max-width: 640px) { body { padding: 0 16px 60px; } }
+</style>
+<body>
+<div class="wrap">
+  <header>
+    <span class="label">Yarnkin · voice casting · Gemini 3.8 Flash TTS</span>
+    <h1>Which voice reads Yarnkin?</h1>
+    <p class="lede">Four voices designed for Yarnkin with the new Gemini 3.8 Flash TTS voice design (two from WTD's Voice Bank descriptions, one written for bedtime, one father), and two warm stock voices for comparison. All read the same line with the same bedtime direction. Pick one, or name two to combine.</p>
+  </header>
+  <div class="line">Rökkrið læðist inn. Allir komnir undir hlýja sæng. Draumarnir geta byrjað.</div>
+  <div class="grid">
+    <div class="v"><span class="k">1 · designed</span><h3>Bedtime reader</h3><p>A calm woman in her thirties reading a picture book at bedtime, hushed and close, a smile in the voice.</p><audio controls preload="none" src="aud-yk-bedtime.mp3"></audio></div>
+    <div class="v"><span class="k">2 · designed (WTD bank)</span><h3>Mother reading aloud</h3><p>Tender and clear, natural Reykjavík accent, a gentle smile in the voice.</p><audio controls preload="none" src="aud-yk-mother.mp3"></audio></div>
+    <div class="v"><span class="k">3 · designed (WTD bank)</span><h3>Grandmother storyteller</h3><p>Soft, smiling, unhurried, very clear on every word.</p><audio controls preload="none" src="aud-yk-grandmother.mp3"></audio></div>
+    <div class="v"><span class="k">4 · designed</span><h3>Father reading aloud</h3><p>Warm soft baritone, relaxed and clear.</p><audio controls preload="none" src="aud-yk-father.mp3"></audio></div>
+    <div class="v"><span class="k">5 · stock</span><h3>Sulafat</h3><p>Gemini's warm stock voice, directed for bedtime.</p><audio controls preload="none" src="aud-Sulafat.mp3"></audio></div>
+    <div class="v"><span class="k">6 · stock</span><h3>Achernar</h3><p>Gemini's soft stock voice, directed for bedtime.</p><audio controls preload="none" src="aud-Achernar.mp3"></audio></div>
+  </div>
+  <footer>Designed voices live in the paid AI Studio project and expire 2027-09-25. The chosen voice then reads each film's headlines and the tagline "Lesum saman. Hlustum saman. Dreymum saman." over the end card.</footer>
+</div>
+</body>
+</html>
