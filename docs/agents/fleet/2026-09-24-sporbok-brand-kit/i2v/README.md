@@ -41,7 +41,7 @@ White paper crossing a white card cannot be masked by difference: time the card 
 
 ## v2: feature films (Mætt, Nótan, Drögin, Frítíminn)
 
-Four 23-second films (20 s of story plus a 3 s end card), each showing real Sporbók features instead of mood alone.
+Four 24.2-second films (20 s of story plus an end card carrying the spoken tagline), each showing real Sporbók features instead of mood alone.
 
 | Film | Feature | Final clips |
 |---|---|---|
@@ -73,3 +73,9 @@ What v2 added to the list of generator failures:
 - An independent review caught numbers that did not add up (hours against clock times, an invoice total against its lines); every film's UI numbers are now derived from one story.
 
 Review page: https://claude.ai/artifact/ADWY28CEabmBwkuHiMh9bS (private until shared); `../films-v2-page.html` is its source.
+
+Sound, final:
+
+- Music: one Lyria cue per film on the paid AI Studio project (`lyria.mjs`, prompts in `music/prompts.json`). Lyria ignores requested lengths and endings (clips run 30 s, Lyria 3.5 ran 46 and 128 s), so each chosen take is cut on its bar grid so its own final cadence lands at 20.25 s (`music/edit.json`: take, cadence, trim, tempo within 6%). Takes were picked in two blind Gemini listening passes with the order reversed, because the first pass put take A first in 3 of 4 films.
+- Voice: `vo.mjs` with Gemini TTS voice Alnilam; every take is transcribed back and must match the script. The tagline is one chosen take shared by all films (`vo/script.json` tagline.file): 5 of 6 takes of "Sporbók man söguna" were heard as "mannsögunnar".
+- Master: two-pass, -14 LUFS, limiter at -2.0 dB so the AAC encode stays under -1.5 dBTP.

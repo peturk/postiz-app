@@ -1,0 +1,30 @@
+{
+ "maett": {
+  "take": "a",
+  "cadence": 21.6,
+  "skip": 0.0,
+  "tempo": 1.0667,
+  "lands": 20.25
+ },
+ "nota": {
+  "take": "a",
+  "cadence": 22.22,
+  "skip": 1.0,
+  "tempo": 1.0479,
+  "lands": 20.25
+ },
+ "drog": {
+  "take": "b",
+  "cadence": 19.2,
+  "skip": 0.0,
+  "tempo": 0.9481,
+  "lands": 20.25
+ },
+ "fri2": {
+  "take": "a",
+  "cadence": 20.0,
+  "skip": 0.0,
+  "tempo": 0.9877,
+  "lands": 20.25
+ }
+}

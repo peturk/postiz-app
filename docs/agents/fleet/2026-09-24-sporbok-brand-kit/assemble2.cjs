@@ -11,8 +11,9 @@
 //   a 5 ms fade-in so a non-zero first sample cannot click.
 // - Music ducks under the voiceover (sidechain).
 // - Mastering is two-pass: the premix is measured, then one static gain brings
-//   it to -14 LUFS integrated under a -1.5 dBTP limiter (the common target for
-//   Reels and Facebook). Single-pass loudnorm pumped like an AGC.
+//   it to -14 LUFS integrated under a -2.0 dB limiter, so the AAC encode stays
+//   under -1.5 dBTP (the common target for Reels and Facebook; the encode
+//   overshot a -1.5 ceiling by up to 0.7 dB). Single-pass loudnorm pumped.
 const { chromium } = require("/home/pk/git/available/node_modules/playwright");
 const { spawn, execFileSync } = require("child_process");
 const fs = require("fs");
@@ -110,14 +111,14 @@ function run(args) {
   const musicFile = [`music/${film}.mp3`, `music/${film}.wav`, "music/bed.mp3", "music/bed.wav"].find(f => fs.existsSync(f));
   if (musicFile) {
     inputs.push("-i", musicFile);
-    fc += `[${n}:a]aresample=48000,aformat=channel_layouts=stereo,loudnorm=I=-26:TP=-3,atrim=0:${total},afade=t=out:st=${(total - 1.5).toFixed(2)}:d=1.5[mus0];`;
+    fc += `[${n}:a]aresample=48000,aformat=channel_layouts=stereo,loudnorm=I=-26:TP=-3,atrim=0:${total},anull[mus0];`;
     if (vo.length) fc += `[mus0][vokey]sidechaincompress=threshold=0.03:ratio=6:attack=40:release=400[mus];`;
     else fc += `[mus0]anull[mus];`;
     mixIn.push("[mus]"); n++;
   } else if (vo.length) {
     fc += `[vokey]anullsink;`;
   }
-  fc += `${mixIn.join("")}amix=inputs=${mixIn.length}:normalize=0,atrim=0:${total},afade=t=out:st=${(total - 1.0).toFixed(2)}:d=1.0[outa];`;
+  fc += `${mixIn.join("")}amix=inputs=${mixIn.length}:normalize=0,atrim=0:${total},afade=t=out:st=${(total - 0.4).toFixed(2)}:d=0.4[outa];`;
   // ---- video ----
   fc += clips.map((c, i) => `[${i}:v]scale=1080:1920:flags=lanczos,fps=${FPS},setsar=1[v${i}x];`).join("")
     + clips.map((c, i) => `[v${i}x]`).join("") + `concat=n=${clips.length}:v=1:a=0,tpad=stop_mode=clone:stop_duration=${pad},trim=0:${total},setpts=PTS-STARTPTS`
@@ -131,7 +132,7 @@ function run(args) {
   // Pass 2: one static gain to -14 LUFS, then a true-peak limiter.
   const gain = -14 - lufs(pre);
   await run(["-i", pre, "-map", "0:v", "-map", "0:a", "-c:v", "copy",
-    "-af", `volume=${gain.toFixed(2)}dB,alimiter=limit=${Math.pow(10, -1.5 / 20).toFixed(4)}:attack=2:release=60:level=disabled`,
+    "-af", `volume=${gain.toFixed(2)}dB,alimiter=limit=${Math.pow(10, -2.0 / 20).toFixed(4)}:attack=2:release=60:level=disabled`,
     "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", out]);
   fs.unlinkSync(layer); fs.unlinkSync(pre);
   console.log(out, "ok", frames, "frames", `sfx=${events.length} vo=${vo.length} music=${musicFile || "none"}`);

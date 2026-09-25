@@ -67,13 +67,16 @@ async function line(film, k, l, slot) {
 
 for (const film of which === "all" ? Object.keys(S.films) : [which]) {
   mkdirSync(`vo/${film}`, { recursive: true });
-  const ls = [...S.films[film], { ...S.tagline, tag: true }];
+  // The tagline is one chosen take shared by every film (vo/script.json
+  // tagline.file), so the brand line sounds identical everywhere.
+  const ls = S.films[film];
   const out = [];
   for (let k = 0; k < ls.length; k++) {
-    const next = k + 1 < ls.length ? ls[k + 1].t : 22.8;
-    const slot = (ls[k].tag ? 22.8 : Math.min(next, SLOT_END)) - ls[k].t - 0.25;
+    const next = k + 1 < ls.length ? ls[k + 1].t : SLOT_END;
+    const slot = Math.min(next, SLOT_END) - ls[k].t - 0.25;
     out.push(await line(film, k, ls[k], slot));
     console.log(film, k, JSON.stringify(out[k]));
   }
+  out.push({ t: S.tagline.t, file: S.tagline.file, text: S.tagline.text, tag: true });
   writeFileSync(`vo/${film}/lines.json`, JSON.stringify(out, null, 1));
 }

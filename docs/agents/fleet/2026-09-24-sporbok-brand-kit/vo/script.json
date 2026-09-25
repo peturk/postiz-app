@@ -1,31 +1,83 @@
 {
-  "voice": "Alnilam",
-  "style": "A calm, warm Icelandic narrator in his forties, a tradesman talking to another tradesman. Dry understatement, relaxed and unhurried, never salesy. Natural Icelandic stress on the first syllable.",
-  "tagline": { "t": 20.4, "text": "Þú vinnur verkið. Sporbók man söguna." },
-  "films": {
-    "maett": [
-      { "t": 0.8, "text": "Þú mætir á verkstað." },
-      { "t": 4.8, "text": "Sporbók skráir mætinguna. Enginn stimpill." },
-      { "t": 10.2, "text": "Tíminn safnast á rétt verk." },
-      { "t": 16.8, "text": "Í lok dags staðfestir þú. Búið." }
-    ],
-    "nota": [
-      { "t": 0.6, "text": "Komið við hjá birgja?" },
-      { "t": 3.9, "text": "Einn smellur. Sótti efni." },
-      { "t": 7.8, "text": "Sporbók les nótuna og setur hana á rétt verk." },
-      { "t": 14.2, "text": "Ekkert efni gleymist." }
-    ],
-    "drog": [
-      { "t": 0.5, "text": "Verkinu er lokið." },
-      { "t": 3.8, "text": "Vinna, efni og akstur raða sér í reikningsdrög." },
-      { "t": 13.8, "text": "Þú ferð yfir og sendir beint í Reiknís." },
-      { "t": 17.5, "text": "Engin kvöld við eldhúsborðið." }
-    ],
-    "fri2": [
-      { "t": 0.7, "text": "Vinnudegi lokið." },
-      { "t": 4.5, "text": "Þú lýkur vaktinni. Staðsetningin slokknar." },
-      { "t": 9.9, "text": "Dagurinn er skráður." },
-      { "t": 13.4, "text": "Frítíminn er þinn." }
-    ]
-  }
+ "voice": "Alnilam",
+ "style": "A calm, warm Icelandic narrator in his forties, a tradesman talking to another tradesman. Dry understatement, relaxed and unhurried, never salesy. Natural Icelandic stress on the first syllable.",
+ "tagline": {
+  "t": 20.1,
+  "text": "Þú vinnur verkið. Sporbók man söguna.",
+  "file": "vo/tagline.wav"
+ },
+ "films": {
+  "maett": [
+   {
+    "t": 0.8,
+    "text": "Þú mætir á verkstað."
+   },
+   {
+    "t": 4.8,
+    "text": "Sporbók skráir mætinguna. Enginn stimpill."
+   },
+   {
+    "t": 10.2,
+    "text": "Tíminn safnast á rétt verk."
+   },
+   {
+    "t": 16.8,
+    "text": "Í lok dags staðfestir þú. Búið."
+   }
+  ],
+  "nota": [
+   {
+    "t": 0.6,
+    "text": "Komið við hjá birgja?"
+   },
+   {
+    "t": 3.9,
+    "text": "Einn smellur. Sótti efni."
+   },
+   {
+    "t": 7.8,
+    "text": "Sporbók les nótuna og setur hana á rétt verk."
+   },
+   {
+    "t": 14.2,
+    "text": "Ekkert efni gleymist."
+   }
+  ],
+  "drog": [
+   {
+    "t": 0.5,
+    "text": "Verkinu er lokið."
+   },
+   {
+    "t": 3.8,
+    "text": "Vinna, efni og akstur raða sér í reikningsdrög."
+   },
+   {
+    "t": 9.8,
+    "text": "Þú ferð yfir og sendir beint í Reiknís."
+   },
+   {
+    "t": 15.0,
+    "text": "Engin kvöld við eldhúsborðið."
+   }
+  ],
+  "fri2": [
+   {
+    "t": 0.7,
+    "text": "Vinnudegi lokið."
+   },
+   {
+    "t": 4.5,
+    "text": "Þú lýkur vaktinni. Staðsetningin slokknar."
+   },
+   {
+    "t": 9.9,
+    "text": "Dagurinn er skráður."
+   },
+   {
+    "t": 13.4,
+    "text": "Frítíminn er þinn."
+   }
+  ]
+ }
 }
