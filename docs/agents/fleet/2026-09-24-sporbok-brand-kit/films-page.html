@@ -1,0 +1,196 @@
+<title>Áhöfnin Films</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400..900&display=swap">
+<style>
+:root {
+  --page: #EEF0F2; --panel: #FFFFFF; --ink: #111418; --ink-2: #3B434D; --muted: #56616E; --line: #D5DAE0;
+  --hivis: #FF5A1F; --hivis-text: #B63A0B; --focus: #2C5F7F;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Source Sans 3", "Source Sans Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --page: #0C0E11; --panel: #161A1F; --ink: #EEF0F2; --ink-2: #C4CAD2; --muted: #97A1AC; --line: #2A3038; --hivis-text: #FF7A45; --focus: #7FB3D5; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --page: #0C0E11; --panel: #161A1F; --ink: #EEF0F2; --ink-2: #C4CAD2; --muted: #97A1AC; --line: #2A3038; --hivis-text: #FF7A45; --focus: #7FB3D5; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--page); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.55; padding-inline: 20px; padding-block: 0 80px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.label { font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--hivis-text); }
+header { padding-block: 44px 26px; border-bottom: 2px solid var(--ink); display: grid; gap: 14px; }
+header h1 { font-size: clamp(32px, 4.6vw, 54px); line-height: 1.04; letter-spacing: -.02em; font-weight: 760; }
+header .lede { color: var(--ink-2); max-width: 72ch; }
+.tape { height: 14px; background: linear-gradient(to bottom, transparent 5px, #C5CBD2 5px, #C5CBD2 9px, transparent 9px), var(--hivis); }
+section { margin-top: 54px; }
+h2.s { font-size: clamp(22px, 2.8vw, 30px); font-weight: 760; letter-spacing: -.015em; margin-bottom: 8px; }
+.sub { color: var(--ink-2); max-width: 72ch; margin-bottom: 18px; }
+
+.bar { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin-bottom: 16px; }
+.bar .l { font: 500 11.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.chip { font: 600 14px/1 var(--sans); color: var(--ink); background: var(--panel); border: 1.5px solid var(--line); padding: 9px 12px; border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--page); border-color: var(--ink); }
+
+.films { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 22px; align-items: start; }
+.film { background: var(--panel); border: 1px solid var(--line); display: grid; }
+.film video { width: 100%; height: auto; display: block; background: #111418; aspect-ratio: 9 / 16; }
+.films.feed .film video { aspect-ratio: 4 / 5; }
+.film .meta { padding: 16px 18px 18px; display: grid; gap: 8px; }
+.film h3 { font-size: 22px; font-weight: 760; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.film h3 small { font: 500 11.5px var(--mono); color: var(--muted); }
+.film .beat { color: var(--ink-2); font-size: 15.5px; }
+.film q { quotes: none; font-weight: 700; color: var(--ink); }
+.film .takes { font: 500 12px var(--mono); color: var(--muted); }
+
+.pipe { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; border: 1px solid var(--line); background: var(--panel); }
+.step { padding: 18px 18px 20px; border-left: 1px solid var(--line); display: grid; gap: 6px; align-content: start; position: relative; }
+.step:first-child { border-left: 0; }
+.step .who { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--hivis-text); }
+.step b { font-size: 17px; }
+.step span { color: var(--ink-2); font-size: 15px; }
+
+.lessons { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.card h3 { font-size: 17px; font-weight: 750; }
+.card ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; color: var(--ink-2); font-size: 15px; }
+
+.ideas { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
+.idea { background: var(--panel); border: 1px solid var(--line); padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.idea .where { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.idea h3 { font-size: 19px; font-weight: 750; }
+.idea p { color: var(--ink-2); font-size: 15.5px; }
+.idea .who2 { font-size: 14px; color: var(--muted); }
+.sheet { margin-top: 18px; background: var(--panel); border: 1px solid var(--line); padding: 10px; }
+.sheet img { width: 100%; height: auto; display: block; }
+footer { margin-top: 54px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+@media (max-width: 640px) { body { font-size: 16px; padding-inline: 16px; } .step { border-left: 0; border-top: 1px solid var(--line); } .step:first-child { border-top: 0; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="label">Sporbók · Áhöfnin · generated with Grok Imagine</span>
+    <h1>Five films, directed here, animated by Grok</h1>
+    <p class="lede">Every film starts from keyframes rendered by our own character rig, so the cast is exactly on model. Grok 4.7 animates between them with image-to-video and adds foley. Captions, the clock, the job-card lettering and the end card are drawn by us on top, so no model ever draws a letter. Each cut was inspected frame by frame here and by two independent reviewers, and re-shot until the faces stayed friendly all the way through: 27 generated takes for 8 final shots.</p>
+  </header>
+  <div class="tape" aria-hidden="true"></div>
+
+  <section aria-labelledby="h-films">
+    <h2 class="s" id="h-films">The films</h2>
+    <p class="sub">Sound is foley only (a lid click, a relay, rain-quiet), normalised for social. Tap to unmute.</p>
+    <div class="bar" role="group" aria-label="Format">
+      <span class="l">Format</span>
+      <button type="button" class="chip" id="fmt-reel" data-fmt="1080x1920" aria-pressed="true">Reels 9:16</button>
+      <button type="button" class="chip" id="fmt-feed" data-fmt="1080x1350" aria-pressed="false">Feed 4:5</button>
+    </div>
+    <div class="films" id="films">
+      <article class="film">
+        <video data-name="tvo" src="sporbok-tvo-ai-1080x1920.mp4" poster="poster-tvo.jpg" controls muted playsinline loop preload="metadata"></video>
+        <div class="meta">
+          <h3>Tvö verk <small>13.5 s</small></h3>
+          <p class="beat">One receipt between two plumbing jobs. It thinks, decides, steps up onto the right card, and the card lights up.</p>
+          <p><q>Tvö verk. Ein nóta.</q> · <q>Rétt verk. Sjálfkrafa.</q></p>
+          <p class="takes">Post first · 2 takes</p>
+        </div>
+      </article>
+      <article class="film">
+        <video data-name="fimm" src="sporbok-fimm-ai-1080x1920.mp4" poster="poster-fimm.jpg" controls muted playsinline loop preload="metadata"></video>
+        <div class="meta">
+          <h3>17:00 <small>15.5 s</small></h3>
+          <p class="beat">Friday, one more thing. The toolbox clacks shut, dusk falls, everyone blinks off to sleep and the van's lamps go out.</p>
+          <p><q>Eitt enn.</q> · <q>Sporbók slekkur á sér.</q></p>
+          <p class="takes">Post on a Friday · 11 takes</p>
+        </div>
+      </article>
+      <article class="film">
+        <video data-name="notan" src="sporbok-notan-ai-1080x1920.mp4" poster="poster-notan.jpg" controls muted playsinline loop preload="metadata"></video>
+        <div class="meta">
+          <h3>Undir sætinu <small>15.5 s</small></h3>
+          <p class="beat">A worried receipt under the van seat. The seat lifts, the day comes in, and it steps up onto its job with one happy hop.</p>
+          <p><q>Undir sætinu aftur.</q> · <q>Komin á rétt verk.</q></p>
+          <p class="takes">Post third · 3 takes</p>
+        </div>
+      </article>
+      <article class="film">
+        <video data-name="sunnudagur" src="sporbok-sunnudagur-ai-1080x1920.mp4" poster="poster-sunnudagur.jpg" controls muted playsinline loop preload="metadata"></video>
+        <div class="meta">
+          <h3>Sunnudagskvöld <small>14.5 s</small></h3>
+          <p class="beat">22:14, a kitchen table of tired receipts. A strip of hi-vis tape crosses the frame, and it is the same table with one content receipt and a mug.</p>
+          <p><q>Sunnudagskvöld.</q> · <q>Reikningurinn er tilbúinn.</q></p>
+          <p class="takes">Post on a Sunday evening · 4 takes</p>
+        </div>
+      </article>
+      <article class="film">
+        <video data-name="morgunn" src="sporbok-morgunn-ai-1080x1920.mp4" poster="poster-morgunn.jpg" controls muted playsinline loop preload="metadata"></video>
+        <div class="meta">
+          <h3>07:40 <small>13.5 s</small></h3>
+          <p class="beat">A frosty dark morning. The van and the hard hat wake as the clock turns, the lamps come on, and dawn comes up while the moon fades.</p>
+          <p><q>Á staðnum.</q></p>
+          <p class="takes">Post on a Monday morning · 7 takes</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-how">
+    <h2 class="s" id="h-how">How a film is made</h2>
+    <p class="sub">Four steps, each owned by whoever is best at it. A new film is a new timeline and a new shot spec; the pipeline does not change.</p>
+    <div class="pipe">
+      <div class="step"><span class="who">Director (Claude)</span><b>Story and timeline</b><span>Beats, captions and poses written as a timeline on the rig. Every pose is chosen, never a random pool.</span></div>
+      <div class="step"><span class="who">Rig</span><b>Keyframes</b><span>Text-free, blink-free frames at the moments that matter, plus a model sheet per character.</span></div>
+      <div class="step"><span class="who">Grok 4.7</span><b>Image-to-video</b><span>reference_to_video with first, key and last frames pinned, the model sheets as references, and a style lock. 720p, 24 fps, foley.</span></div>
+      <div class="step"><span class="who">Assembler</span><b>Text, cards, sound</b><span>Conform to 1080 × 1920 at 30 fps, draw captions with ink picked from the picture's measured brightness, mask card lettering behind characters, end card, loudness to −18 LUFS, a 4:5 cut.</span></div>
+      <div class="step"><span class="who">QA</span><b>Frame by frame</b><span>Contact sheets at 4 fps, zoom on every face, scene-jump detection, stream checks, plus an independent reviewer.</span></div>
+    </div>
+    <div class="lessons">
+      <div class="card"><h3>What the generator gets wrong, and the fix</h3><ul>
+        <li>Half-closed eyes in its in-betweens turn into a V-shaped scowl. Fix: never ask for a half-closed stage; pin open, then closed, 1.3 s apart.</li>
+        <li>It redraws text as gibberish. Fix: every card is blank in the keyframes; we draw the lettering, masked where a character passes in front.</li>
+        <li>It adds shading, grain and moving floor shadows. Fix: a style lock on every prompt and model sheets as references.</li>
+        <li>Overlapping characters can merge into one with extra eyes. Fix: characters never overlap in a keyframe.</li>
+      </ul></div>
+      <div class="card"><h3>Rules the rig now enforces</h3><ul>
+        <li>No eye-roll: an open eye never hides its pupil under the lid.</li>
+        <li>No side-eye: a strong sideways look caps the smiling lower lid.</li>
+        <li>No squint: a heavy upper lid never meets a raised lower lid, and heavy lids flatten.</li>
+        <li>A "z" vanishes the instant the eyes open.</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-ideas">
+    <h2 class="s" id="h-ideas">Where the cast could live later</h2>
+    <p class="sub">sporbok.is stays as it is. These are places Áhöfnin could earn its keep when you want them, strongest first. The rule everywhere: the cast reacts to what the user did, never interrupts, and never appears on money or error screens.</p>
+    <div class="ideas">
+      <div class="idea"><span class="where">App · end of day</span><h3>The off-duty screen</h3><p>When tracking switches off at the end of the workday, the three close their eyes and the van's lamps go out. The privacy promise, shown every evening instead of explained once.</p><p class="who2">Strongest single use.</p></div>
+      <div class="idea"><span class="where">App · receipts</span><h3>Receipt matched</h3><p>When a supplier receipt lands on the right job, Nótan steps onto the card with the small hop from the film. A 0.6 s reaction, then gone.</p></div>
+      <div class="idea"><span class="where">App · empty states</span><h3>Nothing here yet</h3><p>No jobs today: Kassinn peeks from under its lid. No receipts: Nótan waiting on an empty card. Empty screens are where a character helps most and costs least.</p></div>
+      <div class="idea"><span class="where">Onboarding</span><h3>First day on site</h3><p>Hjálmurinn welcomes a new user once, with a nod, on the first job created. Never again after that.</p></div>
+      <div class="idea"><span class="where">Social</span><h3>A weekly short</h3><p>One film a week in the Postiz pipeline, timed to its day: Friday 17:00, Sunday evening, Monday 07:40. The cast in about one post in three.</p></div>
+      <div class="idea"><span class="where">Email</span><h3>Friday summary</h3><p>The weekly hours-and-receipts email signs off with a small still of the sleeping crew. Rendered as a PNG from the rig, so it works in every mail client.</p></div>
+      <div class="idea"><span class="where">Print · merch</span><h3>Van and toolbox stickers</h3><p>A sticker of Kassinn for the real toolbox, Bíllinn for the dashboard. Tradespeople decorate their kit; this puts the brand where the work is.</p></div>
+      <div class="idea"><span class="where">Sales</span><h3>Pitch deck and trade fairs</h3><p>The day-in-the-life strip (07:40 → 17:00) as the one slide that explains the product without a screenshot.</p></div>
+    </div>
+    <div class="sheet"><img src="cast-sheet.png" alt="The four cast members across eleven expressions, from neutral and content to joy, worried, drowsy and asleep." loading="lazy"></div>
+  </section>
+
+  <footer>Keyframes and model sheets from the Áhöfnin rig; motion and foley generated with Grok Imagine through the Grok 4.7 CLI (reference_to_video); text layers, card lettering, loudness and cuts by our assembler. Sources in postiz-app, docs/agents/fleet/2026-09-24-sporbok-brand-kit.</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var films = document.getElementById("films");
+  var buttons = document.querySelectorAll("button[data-fmt]");
+  function setFormat(fmt) {
+    films.classList.toggle("feed", fmt === "1080x1350");
+    films.querySelectorAll("video").forEach(function (v) { v.src = "sporbok-" + v.getAttribute("data-name") + "-ai-" + fmt + ".mp4"; });
+    buttons.forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-fmt") === fmt ? "true" : "false"); });
+    try { localStorage.setItem("films-fmt", fmt); } catch (e) {}
+  }
+  buttons.forEach(function (b) { b.addEventListener("click", function () { setFormat(b.getAttribute("data-fmt")); }); });
+  try { if (localStorage.getItem("films-fmt") === "1080x1350") setFormat("1080x1350"); } catch (e) {}
+})();
+</script>

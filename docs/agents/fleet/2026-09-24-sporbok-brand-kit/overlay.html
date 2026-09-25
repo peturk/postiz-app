@@ -1,0 +1,217 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Source+Sans+3:wght@400..900&display=swap">
+<style>
+  /* The text layer for image-to-video films: captions, clock, kicker and the
+     end card, drawn by us over the generated picture so no model draws text. */
+  html, body { margin: 0; background: transparent; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Source Sans 3", system-ui, sans-serif; }
+  #stage.feed { height: 1350px; }
+  .clock { position: absolute; left: 80px; top: 150px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 500; font-size: 150px; letter-spacing: -4px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .kicker { position: absolute; left: 84px; top: 110px; font-weight: 700; font-size: 34px; letter-spacing: .14em; text-transform: uppercase; }
+  .cap { position: absolute; left: 80px; right: 80px; top: 340px; font-weight: 780; font-size: 86px; line-height: 1.02; letter-spacing: -2.4px; text-wrap: balance; }
+  /* A soft halo keeps text legible over any generated detail behind it. */
+  .cap, .clock, .kicker { text-shadow: 0 0 22px rgba(128,128,128,.18); }
+  .end { position: absolute; inset: 0; background: #111418; color: #EEF0F2; display: grid; place-items: center; opacity: 0; }
+  .end .inner { display: grid; justify-items: center; gap: 44px; opacity: 0; }
+  .end .mark { display: flex; align-items: center; gap: 30px; }
+  .end .mark img { width: 150px; height: 150px; border-radius: 34px; }
+  .end .mark span { font-weight: 700; font-size: 104px; letter-spacing: -2px; }
+  .end .line { font-weight: 760; font-size: 64px; letter-spacing: -1.6px; line-height: 1.08; text-align: center; }
+  .end .url { font-weight: 600; font-size: 40px; color: #97A1AC; }
+  .tape { position: absolute; left: 0; right: 0; bottom: 0; height: 30px; background: linear-gradient(to bottom, transparent 38%, #C5CBD2 38%, #C5CBD2 62%, transparent 62%), #FF5A1F; }
+  /* In feed (4:5, a centre crop of 9:16) the text block moves down with the crop. */
+  /* Card lettering sits exactly where the stage drew it (same padding, same markup). */
+  .lcard { position: absolute; padding: 30px 34px; font-weight: 700; color: #111418; opacity: 0; }
+  .lcard .bar { visibility: hidden; }
+  #stage.feed .clock { top: 70px; } #stage.feed .kicker { top: 36px; } #stage.feed .cap { top: 250px; }
+</style>
+<div id="stage"></div>
+<script src="cards.js"></script>
+<script>
+(function () {
+  "use strict";
+  var ICON = "__ICON__";
+  var params = new URLSearchParams(location.search);
+  var FEED = params.get("fmt") === "feed";
+  /* layer=cards renders only the card lettering (the assembler masks it behind
+     characters); layer=text renders everything else. */
+  var LAYER = params.get("layer") || "text";
+  var stage = document.getElementById("stage");
+  if (FEED) stage.classList.add("feed");
+  function lerp(a, b, p) { return a + (b - a) * p; }
+  function clamp(p) { return p < 0 ? 0 : p > 1 ? 1 : p; }
+  function mix(c1, c2, p) {
+    var a = parseInt(c1.slice(1), 16), b = parseInt(c2.slice(1), 16);
+    var r = Math.round(lerp(a >> 16, b >> 16, p)), g = Math.round(lerp(a >> 8 & 255, b >> 8 & 255, p)), bl = Math.round(lerp(a & 255, b & 255, p));
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + bl).toString(16).slice(1);
+  }
+  function el(cls, html) { var d = document.createElement("div"); d.className = cls; d.innerHTML = html || ""; stage.appendChild(d); return d; }
+
+  /*
+   * A film's text track: every element is a function of time, so a frame is
+   * pure. `ink` is a list of [t, colour] stops that follow the picture's light.
+   */
+  var FILMS = {
+    fimm: {
+      duration: 15.5,
+      kicker: { text: "Föstudagur", ink: "auto-accent" },
+      clock: { steps: [[0, "16:58"], [2.0, "16:59"], [4.0, "17:00"]], ink: "auto" },
+      captions: [
+        { from: 0.4, to: 4.6, text: "Eitt enn.", ink: "auto" },
+        { from: 8.4, to: 11.8, text: "Sporbók slekkur á sér.", ink: "auto" }
+      ],
+      feedY: 150,
+      end: 12.0
+    },
+    notan: {
+      duration: 15.5,
+      kicker: { steps: [[0, "Í bílnum · 07:52"], [7.4, "Hafnarstræti 12 · 07:58"]], ink: "auto-accent" },
+      /* The lettering fills in once the receipt has landed: it crosses the card
+         while stepping up, and white paper over a white card cannot be masked. */
+      cards: [{ from: 9.4, left: 580, top: 870, width: 440, html: function () { return window.SB_CARDS.notan; } }],
+      cardRef: 8.6,
+      captions: [
+        { from: 0.4, to: 5.4, text: "Undir sætinu aftur.", ink: "auto" },
+        /* In 4:5 the receipt stands up into the caption band: keep the line left of it. */
+        { from: 9.4, to: 11.8, text: "Komin á rétt verk.", ink: "auto", feedRight: 460 }
+      ],
+      end: 12.0
+    },
+    morgunn: {
+      duration: 13.5,
+      clock: { steps: [[0, "07:39"], [1.8, "07:40"]], ink: "auto" },
+      captions: [{ from: 3.0, to: 9.8, text: "Á staðnum.", ink: "auto" }],
+      feedY: 150,
+      end: 10.0
+    },
+    sunnudagur: {
+      duration: 14.5,
+      kicker: { steps: [[0, "Sunnudagur · 22:14"]], ink: "auto-accent" },
+      captions: [
+        { from: 0.4, to: 5.6, text: "Sunnudagskvöld.", ink: "auto" },
+        { from: 6.6, to: 10.8, text: "Reikningurinn er tilbúinn.", ink: "auto" }
+      ],
+      /* The hi-vis tape crosses the frame exactly over the cut between shots. */
+      wipe: { from: 5.7, to: 6.3 },
+      end: 11.0
+    },
+    tvo: {
+      duration: 13.5,
+      kicker: { steps: [[0, "Byggingavöruverslunin · 12:10"]], ink: "auto-accent" },
+      cardRef: 0.5,
+      cards: [
+        /* The receipt crosses this card while stepping up (about 4.9-5.2 s):
+           its lettering steps out of the way and fills back in on landing. */
+        { from: 0, hide: [4.75, 5.35], left: 16, top: 870, width: 330, html: function () { return window.SB_CARDS.tvo("Hafnarstræti 12", "Pípulögn · bað"); } },
+        { from: 0, left: 666, top: 870, width: 330, html: function () { return window.SB_CARDS.tvo("Laugavegur 88", "Pípulögn · eldhús"); } }
+      ],
+      captions: [
+        { from: 0.3, to: 5.0, text: "Tvö verk. Ein nóta.", ink: "auto" },
+        /* The receipt stands on the LEFT card: in 4:5 the line moves right of it. */
+        { from: 6.2, to: 9.8, text: "Rétt verk. Sjálfkrafa.", ink: "auto", feedLeft: 380 }
+      ],
+      end: 10.0
+    }
+  };
+  var film = FILMS[params.get("v") || "fimm"];
+  window.__duration = film.duration;
+
+  /* Measured brightness (0..255) behind the text, one value per frame, set by
+     the assembler from the actual picture. "auto" ink reads it, so text is
+     never grey on grey whatever the generated lighting does. */
+  var LUM = null;
+  window.__setLum = function (arr) { LUM = arr; };
+  /* Never blend dark and light ink: a blend is mid-grey exactly when the
+     picture is mid-grey. Pick the side with more contrast from a smoothed
+     brightness, with hysteresis so it cannot flicker, and cross over in 4 frames. */
+  var SIDE = null;
+  window.__setLum = function (arr) {
+    LUM = arr;
+    var sm = arr.map(function (v, i) { var s = 0, n = 0; for (var k = i - 4; k <= i + 4; k++) if (k >= 0 && k < arr.length) { s += arr[k]; n++; } return s / n; });
+    var dark = sm[0] >= 118;
+    SIDE = sm.map(function (v) { if (dark && v < 110) dark = false; else if (!dark && v > 126) dark = true; return dark ? 1 : 0; });
+  };
+  function autoInk(t, dark, light) {
+    if (!SIDE) return dark;
+    var i = Math.min(SIDE.length - 1, Math.max(0, Math.round(t * 30)));
+    var s = 0, n = 0;
+    for (var k = i - 2; k <= i + 1; k++) if (k >= 0 && k < SIDE.length) { s += SIDE[k]; n++; }
+    return mix(light, dark, s / n);
+  }
+  function inkAt(stops, t) {
+    if (stops === "auto") return autoInk(t, "#111418", "#EEF0F2");
+    if (stops === "auto-accent") return autoInk(t, "#B63A0B", "#FF9A6B");
+    for (var i = stops.length - 1; i >= 0; i--) {
+      if (t >= stops[i][0]) {
+        var nx = stops[i + 1];
+        if (!nx) return stops[i][1];
+        return mix(stops[i][1], nx[1], clamp((t - stops[i][0]) / (nx[0] - stops[i][0])));
+      }
+    }
+    return stops[0][1];
+  }
+  if (LAYER === "cards") { film = Object.assign({}, film, { kicker: null, clock: null, captions: [], wipe: null, noEnd: true }); }
+  var kick = film.kicker ? el("kicker", film.kicker.text || film.kicker.steps[0][1]) : null;
+  var wipe = null;
+  if (film.wipe) {
+    wipe = el("wipe");
+    wipe.style.cssText = "position:absolute;top:0;bottom:0;width:1300px;left:-1300px;background:linear-gradient(to right, transparent 0, #FF5A1F 0, #FF5A1F 90px, #C5CBD2 90px, #C5CBD2 124px, #FF5A1F 124px, #FF5A1F 214px, #2A2521 214px, #2A2521 1086px, #FF5A1F 1086px, #FF5A1F 1176px, #C5CBD2 1176px, #C5CBD2 1210px, #FF5A1F 1210px, #FF5A1F 1300px)";
+  }
+  var clock = film.clock ? el("clock") : null;
+  /* The 4:5 cut is a crop of the 9:16 master; films with sky at the top crop higher. */
+  var FEED_Y = film.feedY != null ? film.feedY : 285;
+  window.__feedY = FEED_Y;
+  var FEED_DY = FEED ? -FEED_Y : 0;
+  window.__cardRef = film.cardRef;
+  window.__cardRects = (film.cards || []).map(function (c) { return [c.left, c.top + FEED_DY, c.width + 68, 190]; });
+  var cards = (LAYER === "cards" ? film.cards || [] : []).map(function (c) {
+    var d = el("lcard", c.html());
+    d.style.left = c.left + "px"; d.style.top = (c.top + FEED_DY) + "px"; d.style.width = c.width + "px";
+    return { c: c, d: d };
+  });
+  var caps = film.captions.map(function (c) {
+    var d = el("cap", c.text); d.style.opacity = 0;
+    if (FEED && c.feedRight) d.style.right = c.feedRight + "px";
+    if (FEED && c.feedLeft) d.style.left = c.feedLeft + "px";
+    return { c: c, d: d };
+  });
+  var end = film.noEnd ? el("") : el("end", '<div class="inner"><div class="mark"><img src="' + ICON + '" alt=""><span>Sporbók</span></div>'
+    + '<div class="line">Þú vinnur verkið.<br>Sporbók man söguna.</div><div class="url">sporbok.is</div></div><div class="tape"></div>');
+  var inner = end.querySelector(".inner") || document.createElement("div");
+
+  window.__frame = function (t) {
+    if (kick) {
+      kick.style.color = inkAt(film.kicker.ink, t);
+      if (film.kicker.steps) { var kt = film.kicker.steps[0][1]; film.kicker.steps.forEach(function (s) { if (t >= s[0]) kt = s[1]; }); kick.textContent = kt; }
+    }
+    if (wipe) {
+      var wp = clamp((t - film.wipe.from) / (film.wipe.to - film.wipe.from));
+      wp = wp * wp * (3 - 2 * wp);
+      wipe.style.left = lerp(-1300, 1080, wp) + "px";
+    }
+    if (clock) {
+      var txt = film.clock.steps[0][1];
+      film.clock.steps.forEach(function (s) { if (t >= s[0]) txt = s[1]; });
+      clock.textContent = txt; clock.style.color = inkAt(film.clock.ink, t);
+    }
+    caps.forEach(function (o) {
+      var a = clamp((t - o.c.from) / 0.35) * clamp((o.c.to - t) / 0.3);
+      o.d.style.opacity = a;
+      o.d.style.transform = "translateY(" + (1 - clamp((t - o.c.from) / 0.35)) * 24 + "px)";
+      o.d.style.color = inkAt(o.c.ink, t);
+    });
+    cards.forEach(function (o) {
+      var a = clamp((t - o.c.from) / 0.4) * (t >= film.end ? 0 : 1);
+      if (o.c.hide) a *= Math.max(clamp((o.c.hide[0] - t) / 0.12), clamp((t - o.c.hide[1]) / 0.3));
+      o.d.style.opacity = a;
+    });
+    var hideText = t >= film.end;
+    if (kick) kick.style.opacity = hideText ? 0 : 1;
+    if (clock) clock.style.opacity = hideText ? 0 : 1;
+    if (!film.noEnd) end.style.opacity = clamp((t - film.end) / 0.4);
+    var ip = clamp((t - film.end - 0.4) / 0.35);
+    inner.style.opacity = ip; inner.style.transform = "translateY(" + (1 - ip) * 16 + "px)";
+  };
+})();
+</script>

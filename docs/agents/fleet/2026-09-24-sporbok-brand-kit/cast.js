@@ -225,6 +225,10 @@
     oops: { eye: 1, gaze: [0.46, -0.06], lids: lids(0.08, -3, 0.36, 10), pupil: 1.02, mouth: "sheepish", drop: true, body: "wiggle", pose: { rotate: 5, scaleY: 0.98 } },
     worried: { eye: 1.01, gaze: [0.22, 0.18], lids: lids(0.14, -14, 0.08), pupil: 1.04, mouth: "wavy", drop: true, pose: { scaleY: 0.985, y: 2 } },
     sad: { eye: 1.01, gaze: [0, 0.3], lids: lids(0.3, -12, 0.04), pupil: 1.08, mouth: "frown", pose: { rotate: -3, scaleY: 0.985, y: 5 } },
+    /* Drowsy: heavy LEVEL lids, a little lower lid, a soft smile. For films,
+       where a generator interpolates from open eyes: any lid angle on the way
+       down tips into a V scowl in the in-betweens, so falling asleep uses this. */
+    drowsy: { eye: 0.98, gaze: [0, 0.04], lids: lids(0.42, 0, 0.02), pupil: 1.02, mouth: "soft", pose: { rotate: -1, y: 2 } },
     sleepy: { cue: "droop", eye: 0.96, gaze: [0, 0.3], lids: lids(0.62, -8, 0.04), pupil: 0.95, mouth: "small", pose: { rotate: -2, y: 3 } },
     /* Relieved: shut from above with a smile, no z. The job is done. */
     relieved: { eye: 0.98, gaze: [0, 0.2], lids: lids(0.9, -8, 0.3, -2), pupil: 1, mouth: "soft", pose: { rotate: 2, y: 1 } },
@@ -405,7 +409,9 @@
   }
 
   function blinkAmount(s, t, atRest) {
-    if (atRest) return 0;
+    /* Keyframes for generated video never catch a blink: a pinned mid-blink
+       frame forces slit eyes into the clip. */
+    if (atRest || (root.SporbokCast && root.SporbokCast.options.noBlink)) return 0;
     var bt = t - s.blinkStart;
     if (bt < 0 || bt >= 0.2) return 0;
     return clamp01(bt < 0.07 ? bt / 0.07 : (bt < 0.09 ? 1 : 1 - (bt - 0.09) / 0.11));
@@ -416,10 +422,15 @@
     var preset = EXPRESSIONS[s.mood];
     var targets = [preset.lids, preset.lidsRight || preset.lids];
     var f = atRest ? 1 : Math.min(1, dt * 7.5);
+    /* A sideways glance under a lower-lid smile reads as smug side-eye, so a
+       strong sideways look caps the lower lid. Like the eye-roll guard below,
+       this is a rule of the rig, not a choice any timeline has to remember. */
+    var sideways = Math.abs(s.lookX) > 0.35 && !(preset.lids.u > 0.5);
     for (var i = 0; i < 2; i++) {
       var c = s.eyes[i], g = targets[i];
+      var gd = sideways ? Math.min(g.d, 0.14) : g.d;
       c.u = lerp(c.u, g.u, f); c.ua = lerp(c.ua, g.ua, f);
-      c.d = lerp(c.d, g.d, f); c.da = lerp(c.da, g.da, f);
+      c.d = lerp(c.d, gd, f); c.da = lerp(c.da, g.da, f);
       c.p = lerp(c.p, preset.pupil, f); c.es = lerp(c.es, preset.eye, f);
     }
     s.moodGazeX = lerp(s.moodGazeX, preset.gaze[0], f);
@@ -428,7 +439,9 @@
     s.bright = lerp(s.bright, preset.bright || 0, f);
     s.fxSpark = lerp(s.fxSpark, preset.spark ? 1 : 0, atRest ? 1 : Math.min(1, dt * 5));
     s.fxDrop = lerp(s.fxDrop, preset.drop ? 1 : 0, atRest ? 1 : Math.min(1, dt * 5));
-    s.fxZ = lerp(s.fxZ, preset.zzz ? 1 : 0, atRest ? 1 : Math.min(1, dt * 2));
+    /* A z drifts in slowly while falling asleep, and is gone the moment the
+       eyes open: a z over open eyes contradicts the face. */
+    s.fxZ = lerp(s.fxZ, preset.zzz ? 1 : 0, atRest ? 1 : Math.min(1, dt * (preset.zzz ? 2 : 12)));
 
     var lookScale = art.eye.r;
     if (!atRest && manual) {
@@ -483,6 +496,11 @@
       var upper = clamp01(e.u + cueLid + Math.min(0.2, gazeDown * 0.95) - Math.min(0.1, gazeUp * 0.5));
       var u = Math.max(upper, blink);
       var d = clamp01(e.d + Math.min(0.08, gazeUp * 0.25));
+      /* A heavy upper lid never meets a raised lower lid: squeezed from both
+         sides a round eye becomes pointed slits, a glare, which is what every
+         drowsy or calm look turned into once it also looked down. Shut eyes
+         (both lids past the middle) are exempt: that is a closed eye, not a slit. */
+      if (u > 0.22 && u < 0.8) d = Math.min(d, 0.06);
       var drop = u * R * 0.26 - d * R * 0.24;
       var pr = R * 0.46 * e.p;
       var px = cx + s.gazeX + s.moodGazeX * R + cueX * 0.55;
@@ -504,7 +522,10 @@
       setAttrs(white, { cx: cx, cy: cy, r: Math.max(0, R - 0.9) });
       white.setAttribute("opacity", (1 - shut).toFixed(3));
       var lidU = wrap.querySelector(".lidU");
-      setAttrs(lidU, { cx: cx, cy: cy - R - LR + u * (2 * R + LR * 0.06), r: LR });
+      /* A heavy lid flattens: a small steep arc over half an eye leaves a
+         pointed bowl that reads as a glare; a flatter edge reads as sleep. */
+      var LRu = u > 0.45 && u < 0.85 ? LR * (1 + 2.2 * Math.min(1, (u - 0.45) / 0.25)) : LR;
+      setAttrs(lidU, { cx: cx, cy: cy - R - LRu + u * (2 * R + LRu * 0.06), r: LRu });
       lidU.setAttribute("transform", "rotate(" + (e.ua * lidSide * Math.min(1, u / 0.18)).toFixed(2) + " " + cx + " " + cy + ")");
       var lidD = wrap.querySelector(".lidD");
       setAttrs(lidD, { cx: cx, cy: cy + R + LR - d * (2 * R + LR * 0.06), r: LR });
@@ -699,7 +720,7 @@
   root.SporbokCast = {
     ART: ART, EXPRESSIONS: EXPRESSIONS, BEHAVIOURS: BEHAVIOURS, RHYTHMS: RHYTHMS, MOUTHS: MOUTHS,
     KINDS: ["van", "box", "hat", "note"], mount: mount, reducedMotion: reducedMotion,
-    options: { hatBand: false },
+    options: { hatBand: false, noBlink: false },
     manual: function (on) { manual = !!on; if (manual) stop(); },
     step: function (dt) { clock += dt; for (var i = 0; i < subs.length; i++) subs[i](clock, dt); },
     now: function () { return clock; }

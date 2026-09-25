@@ -35,6 +35,7 @@
   })();
 </script>
 <script src="cast.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
   "use strict";
@@ -85,6 +86,8 @@
     place(x, opts && opts.floor != null ? opts.floor : FLOOR);
     var handle = C.mount(host, kind, Object.assign({ live: true }, opts || {}));
     handle.host = host; handle.place = place;
+    window.__cast = window.__cast || {};
+    if (!window.__cast[kind]) window.__cast[kind] = handle;
     return handle;
   }
   function caption(t0, t1, text, style) {
@@ -150,6 +153,8 @@
     return state;
   }
 
+  var CARD_NOTAN = window.SB_CARDS.notan, cardTvo = window.SB_CARDS.tvo;
+
   /* ---------------- the videos ---------------- */
   var VIDEOS = {};
 
@@ -161,16 +166,23 @@
     var fl = floor("#CFD5DB");
     var kick = el("Föstudagur", "kicker"); kick.style.color = "#B63A0B";
     var clock = el("16:58", "clock"); clock.style.color = "#111418";
-    var van = cast("van", 290, 440, { behaviour: "avakt", look: { x: 0.5, y: 0 } });
-    var hat = cast("hat", 660, 200, { behaviour: "avakt", look: { x: -0.5, y: 0 } });
-    var box = cast("box", 900, 240, { mood: "busy", look: { x: -0.3, y: 0.3 } });
+    /* Films pin explicit moods, never a random pool: every exported keyframe
+       is a pose that was chosen and checked. */
+    var van = cast("van", 290, 440, { mood: "content", look: { x: 0.4, y: -0.1 } });
+    var hat = cast("hat", 660, 200, { mood: "content", look: { x: -0.4, y: -0.1 } });
+    var box = cast("box", 900, 240, { mood: "content", look: { x: -0.2, y: -0.1 } });
     var c0 = caption(0.4, 4.2, "Eitt enn."); c0.style.color = "#111418";
     at(1.6, function () { clock.textContent = "16:59"; });
-    at(3.2, function () { clock.textContent = "17:00"; hat.look(0.6, 0); box.look(-0.7, -0.1); box.setMood("relieved"); });
+    at(3.2, function () { clock.textContent = "17:00"; hat.look(0.1, -0.05); van.look(0.3, 0); box.look(-0.3, -0.1); box.setMood("relieved"); });
+    /* Drowsy eyes look ahead, never sideways or down: a side glance reads
+       skeptical, and looking down closes a heavy lid into a sliver. */
+    at(4.4, function () { van.setMood("calm"); van.look(0, 0); hat.setMood("drowsy"); hat.look(0, 0); });
     /* The goodnight, tight: the lid snaps, the hat, then the van's lamps. */
     at(4.2, function () { box.setMood("asleep"); });
-    at(4.7, function () { hat.setMood("asleep"); });
-    at(5.2, function () { van.setMood("asleep"); });
+    /* Settled beats, so every keyframe lands on a finished pose, never a blend:
+       4.4-5.0 hat drowsy, van calm; 5.0-5.6 hat asleep, van drowsy; 5.6 on all asleep. */
+    at(5.0, function () { hat.setMood("asleep"); van.setMood("drowsy"); });
+    at(5.6, function () { van.setMood("asleep"); });
     tween(4.2, 6.6, function (p) {
       bg.style.background = mix("#E6E9EC", "#1A2027", p);
       fl.style.background = mix("#CFD5DB", "#252C35", p);
@@ -190,8 +202,10 @@
     var fl = floor("#151A20");
     var kick = el("Í bílnum · 07:52", "kicker"); kick.style.color = "#FF9A6B"; kick.style.zIndex = 8;
     /* The underside of the van's seat, filling the top of the frame. */
-    var seat = el('<svg viewBox="0 0 1080 900" width="1080" height="900"><rect x="-40" y="0" width="1160" height="760" rx="90" fill="#2A3440"/><rect x="60" y="700" width="960" height="70" rx="35" fill="#222B35"/><rect x="180" y="760" width="40" height="' + (FLOOR - 1000 + 240) + '" rx="12" fill="#11161B"/><rect x="860" y="760" width="40" height="' + (FLOOR - 1000 + 240) + '" rx="12" fill="#11161B"/></svg>', "layer");
-    seat.style.top = (FLOOR - 1000) + "px"; seat.style.zIndex = 6;
+    /* High enough that her eyes show just under its edge: the worry has to read. */
+    var SEAT = 1150;
+    var seat = el('<svg viewBox="0 0 1080 1160" width="1080" height="1160"><rect x="-40" y="0" width="1160" height="760" rx="90" fill="#2A3440"/><rect x="60" y="700" width="960" height="70" rx="35" fill="#222B35"/><rect x="180" y="760" width="40" height="' + (SEAT - 760) + '" rx="12" fill="#11161B"/><rect x="860" y="760" width="40" height="' + (SEAT - 760) + '" rx="12" fill="#11161B"/></svg>', "layer");
+    seat.style.top = (FLOOR - SEAT) + "px"; seat.style.zIndex = 6;
     var c1 = caption(0.3, 3.0, "Undir sætinu aftur."); c1.style.color = "#EEF0F2"; c1.style.zIndex = 8;
     /* Wedged: bigger than the gap, so the seat edge covers her top. */
     var note = cast("note", 520, 330, { mood: "oops", look: { x: 0.3, y: -0.2 } });
@@ -202,7 +216,7 @@
     at(2.3, function () { note.setMood("surprised"); });
     /* The seat lifts away and the day comes in: she is found. */
     tween(2.6, 3.4, function (p) {
-      seat.style.top = lerp(FLOOR - 1000, -1100, p) + "px";
+      seat.style.top = lerp(FLOOR - SEAT, -1300, p) + "px";
       bg.style.background = mix("#1C232B", "#E6E9EC", p);
       fl.style.background = mix("#151A20", "#CFD5DB", p);
       kick.style.color = mix("#FF9A6B", "#B63A0B", p);
@@ -210,16 +224,13 @@
     });
     tween(2.9, 3.4, function (p) { note.place(lerp(520, 300, p), FLOOR, 0); });
     at(3.4, function () { kick.textContent = "Hafnarstræti 12 · 07:58"; });
-    var card = el('<div style="font:500 26px IBM Plex Mono,monospace;letter-spacing:.08em;color:#56616E">VERK</div>'
-      + '<div style="font-size:56px;letter-spacing:-1px;margin-top:6px">Hafnarstræti 12</div>'
-      + '<div style="font-size:34px;color:#56616E;font-weight:600;margin-top:4px">Pípulögn · baðherbergi</div>'
-      + '<div class="bar" style="height:10px;border-radius:5px;background:#C5CBD2;margin-top:26px;width:160px"></div>', "card");
+    var card = el(CARD_NOTAN, "card");
     card.style.width = "440px"; card.style.top = (FLOOR - 470) + "px"; card.style.left = "1180px";
     tween(3.3, 4.0, function (p) { card.style.left = lerp(1180, 580, p) + "px"; }, out);
     at(3.6, function () { note.setMood("curious"); note.look(0.8, 0); });
     /* She crosses and steps up onto the card: a slide, then the one joy beat. */
     tween(4.2, 5.4, function (p) {
-      note.place(lerp(300, 800, p), FLOOR - 430 * Math.min(1, p * 1.25), lerp(0, 3, p));
+      note.place(lerp(300, 800, p), FLOOR - 462 * Math.min(1, p * 1.25), lerp(0, 3, p));
     }, smooth);
     at(5.5, function () { note.setMood("joy"); note.look(0, 0); card.querySelector(".bar").style.background = "#FF5A1F"; });
     at(6.6, function () { note.setMood("content"); });
@@ -239,10 +250,12 @@
     var van = cast("van", 360, 460, { mood: "asleep" });
     var hat = cast("hat", 850, 210, { mood: "asleep" });
     stage.style.setProperty("--cast-shadow", "rgba(255,255,255,.06)");
+    at(1.0, function () { van.setMood("sleepy"); });
     at(1.3, function () { clock.textContent = "07:40"; });
-    at(1.5, function () { van.setMood("surprised"); });
-    at(2.2, function () { hat.setMood("curious"); hat.look(-0.6, 0); });
-    at(2.6, function () { van.setMood("neutral"); van.play("nod"); van.look(0.5, 0); });
+    at(1.6, function () { van.setMood("alert"); });
+    at(2.0, function () { hat.setMood("sleepy"); });
+    at(2.3, function () { hat.setMood("curious"); hat.look(-0.6, 0); });
+    at(2.6, function () { van.setMood("neutral"); van.play("nod"); van.look(0.1, -0.05); });
     at(3.4, function () { hat.setMood("content"); hat.play("nod"); });
     tween(1.5, 4.5, function (p) {
       bg.style.background = mix("#141B26", "#3E5566", p);
@@ -267,9 +280,9 @@
     cup.style.left = "840px"; cup.style.top = (FLOOR - 142) + "px";
     /* The pile is tired, not frantic: it is the evening that is the problem. */
     var pile = [];
-    [[170, 220, -9, "thinking"], [360, 240, 5, "neutral"], [545, 215, -3, "calm"], [700, 230, 10, "thinking"], [270, 200, 14, "neutral"]].forEach(function (p, i) {
+    [[150, 210, -7, "thinking"], [345, 225, 4, "neutral"], [535, 205, -3, "calm"], [720, 220, 6, "thinking"]].forEach(function (p, i) {
       var n = cast("note", p[0], p[1], { mood: p[3], look: { x: (i % 3 - 1) * 0.5, y: 0.2 } });
-      n.place(p[0], FLOOR - (i === 4 ? 60 : 0), p[2]);
+      n.place(p[0], FLOOR, p[2]);
       pile.push(n);
     });
     at(2.2, function () { pile[1].setMood("oops"); });
@@ -293,29 +306,34 @@
     var kick = el("Byggingavöruverslunin · 12:10", "kicker"); kick.style.color = "#B63A0B";
     caption(0.3, 4.2, "Tvö verk. Ein nóta.").style.color = "#111418";
     function jobCard(x, title, sub) {
-      var c = el('<div style="font:500 24px IBM Plex Mono,monospace;letter-spacing:.08em;color:#56616E">VERK</div>'
-        + '<div style="font-size:46px;letter-spacing:-1px;margin-top:6px">' + title + '</div>'
-        + '<div style="font-size:30px;color:#56616E;font-weight:600;margin-top:4px">' + sub + '</div>'
-        + '<div class="bar" style="height:10px;border-radius:5px;background:#C5CBD2;margin-top:22px;width:130px"></div>', "card");
+      var c = el(cardTvo(title, sub), "card");
       c.style.width = "330px"; c.style.left = x + "px"; c.style.top = (FLOOR - 470) + "px";
       return c;
     }
-    var left = jobCard(24, "Hafnarstræti 12", "Pípulögn · bað");
-    var right = jobCard(726, "Laugavegur 88", "Pípulögn · eldhús");
-    var note = cast("note", 540, 205, { mood: "thinking", look: { x: -0.8, y: 0 } });
+    var left = jobCard(16, "Hafnarstræti 12", "Pípulögn · bað");
+    var right = jobCard(666, "Laugavegur 88", "Pípulögn · eldhús");
+    var note = cast("note", 540, 240, { mood: "thinking", look: { x: -0.8, y: 0 } });
     note.host.style.zIndex = 5;
     at(1.4, function () { note.look(0.8, 0); });
     at(2.5, function () { note.look(-0.8, 0); note.setMood("curious"); });
     at(3.4, function () { note.play("jolt"); note.setMood("alert"); });
     /* A slide up onto the card, not a hop. */
     tween(3.9, 4.9, function (p) {
-      note.place(lerp(540, 190, p), FLOOR - 410 * Math.min(1, p * 1.3), lerp(0, -4, p));
+      note.place(lerp(540, 215, p), FLOOR - 462 * Math.min(1, p * 1.3), lerp(0, -4, p));
     }, smooth);
     at(5.0, function () { note.setMood("relieved"); note.play("nod"); left.querySelector(".bar").style.background = "#FF5A1F"; });
     caption(5.2, 8.2, "Rétt verk. Sjálfkrafa.").style.color = "#111418";
     endCard(8.2);
     return 11.7;
   };
+
+  /* Clean mode: keyframes for image-to-video carry no text at all. The edit
+     adds captions, the clock and the end card, so no model ever draws a letter. */
+  if (params.get("clean") === "1") {
+    var st = document.createElement("style");
+    st.textContent = ".cap,.kicker,.clock,.end{display:none!important}.card .t{visibility:hidden!important}";
+    document.head.appendChild(st);
+  }
 
   /* ---------------- driver ---------------- */
   var name = params.get("v") || "fimm";
