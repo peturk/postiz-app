@@ -76,11 +76,52 @@
     return svg(300, 160, b + '<rect x="0" y="140" width="300" height="16" rx="8" fill="' + C.wood + '"/>', x, y);
   }
 
+
+  /* Furniture: flat shapes in the palette, each with a back and a front. */
+  function piece(html, x, y, z) { var d = svg(html[0], html[1], html[2], x, y); d.style.zIndex = z; return d; }
+  function sofa(x, w, seatY, k) {
+    k = k || { back: "#A34633", inner: "#B8543F", base: "#8E3A2A", cush: "#C0624B" };
+    var back = piece([w, 330, '<rect x="0" y="0" width="' + w + '" height="300" rx="60" fill="' + k.back + '"/><rect x="30" y="40" width="' + (w - 60) + '" height="230" rx="44" fill="' + k.inner + '"/>'], x, seatY - 250, 2);
+    var front = piece([w, 260, '<rect x="0" y="40" width="' + w + '" height="150" rx="40" fill="' + k.base + '"/>'
+      + '<rect x="40" y="0" width="' + (w / 2 - 50) + '" height="120" rx="36" fill="' + k.cush + '"/><rect x="' + (w / 2 + 10) + '" y="0" width="' + (w / 2 - 50) + '" height="120" rx="36" fill="' + k.cush + '"/>'
+      + '<rect x="-10" y="-40" width="90" height="250" rx="40" fill="' + k.base + '"/><rect x="' + (w - 80) + '" y="-40" width="90" height="250" rx="40" fill="' + k.base + '"/>'
+      + '<rect x="60" y="190" width="30" height="60" rx="8" fill="#5A3A26"/><rect x="' + (w - 90) + '" y="190" width="30" height="60" rx="8" fill="#5A3A26"/>'], x, seatY - 40, 8);
+    return { back: back, front: front };
+  }
+  function armchair(x, w, seatY) {
+    piece([w, 400, '<rect x="10" y="0" width="' + (w - 20) + '" height="360" rx="70" fill="#5E8A72"/><rect x="40" y="40" width="' + (w - 80) + '" height="280" rx="50" fill="#6E9B83"/>'], x, seatY - 330, 2);
+    piece([w, 260, '<rect x="0" y="30" width="' + w + '" height="160" rx="44" fill="#4F7862"/><rect x="36" y="0" width="' + (w - 72) + '" height="110" rx="36" fill="#7AA88F"/>'
+      + '<rect x="-6" y="-60" width="80" height="250" rx="38" fill="#4F7862"/><rect x="' + (w - 74) + '" y="-60" width="80" height="250" rx="38" fill="#4F7862"/>'
+      + '<rect x="50" y="190" width="26" height="54" rx="8" fill="#5A3A26"/><rect x="' + (w - 76) + '" y="190" width="26" height="54" rx="8" fill="#5A3A26"/>'], x, seatY - 30, 8);
+  }
+  function cushion(x, w, y, color) { return piece([w, 140, '<ellipse cx="' + w / 2 + '" cy="80" rx="' + (w / 2 - 4) + '" ry="56" fill="' + color + '"/><ellipse cx="' + w / 2 + '" cy="62" rx="' + (w / 2 - 30) + '" ry="30" fill="rgba(255,255,255,.14)"/>'], x, y - 80, 8); }
+  function windowSeat(x, w, seatY) {
+    piece([w, 220, '<rect x="0" y="20" width="' + w + '" height="180" rx="30" fill="#8A6446"/><rect x="20" y="0" width="' + (w - 40) + '" height="70" rx="30" fill="#E3D2B4"/>'
+      + '<rect x="60" y="100" width="' + (w / 2 - 90) + '" height="70" rx="12" fill="#7A5638"/><rect x="' + (w / 2 + 30) + '" y="100" width="' + (w / 2 - 90) + '" height="70" rx="12" fill="#7A5638"/>'], x, seatY - 20, 8);
+  }
+  function tableLamp(x, topY) {
+    var glow = el("", "left:" + (x - 200) + "px;top:" + (topY - 170) + "px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle, rgba(245,197,66,.45), rgba(245,197,66,0) 68%);z-index:1");
+    var body = piece([200, 360, '<rect x="30" y="220" width="140" height="140" rx="12" fill="#8A6446"/><rect x="92" y="110" width="16" height="112" rx="8" fill="' + C.espresso + '"/><path d="M40 120 L68 30 L132 30 L160 120 Z" fill="' + C.gold + '"/>'], x - 100, topY - 20, 3);
+    return { glow: glow, body: body };
+  }
+  function bed(x, w, mattressY) {
+    var head = piece([w, 420, '<rect x="0" y="0" width="' + w + '" height="400" rx="70" fill="#8A6446"/><rect x="36" y="40" width="' + (w - 72) + '" height="320" rx="50" fill="#9C7556"/>'], x, mattressY - 380, 2);
+    var pillows = piece([w, 160, '<rect x="60" y="20" width="' + (w / 2 - 80) + '" height="120" rx="50" fill="#FBF4E4"/><rect x="' + (w / 2 + 20) + '" y="20" width="' + (w / 2 - 80) + '" height="120" rx="50" fill="#FBF4E4"/>'], x, mattressY - 170, 3);
+    var blanket = piece([w + 40, 300, '<path d="M0 60 Q' + (w / 4) + ' 20 ' + (w / 2 + 20) + ' 50 T' + (w + 40) + ' 50 L' + (w + 40) + ' 300 L0 300 Z" fill="#7D8DA8"/>'
+      + '<path d="M0 60 Q' + (w / 4) + ' 20 ' + (w / 2 + 20) + ' 50 T' + (w + 40) + ' 50" fill="none" stroke="#FBF4E4" stroke-width="22"/>'
+      + '<circle cx="' + (w * 0.2) + '" cy="170" r="10" fill="#F5C542" opacity=".55"/><circle cx="' + (w * 0.55) + '" cy="210" r="8" fill="#F5C542" opacity=".55"/><circle cx="' + (w * 0.8) + '" cy="150" r="9" fill="#F5C542" opacity=".55"/>'], x - 20, mattressY - 60, 8);
+    return { head: head, blanket: blanket };
+  }
+
   /* The cast: the product's own <Mascot>, held moods, live breath and blinks. */
   var cast = {};
-  function mascot(name, x, w, props) {
+  /* base: where the mascot's feet rest (the floor by default, a seat or a
+     mattress when it sits or lies in something). Mascots draw at z 5; set
+     pieces put their back at z 2 and their front (seat, cushion, blanket) at
+     z 8, so the cast sits in the furniture instead of standing on the floor. */
+  function mascot(name, x, w, props, base) {
     var d = document.createElement("div"); d.className = "m";
-    var h = w * 300 / 240; d.style.cssText = "left:" + x + "px;top:" + (FLOOR + 30 - h) + "px;width:" + w + "px";
+    var h = w * 300 / 240; d.style.cssText = "left:" + x + "px;top:" + ((base || FLOOR) + 30 - h) + "px;width:" + w + "px;z-index:5";
     stage.appendChild(d);
     var cur = Object.assign({ name: name, live: true }, props);
     /* No upward gaze past -0.25 (under the lids it reads as an eye-roll) and
@@ -92,74 +133,81 @@
   }
 
   var FILMS = {
-    /* Saga fyrir kvöldið: an evening, a free book opened straight away. */
+    /* Saga fyrir kvöldið: dusk on the sofa, a free book opened straight away. */
     kvold: function () {
       var r = room({ wall: "#EBDFC6", sky: "#7D8DA8", floor: "#D9C7A6", rug: "#CDB58F" });
       var st = stars(r.sky, 9, 3); st.forEach(function (s) { s.style.opacity = 0; });
       var mn = moon(r.sky, 120, 90, 34); mn.style.opacity = 0;
       shelf(70, 640);
-      var lp = lamp(640);
-      var bear = mascot("bear", 40, 380, { mood: "neutral", look: { x: 0.6, y: 0 } });
-      var rabbit = mascot("rabbit", 760, 250, { mood: "neutral", look: { x: -0.7, y: 0 } });
+      var lp = tableLamp(990, 1300);
+      sofa(40, 860, 1440);
+      var bear = mascot("bear", 90, 330, { mood: "neutral", look: { x: 0.4, y: 0 } }, 1440);
+      var rabbit = mascot("rabbit", 560, 220, { mood: "neutral", look: { x: -0.4, y: 0 } }, 1440);
       tween(0, 6, function (p) { r.sky.style.background = mix("#7D8DA8", "#1E2A44", p); st.forEach(function (s, i) { s.style.opacity = clamp(p * 1.6 - i * 0.08); }); mn.style.opacity = p; });
-      tween(0, 4, function (p) { lp.glow.style.opacity = 0.4 + 0.6 * p; });
-      at(3.4, function () { rabbit.set({ mood: "curious", look: { x: -0.4, y: -0.6 } }); bear.set({ mood: "curious", look: { x: 0.5, y: -0.6 } }); });
-      at(7.4, function () { rabbit.set({ mood: "excited", look: { x: -0.3, y: -0.6 } }); bear.set({ mood: "excited", look: { x: 0.4, y: -0.6 } }); });
-      at(10.2, function () { bear.set({ mood: "love", hold: { kind: "book" }, look: { x: 0, y: 0.1 } }); rabbit.set({ mood: "curious", look: { x: -0.8, y: 0.1 } }); });
-      at(14.2, function () { rabbit.set({ mood: "love", look: { x: -0.8, y: 0 } }); bear.set({ mood: "love", look: { x: 0.1, y: 0.1 } }); });
+      lp.glow.style.opacity = 0; tween(3.9, 5.2, function (p) { lp.glow.style.opacity = p; });
+      at(4.0, function () { rabbit.set({ mood: "love", look: { x: 0.4, y: 0 } }); bear.set({ mood: "love", look: { x: 0.45, y: 0 } }); });
+      at(7.6, function () { rabbit.set({ mood: "curious", look: { x: -0.3, y: -0.2 } }); bear.set({ mood: "curious", look: { x: 0.3, y: -0.2 } }); });
+      at(10.6, function () { rabbit.set({ mood: "excited" }); bear.set({ mood: "love" }); });
+      at(12.0, function () { rabbit.set({ mood: "love", look: { x: -0.4, y: -0.1 } }); bear.set({ mood: "love", hold: { kind: "book" }, look: { x: 0, y: 0.1 } }); });
       return 20;
     },
-    /* Lesum saman: reading together, page by page. */
+    /* Lesið saman: Bangsi reads in the armchair, Ugla and Kanína listen from cushions. */
     saman: function () {
       var r = room({ wall: "#EFE3CB", sky: "#27334F", floor: "#D9C7A6", rug: "#C9A57E" });
       moon(r.sky, 120, 90, 32); stars(r.sky, 8, 11);
-      var lp = lamp(700);
-      var owl = mascot("owl", 20, 260, { mood: "neutral", look: { x: 0.6, y: -0.2 } });
-      var bear = mascot("bear", 290, 330, { mood: "love", hold: { kind: "book" }, look: { x: 0, y: 0.1 } });
-      var rabbit = mascot("rabbit", 820, 220, { mood: "curious", look: { x: -0.8, y: 0 } });
-      at(4.0, function () { rabbit.set({ mood: "excited", look: { x: -0.8, y: 0 } }); });
-      at(8.6, function () { owl.set({ mood: "curious", look: { x: 0.7, y: -0.1 } }); });
-      at(11.0, function () { owl.set({ mood: "love", look: { x: 0.6, y: -0.1 } }); rabbit.set({ mood: "excited", look: { x: -0.8, y: -0.1 } }); });
-      at(14.6, function () { rabbit.set({ mood: "love", look: { x: -0.8, y: 0 } }); owl.set({ mood: "neutral", look: { x: 0.5, y: 0 } }); });
+      var lp = tableLamp(1000, 1320);
+      armchair(20, 400, 1430);
+      var bear = mascot("bear", 60, 320, { mood: "love", hold: { kind: "book" }, look: { x: 0, y: 0.1 } }, 1430);
+      var owl = mascot("owl", 470, 230, { mood: "neutral", look: { x: -0.4, y: 0 } }, 1540);
+      cushion(450, 270, 1560, "#F5C542");
+      var rabbit = mascot("rabbit", 750, 190, { mood: "curious", look: { x: -0.45, y: 0 } }, 1545);
+      cushion(720, 250, 1565, "#A34633");
+      at(4.2, function () { rabbit.set({ mood: "love" }); });
+      at(8.6, function () { owl.set({ mood: "curious", look: { x: -0.4, y: -0.1 } }); });
+      at(11.0, function () { owl.set({ mood: "love" }); rabbit.set({ mood: "excited" }); });
+      at(12.6, function () { rabbit.set({ mood: "love" }); });
       return 20;
     },
-    /* Á íslensku og ensku: the language switch. */
+    /* Á íslensku og ensku: the window seat, one page in two languages. */
     tunga: function () {
       var r = room({ wall: "#EFE3CB", sky: "#27334F", floor: "#D9C7A6", rug: "#CDB58F" });
       moon(r.sky, 120, 90, 32); stars(r.sky, 8, 17);
-      lamp(690);
       shelf(70, 640);
-      var fox = mascot("fox", 40, 340, { mood: "neutral", look: { x: 0.6, y: -0.3 } });
-      var rabbit = mascot("rabbit", 790, 240, { mood: "neutral", look: { x: -0.6, y: -0.3 } });
-      at(3.6, function () { fox.set({ mood: "curious", look: { x: 0.6, y: -0.5 } }); });
-      at(6.2, function () { fox.set({ mood: "surprised", look: { x: 0.5, y: -0.5 } }); rabbit.set({ mood: "curious", look: { x: -0.5, y: -0.5 } }); });
+      var lp = tableLamp(1000, 1320);
+      sofa(60, 820, 1450, { back: "#5E7390", inner: "#7D8DA8", base: "#4E6380", cush: "#9AAAC2" });
+      var fox = mascot("fox", 140, 300, { mood: "neutral", look: { x: 0.4, y: -0.2 } }, 1450);
+      var rabbit = mascot("rabbit", 560, 220, { mood: "neutral", look: { x: -0.4, y: -0.2 } }, 1450);
+      at(3.6, function () { fox.set({ mood: "curious" }); });
+      at(6.2, function () { fox.set({ mood: "surprised" }); rabbit.set({ mood: "curious" }); });
       at(7.4, function () { fox.set({ mood: "love", look: { x: 0.4, y: -0.2 } }); });
-      at(10.8, function () { rabbit.set({ mood: "love", look: { x: -0.4, y: -0.2 } }); });
-      at(14.4, function () { fox.set({ mood: "love", look: { x: 0.7, y: 0 } }); rabbit.set({ mood: "love", look: { x: -0.7, y: 0 } }); });
+      at(10.8, function () { rabbit.set({ mood: "love" }); });
       return 20;
     },
-    /* Góða nótt: the book ends, nothing plays next, lights down. */
+    /* Góða nótt: everyone in bed, the last page, the book comes down, lights out. */
     nott: function () {
       var r = room({ wall: "#E6D8BC", sky: "#1E2A44", floor: "#CDB894", rug: "#B99A73" });
       moon(r.sky, 120, 90, 34); stars(r.sky, 10, 5);
-      var owl = mascot("owl", 10, 220, { mood: "neutral", look: { x: 0.4, y: 0 } });
-      var rabbit = mascot("rabbit", 250, 170, { mood: "sleepy", look: { x: 0.3, y: 0 } });
-      var bear = mascot("bear", 440, 300, { mood: "neutral", look: { x: 0, y: 0 } });
-      var fox = mascot("fox", 770, 240, { mood: "neutral", look: { x: -0.4, y: 0 } });
+      var lp = tableLamp(90, 1330);
+      var b = bed(190, 850, 1440);
+      var owl = mascot("owl", 205, 170, { mood: "neutral", look: { x: 0.4, y: 0 } }, 1080);
+      var rabbit = mascot("rabbit", 250, 190, { mood: "sleepy", look: { x: 0.3, y: 0 } }, 1462);
+      var bear = mascot("bear", 440, 300, { mood: "love", hold: { kind: "book" }, look: { x: 0, y: 0.1 } }, 1480);
+      var fox = mascot("fox", 760, 220, { mood: "neutral", look: { x: -0.4, y: 0 } }, 1500);
       /* Lights down is a night, not grey: deep navy with a warm pool where the
-         cast sleeps (a flat dim over parchment read as grey). The
-         window is repeated above it, so the moon never fades into the night. */
-      var dark = el("", "left:0;top:0;width:1080px;height:1920px;background:radial-gradient(ellipse 60% 22% at 50% 78%, rgba(58,38,20,.35), rgba(9,17,44,.95) 75%);opacity:0");
-      var winTop = r.win.cloneNode(true); winTop.style.opacity = 0; stage.appendChild(winTop); moon(winTop.querySelector(".sky"), 120, 90, 34); stars(winTop.querySelector(".sky"), 10, 5);
-      at(6.4, function () { rabbit.set({ mood: "asleep" }); });
-      at(8.4, function () { fox.set({ mood: "sleepy", look: { x: -0.2, y: 0.2 } }); bear.set({ mood: "sleepy", look: { x: 0, y: 0.2 } }); });
-      at(11.2, function () { fox.set({ mood: "asleep" }); });
-      tween(12.6, 14.4, function (p) { dark.style.opacity = 0.85 * p; winTop.style.opacity = p; });
-      at(13.4, function () { bear.set({ mood: "asleep" }); });
-      at(15.6, function () { owl.set({ mood: "asleep" }); });
+         cast sleeps (a flat dim over parchment read as grey). The window is
+         repeated above it, so the moon never fades into the night. */
+      var dark = el("", "left:0;top:0;width:1080px;height:1920px;z-index:20;background:radial-gradient(ellipse 60% 22% at 55% 76%, rgba(58,38,20,.35), rgba(9,17,44,.95) 75%);opacity:0");
+      var winTop = r.win.cloneNode(true); winTop.style.opacity = 0; winTop.style.zIndex = 21; stage.appendChild(winTop); moon(winTop.querySelector(".sky"), 120, 90, 34); stars(winTop.querySelector(".sky"), 10, 5);
+      at(5.6, function () { rabbit.set({ mood: "asleep" }); });
+      at(8.8, function () { bear.set({ mood: "sleepy", hold: undefined, look: { x: 0, y: 0.2 } }); fox.set({ mood: "sleepy", look: { x: -0.2, y: 0.2 } }); });
+      at(11.0, function () { fox.set({ mood: "asleep" }); });
+      tween(11.8, 13.6, function (p) { lp.glow.style.opacity = 1 - p; dark.style.opacity = 0.85 * p; winTop.style.opacity = p; });
+      at(12.8, function () { bear.set({ mood: "asleep" }); });
+      at(15.2, function () { owl.set({ mood: "asleep" }); });
       return 20;
     }
   };
+
   var dur = FILMS[film]();
   window.__duration = dur;
   window.__frame = function (t) { items.forEach(function (f) { f(t); }); };

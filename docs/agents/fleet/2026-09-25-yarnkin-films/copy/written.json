@@ -1,0 +1,100 @@
+{
+  "kvold": {
+    "sets": [
+      [
+        "Rökkrið læðist inn.",
+        "Kveikjum á litla lampanum.",
+        "Þrjár bækur standa opnar.",
+        "Engin innskráning. Byrjum strax.",
+        "Saga fyrir kvöldið."
+      ],
+      [
+        "Húmið færist yfir borgina.",
+        "Komum okkur vel fyrir.",
+        "Bækurnar bíða á skjánum.",
+        "Einn smellur og sagan hefst.",
+        "Róleg kvöldstund heima."
+      ],
+      [
+        "Kvöldkyrrðin tekur völdin.",
+        "Tími fyrir okkur tvö.",
+        "Engar auglýsingar, engin truflun.",
+        "Bókin bíður opin í kvöld.",
+        "Bara að fletta saman."
+      ]
+    ],
+    "caption": "Gerið ykkur kósý í kvöld. Þrjár myndabækur standa tilbúnar á Yarnkin án allrar innskráningar – bara að velja og lesa saman."
+  },
+  "saman": {
+    "sets": [
+      [
+        "Einn les, aðrir hlusta.",
+        "Enginn rekur á eftir okkur.",
+        "Skoðum myndirnar í rólegheitum.",
+        "Blaðsíðu fyrir blaðsíðu.",
+        "Nærveran ein skiptir máli."
+      ],
+      [
+        "Hægt og rólega í hægindastól.",
+        "Heimur opnast á hverri síðu.",
+        "Óskar telur ræturnar.",
+        "Tíminn fær að bíða.",
+        "Kvöldstund sem við eigum saman."
+      ],
+      [
+        "Hlý koddahorn og hljóðlát birta.",
+        "Við lesum á okkar hraða.",
+        "Ekkert streymi, ekkert áreiti.",
+        "Blaðsíðurnar snúast ljúflega.",
+        "Saman inn í söguna."
+      ]
+    ],
+    "caption": "Engar auglýsingar og enginn sem rekur á eftir ykkur. Fallegar myndabækur fyrir rólegar samverustundir á kvöldin."
+  },
+  "tunga": {
+    "sets": [
+      [
+        "Íslenska á einni síðu.",
+        "Einn smellur, orðin verða ensk.",
+        "Og aftur til baka.",
+        "Sama sagan, tvö mál."
+      ],
+      [
+        "Óskar telur ræturnar heima.",
+        "Oskar counts the roots too.",
+        "Skiptu um mál með fingri.",
+        "Bækur á báðum tungumálum."
+      ],
+      [
+        "„Bank, bank, bank.“",
+        "„Tap, tap, tap.“",
+        "Málið skiptir um svip samstundis.",
+        "Á íslensku. Á ensku. Saman."
+      ]
+    ],
+    "caption": "Skiptu á milli íslensku og ensku með einum smelli á sömu síðunni. Fullkomið fyrir heimili þar sem tvö tungumál eiga heima."
+  },
+  "nott": {
+    "sets": [
+      [
+        "Síðustu orðin fyrir svefninn.",
+        "Góða nótt, bjartar stjörnur.",
+        "Slökkvum ljósið og lokum augunum.",
+        "Máninn vakir yfir okkur."
+      ],
+      [
+        "Sagan kyssir daginn bless.",
+        "Lágvær rödd í dimmunni.",
+        "Bókin lögð til hliðar.",
+        "Sofðu rótt, litla hjarta."
+      ],
+      [
+        "Allir komnir undir hlýja sæng.",
+        "Síðasta blaðsíðan er lesin.",
+        "Lampinn slokknar, kyrrðin tekur við.",
+        "Draumarnir geta byrjað."
+      ]
+    ],
+    "caption": "Síðasta blaðsíðan lokast, ljósið slokknar og nóttin tekur blíðlega við. Góða nótt frá Yarnkin."
+  }
+}

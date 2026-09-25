@@ -38,3 +38,14 @@ Set dressing (wall, window, moon, lamp, shelf) is flat shapes in the brand palet
 The independent review of round 1 found: Bangsi weary while reading, side-eye and eye-roll poses, cropped covers, micro-text too small, a grey lights-down, and one translated-sounding line ("Enginn endalaus straumur."); all fixed in round 2.
 
 Review page: https://claude.ai/artifact/KKzyiTGLX8v8xwSeqpnSPT (private until shared); `films-page.html` is its source.
+
+## Round 3 (PK feedback: no popups, better copy, no immersion breaks)
+
+- No dialogs or tap circles: the reader and the covers carry the story.
+- The cast lives in the room: sofa (kvold), armchair and floor cushions (saman), daybed (tunga), in bed under a blanket with Ugla on the bedhead (nott). `mascot(name, x, w, props, base)` seats a mascot at a seat or mattress line; furniture has a back (z 2) and a front (z 8) around the cast (z 5).
+- Copy: `copy/brief.md` holds the facts, rules and beats; `copy/written.json` has three candidate sets per film; `copy/critic.json` is a separate critic pass (native Icelandic editor and brand marketer) that scored every set and wrote the final lines, `copy/final.json` feeds `ui-yk.html` through `assemble-yk.cjs`.
+
+Gemini rule (PK, 2026-09-25, hard): the paid Gemini key (`GEMINI_TTS_API_KEY`) is for TTS commands only.
+All other Gemini work goes through a Herdr client: the critic ran in an `agy` helper tab on Gemini 3.8 Flash (High) from `copy/critic-task.md`.
+Never Gemini 3.1.
+The writer pass and the round 1-2 music and listening passes predate this rule and called the key directly; `lyria.mjs` and `listen.mjs` are therefore not kept here, and new music or listening work must run through a Herdr client.

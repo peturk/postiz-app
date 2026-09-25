@@ -25,6 +25,13 @@ Claude directs, Grok 4.7 animates, Gemini listens and speaks, Lyria scores.
 | Mix and master | two-pass, -14 LUFS, limiter -2.0 dB | `assemble2.cjs` |
 | QA | contact sheets, jumps, loudness, blink runs | `qa.sh`, `blinks.py`, zoom crops with ffmpeg |
 
+## Hard rule: Gemini access (PK, 2026-09-25)
+
+The paid Gemini key (`GEMINI_TTS_API_KEY`) is for TTS commands only.
+Every other Gemini task (copy, listening, judging, music) runs through a Herdr client: an `agy` helper tab on Gemini 3.8 Flash.
+Never Gemini 3.1.
+Steps 7 and 9 below describe direct API calls from the first run; redo them through a Herdr client.
+
 ## Step by step
 
 ### 1. Facts before story

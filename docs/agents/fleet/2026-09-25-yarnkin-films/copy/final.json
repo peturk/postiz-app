@@ -1,0 +1,100 @@
+{
+ "kvold": [
+  [
+   "Rökkrið læðist inn.",
+   0.5,
+   3.5
+  ],
+  [
+   "Kveikjum á litla lampanum.",
+   3.6,
+   7.6
+  ],
+  [
+   "Þrjár bækur standa opnar.",
+   7.8,
+   12.0
+  ],
+  [
+   "Engin innskráning, sagan hefst.",
+   12.2,
+   16.0
+  ],
+  [
+   "Saga fyrir kvöldið.",
+   16.2,
+   19.9
+  ]
+ ],
+ "saman": [
+  [
+   "Einn les, aðrir hlusta.",
+   0.4,
+   4.0
+  ],
+  [
+   "Enginn rekur á eftir okkur.",
+   4.0,
+   8.0
+  ],
+  [
+   "Skoðum myndirnar í rólegheitum.",
+   8.0,
+   12.0
+  ],
+  [
+   "Blaðsíðu fyrir blaðsíðu.",
+   12.0,
+   16.0
+  ],
+  [
+   "Tíminn fær að bíða.",
+   16.0,
+   19.9
+  ]
+ ],
+ "tunga": [
+  [
+   "Sagan hefst á íslensku.",
+   0.4,
+   5.8
+  ],
+  [
+   "Einn smellur, orðin verða ensk.",
+   6.0,
+   12.2
+  ],
+  [
+   "Ljúft að flakka á milli.",
+   12.4,
+   15.4
+  ],
+  [
+   "Sama sagan, tvö mál.",
+   15.6,
+   19.9
+  ]
+ ],
+ "nott": [
+  [
+   "Allir komnir undir hlýja sæng.",
+   0.4,
+   4.4
+  ],
+  [
+   "„Góða nótt, bjartar stjörnur.“",
+   4.6,
+   9.0
+  ],
+  [
+   "Lampinn slokknar, kyrrðin tekur við.",
+   9.2,
+   14.2
+  ],
+  [
+   "Draumarnir geta byrjað.",
+   14.4,
+   19.9
+  ]
+ ]
+}

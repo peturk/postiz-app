@@ -65,7 +65,7 @@ footer { margin-top: 54px; padding-top: 16px; border-top: 1px solid var(--line);
 <div class="wrap">
   <header>
     <span class="label">Yarnkin · four films · the real cast and real books</span>
-    <h1>Bedtime films, drawn by the product itself</h1>
+    <h1>Bedtime films, round 3: living in the room</h1>
     <p class="lede">Four short films in the same spirit as the Sporbók ones, each showing one true part of reading with Yarnkin: an open book tonight, reading together, two languages, and good night. The mascots are rendered frame by frame by Yarnkin's own character component, the pages are real catalog pages of <i>Óskar telur ræturnar</i>, and every word on a screen is the app's own Icelandic.</p>
   </header>
   <div class="tape" aria-hidden="true"></div>
@@ -81,23 +81,19 @@ footer { margin-top: 54px; padding-top: 16px; border-top: 1px solid var(--line);
     <div class="films" id="films">
       <article class="film">
         <video data-name="kvold" src="yarnkin-kvold-1080x1920.mp4" poster="poster-kvold.jpg" controls playsinline loop preload="metadata" aria-label="Saga fyrir kvöldið"></video>
-        <div class="meta"><h3>Saga fyrir kvöldið</h3><p class="beat">Dusk turns to night; three open books; one tap and the story begins.</p>
-          <ul><li>The three open books, whole covers</li><li>"Opna bókina" and the reader, pages 1-2</li><li>"Byrjaðu strax í kvöld, án innskráningar."</li></ul></div>
+        <div class="meta"><h3>Saga fyrir kvöldið</h3><p class="beat">Dusk on the sofa; the lamp comes on; three open books; one opens.</p><ul><li>Rökkrið læðist inn.</li><li>Kveikjum á litla lampanum.</li><li>Þrjár bækur standa opnar.</li><li>Engin innskráning, sagan hefst.</li><li>Saga fyrir kvöldið.</li></ul></div>
       </article>
       <article class="film">
         <video data-name="saman" src="yarnkin-saman-1080x1920.mp4" poster="poster-saman.jpg" controls playsinline loop preload="metadata" aria-label="Lesið saman"></video>
-        <div class="meta"><h3>Lesið saman</h3><p class="beat">Bangsi reads, Ugla and Kanína listen, page by page.</p>
-          <ul><li>Page turns through pages 1-4</li><li>"Halda áfram á síðu 4?"</li><li>"Og á morgun heldur sagan áfram."</li></ul></div>
+        <div class="meta"><h3>Lesið saman</h3><p class="beat">Bangsi reads in the armchair; Ugla and Kanína listen from their cushions.</p><ul><li>Einn les, aðrir hlusta.</li><li>Enginn rekur á eftir okkur.</li><li>Skoðum myndirnar í rólegheitum.</li><li>Blaðsíðu fyrir blaðsíðu.</li><li>Tíminn fær að bíða.</li></ul></div>
       </article>
       <article class="film">
         <video data-name="tunga" src="yarnkin-tunga-1080x1920.mp4" poster="poster-tunga.jpg" controls playsinline loop preload="metadata" aria-label="Á íslensku og ensku"></video>
-        <div class="meta"><h3>Á íslensku og ensku</h3><p class="beat">One tap on "Skipta um tungumál" and Óskar counts in English.</p>
-          <ul><li>"Bank, bank, bank." becomes "Tap, tap, tap."</li><li>And back to Icelandic</li><li>"Sama saga, tvö tungumál."</li></ul></div>
+        <div class="meta"><h3>Á íslensku og ensku</h3><p class="beat">On the daybed, one tap turns the page from Icelandic to English and back.</p><ul><li>Sagan hefst á íslensku.</li><li>Einn smellur, orðin verða ensk.</li><li>Ljúft að flakka á milli.</li><li>Sama sagan, tvö mál.</li></ul></div>
       </article>
       <article class="film">
         <video data-name="nott" src="yarnkin-nott-1080x1920.mp4" poster="poster-nott.jpg" controls playsinline loop preload="metadata" aria-label="Góða nótt"></video>
-        <div class="meta"><h3>Góða nótt</h3><p class="beat">The last page, "Endir", the light goes out and the cast falls asleep.</p>
-          <ul><li>Page 12: "Góða nótt, bjartar stjörnur."</li><li>"Lesa aftur · Fleiri sögur · Loka"</li><li>A night room with the moon in the window</li></ul></div>
+        <div class="meta"><h3>Góða nótt</h3><p class="beat">Everyone in bed: the last page, the lamp goes out, one by one they sleep.</p><ul><li>Allir komnir undir hlýja sæng.</li><li>„Góða nótt, bjartar stjörnur.“</li><li>Lampinn slokknar, kyrrðin tekur við.</li><li>Draumarnir geta byrjað.</li></ul></div>
       </article>
     </div>
   </section>
@@ -106,6 +102,7 @@ footer { margin-top: 54px; padding-top: 16px; border-top: 1px solid var(--line);
     <h2 class="s" id="h-how">How they were made</h2>
     <div class="grid2">
       <div class="card"><span class="status ok">Brand rule</span><h3>Nothing generated in the picture</h3><ul><li>Yarnkin's brand rules forbid generating or redrawing the mascots or story art, so there is no image-to-video step</li><li>The cast is Yarnkin's own &lt;Mascot&gt; component, unchanged, played frame by frame under a controlled clock</li><li>The book art is the real catalog: the three open books and their pages</li></ul></div>
+      <div class="card"><span class="status ok">Round 3</span><h3>What changed</h3><ul><li>No popups or tap circles: the book itself carries the story</li><li>The cast sits on a sofa, an armchair, cushions and in bed under a blanket instead of standing in a row</li><li>The lamp moved off the reader; the owl sits on the bedhead</li><li>Every headline was scored and rewritten by a Gemini 3.8 Flash critic acting as a native Icelandic editor (via the agy client)</li></ul></div>
       <div class="card"><span class="status ok">Checked</span><h3>Faces, words, layout</h3><ul><li>Faces cast from a grid of real rig poses; no eye-rolls, side-eye or squints (an independent review caught the first ones)</li><li>Every on-screen string is from the app; the no-login line is its pricing copy, verified against the open books</li><li>Everything sits inside the 4:5 crop; cards clear every face</li></ul></div>
       <div class="card"><span class="status ok">Scored</span><h3>A lullaby for each film</h3><ul><li>Lyria, one palette: felt piano, celesta, nylon guitar, pizzicato, clarinet, music box, and a falling four-note signature</li><li>Three takes per film, picked in two blind listening passes with the order reversed</li><li>Each cue cut on its own bar lines so its final chord lands on the end card; mastered to -14 LUFS</li></ul></div>
     </div>

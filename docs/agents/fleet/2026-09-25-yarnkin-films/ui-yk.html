@@ -31,7 +31,7 @@
   .reader .lang { font-weight: 700; font-size: 30px; padding: 12px 20px; border-radius: 999px; background: rgba(246,238,221,.14); }
   .reader .lang.on { background: #F5C542; color: #33261E; }
   .reader .pg { font-weight: 700; font-size: 30px; color: #C9B79F; }
-  .reader .pic { position: relative; width: 380px; height: 380px; margin: 14px auto 0; border-radius: 18px; overflow: hidden; }
+  .reader .pic { position: relative; width: 340px; height: 340px; margin: 14px auto 0; border-radius: 18px; overflow: hidden; }
   .reader .pic div { position: absolute; inset: 0; background-size: cover; background-position: center; }
   .reader .txt { font-family: "Source Serif 4", Georgia, serif; font-weight: 500; font-size: 38px; line-height: 1.2; text-align: center; margin-top: 14px; min-height: 92px; }
   .end2 { text-align: center; }
@@ -147,7 +147,7 @@
     3: ["Óskar telur. Einn hnappur.", "Oskar counts. One button."], 4: ["Óskar telur. Bank, bank, bank.", "Oskar counts. Tap, tap, tap."],
     5: ["Óskar telur. Ein bjarkarskífa.", "Oskar counts. One birchbark disc."], 6: ["Óskar telur. Tveir hringir. Sko!", "Oskar counts. Two circles. Look!"],
     12: ["Óskar telur. Góða nótt, bjartar stjörnur.", "Oskar counts. Goodnight, bright stars."] };
-  var RX = 290, RY = 540, RW = 500;  /* bottom edge ~1100: clear of every head */
+  var RX = 400, RY = 530, RW = 480;  /* right of the seated cast, bottom edge ~1080: clear of every head */
   /* The reader: a list of [time, page, lang] states; a page turn cross-fades the picture. */
   function reader(from, to, states, withLang) {
     var d = show(el("reader", '<div class="bar"><span class="lang' + (withLang ? '' : '" style="visibility:hidden') + '">Skipta um tungumál</span><span class="pg"></span></div>'
@@ -170,59 +170,40 @@
     });
     return d;
   }
+  /* Headlines per film and beat, [text, from, to]: written and edited with
+     Gemini (copy/brief.md, copy.mjs), replaced here from copy/final.json. */
+  var COPY = __COPY__;
+  function heads(film) { COPY[film].forEach(function (h) { head(h[0], h[1], h[2]); }); }
   var FILMS = {
-    /* Saga fyrir kvöldið: an evening, a free book opened straight away. */
+    /* Saga fyrir kvöldið: the three open books, one lights up, the book opens. */
     kvold: function () {
-      head("Saga fyrir kvöldið.", 0.5, 3.4);
+      heads("kvold");
       var sh = show(el("card", '<div class="covers" style="margin-top:0">'
         + [[OSK, "Óskar telur ræturnar", 180], [VET, "Geturðu fundið vettlinginn?", 320], [LIT, "Litirnir á flóamarkaði áarsteinanna", 320]].map(function (c) {
           return '<div class="cover" style="width:' + c[2] + 'px"><img class="img" src="' + ART + c[0] + '-cover.png" style="width:' + c[2] + 'px"><div class="n">' + c[1] + '</div></div>'; }).join("")
-        + '</div>', 90, 600, 900), 3.6, 7.6, { pop: true });
-      head("Lestu ókeypis bók.", 3.6, 7.6);
-      tap(214, 720, 6.6);
-      show(el("card", '<div style="display:flex;gap:30px;align-items:center"><div style="width:300px;height:300px;border-radius:20px;background:url(' + ART + OSK + '-cover.png) center/cover;flex:none"></div>'
-        + '<div><div class="h">Óskar telur ræturnar</div><span class="btn" style="margin-top:26px">Opna bókina</span></div></div>', 90, 620, 900), 7.8, 10.6, { pop: true });
-      tap(590, 868, 9.6);
-      head("Byrjaðu strax í kvöld, án innskráningar.", 7.8, 10.6);
-      reader(10.8, 15.8, [[10.8, 1, "is"], [13.3, 2, "is"]]);
-      head("Enginn rekur á eftir þér.", 10.8, 15.8);
-      chip("Engar auglýsingar", 400, 600, 16.0, 19.9);
-      chip("Fyrir 0-10 ára", 400, 710, 16.6, 19.9);
-      head("Myndabækur til að lesa saman.", 16.0, 19.9);
+        + '</div>', 90, 600, 900), 7.8, 12.0, { pop: true });
+      var first = sh.querySelector(".cover .img");
+      items.push(function (t) { var p = clamp((t - 10.6) / 0.35); first.style.transform = "scale(" + lerp(1, 1.08, out3(p)) + ")"; first.style.boxShadow = p ? "0 0 0 " + (6 * p) + "px #F5C542, 0 10px 22px -12px rgba(51,38,30,.6)" : ""; });
+      sfx(10.6, "pop");
+      reader(12.2, 19.9, [[12.2, 1, "is"], [16.0, 2, "is"]]);
       return { duration: 23, end: 20.0 };
     },
-    /* Lesum saman: reading together, page by page, and tomorrow it continues. */
+    /* Lesið saman: page by page. */
     saman: function () {
-      head("Lesið saman í kvöld.", 0.4, 3.6);
-      reader(0.6, 14.6, [[0.6, 1, "is"], [4.0, 2, "is"], [7.6, 3, "is"], [11.2, 4, "is"]]);
-      head("Lestu með barninu.", 3.6, 7.4);
-      head("Enginn rekur á eftir þér.", 7.4, 11.0);
-      head("Blaðsíðu fyrir blaðsíðu.", 11.0, 14.6);
-      show(el("card end2", '<div class="h">Halda áfram á síðu 4?</div><div class="row2"><span class="btn">Halda áfram</span><span class="btn ghost">Byrja upp á nýtt</span></div>', 130, 700, 820), 14.8, 19.9, { pop: true });
-      tap(335, 868, 17.2);
-      head("Og á morgun heldur sagan áfram.", 14.8, 19.9);
+      heads("saman");
+      reader(0.6, 19.9, [[0.6, 1, "is"], [4.0, 2, "is"], [8.0, 3, "is"], [12.0, 4, "is"], [16.0, 5, "is"]]);
       return { duration: 23, end: 20.0 };
     },
-    /* Á íslensku og ensku: the language switch. */
+    /* Á íslensku og ensku: the same page, one tap, two languages. */
     tunga: function () {
-      head("Á íslensku og ensku.", 0.4, 5.8);
+      heads("tunga");
       reader(0.6, 19.9, [[0.6, 4, "is"], [6.0, 4, "en"], [9.2, 5, "en"], [12.4, 5, "is"], [15.6, 6, "is"]], { on: 6.0, off: 12.4 });
-      tap(RX + 150, RY + 54, 5.6); tap(RX + 150, RY + 54, 12.0);
-      head("Og nú á ensku.", 6.0, 12.2);
-      head("Og aftur á íslensku.", 12.4, 15.4);
-      head("Sama saga, tvö tungumál.", 15.6, 19.9);
       return { duration: 23, end: 20.0 };
     },
-    /* Góða nótt: the book ends, nothing plays next, lights down. */
+    /* Góða nótt: the last page, then the book comes down and the light goes out. */
     nott: function () {
-      head("Síðasta blaðsíðan.", 0.4, 4.0);
-      reader(0.6, 4.4, [[0.6, 12, "is"]]);
-      show(el("card end2", '<div class="t">Óskar telur ræturnar</div><div class="h" style="font-size:64px">Endir</div><div class="row2"><span class="btn">Lesa aftur</span><span class="btn ghost">Fleiri sögur</span></div>'
-        + '<div class="row2"><span class="btn ghost">Loka</span></div>', 170, 640, 740), 4.6, 9.0, { pop: true });
-      tap(540, 1003, 8.4);
-      head("Og svo er sagan búin.", 4.6, 9.0);
-      head("Og svo slökkvum við ljósið.", 9.2, 14.2);
-      head("Góða nótt.", 14.4, 19.9);
+      heads("nott");
+      reader(0.6, 8.6, [[0.6, 12, "is"]]);
       return { duration: 23, end: 20.0 };
     }
   };

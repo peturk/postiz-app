@@ -1,0 +1,214 @@
+{
+  "kvold": {
+    "scores": {
+      "baseline": {
+        "icelandic": 5,
+        "warmth": 4,
+        "marketability": 4,
+        "truth": 9,
+        "fit": 4
+      },
+      "set1": {
+        "icelandic": 8,
+        "warmth": 8,
+        "marketability": 8,
+        "truth": 10,
+        "fit": 9
+      },
+      "set2": {
+        "icelandic": 7,
+        "warmth": 6,
+        "marketability": 6,
+        "truth": 10,
+        "fit": 7
+      },
+      "set3": {
+        "icelandic": 7,
+        "warmth": 6,
+        "marketability": 6,
+        "truth": 9,
+        "fit": 6
+      }
+    },
+    "problems": [
+      "Baseline leans heavily on stiff, transactional software commands ('Lestu ókeypis bók', 'Byrjaðu strax í kvöld, án innskráningar') that ruin the bedtime mood.",
+      "Set 1 relapses into SaaS sign-up jargon in beat 4 ('Engin innskráning. Byrjum strax.') instead of maintaining lyrical narrative immersion.",
+      "Set 2 unnecessarily highlights digital screen time ('á skjánum', 'smellur'), triggering screen-time ambivalence among parents.",
+      "Set 3 adopts a defensive advertising tone ('Engar auglýsingar, engin truflun') and unnecessarily presumes a two-person household ('okkur tvö').",
+      "The candidate caption contained a forbidden em dash ('–') and opened with an imperative command ('Gerið ykkur kósý')."
+    ],
+    "final": [
+      "Rökkrið læðist inn.",
+      "Kveikjum á litla lampanum.",
+      "Þrjár bækur standa opnar.",
+      "Engin innskráning, sagan hefst.",
+      "Saga fyrir kvöldið."
+    ],
+    "why": [
+      "Captures the visual dusk transition with an authentic, gentle Icelandic idiom.",
+      "Mirrors the physical action of the lamp turning on with an inclusive, cozy family gesture.",
+      "Accurately conveys the three unlocked book covers without corporate jargon.",
+      "Communicates zero-friction access while smoothly ushering the reader into the story.",
+      "Lands the hero brand promise with quiet, reassuring simplicity."
+    ],
+    "caption": "Þegar rökkrið færist yfir er gott að eiga rólega stund saman. Þrjár myndabækur standa opnar á Yarnkin án allrar innskráningar, tilbúnar fyrir kvöldsöguna."
+  },
+  "saman": {
+    "scores": {
+      "baseline": {
+        "icelandic": 5,
+        "warmth": 4,
+        "marketability": 4,
+        "truth": 9,
+        "fit": 5
+      },
+      "set1": {
+        "icelandic": 9,
+        "warmth": 9,
+        "marketability": 8,
+        "truth": 10,
+        "fit": 9
+      },
+      "set2": {
+        "icelandic": 8,
+        "warmth": 8,
+        "marketability": 8,
+        "truth": 10,
+        "fit": 8
+      },
+      "set3": {
+        "icelandic": 5,
+        "warmth": 6,
+        "marketability": 6,
+        "truth": 10,
+        "fit": 6
+      }
+    },
+    "problems": [
+      "Baseline is didactic and preachy, commanding parents with guilt-inducing imperatives ('Lestu með barninu').",
+      "Set 3 commits a serious linguistic blunder by saying 'blaðsíðurnar snúast' (pages turn like wheels/rotate) instead of using 'flettast'.",
+      "Set 3 also relies on defensive tech-detox framing ('Ekkert streymi, ekkert áreiti') that clashes with quiet bedtime storytelling.",
+      "Set 1's final line ('Nærveran ein skiptir máli') sounds like a sentimental greeting card and crowds out the upcoming end card.",
+      "The candidate caption leads with negative product features ('Engar auglýsingar') rather than emotional bedtime warmth."
+    ],
+    "final": [
+      "Einn les, aðrir hlusta.",
+      "Enginn rekur á eftir okkur.",
+      "Skoðum myndirnar í rólegheitum.",
+      "Blaðsíðu fyrir blaðsíðu.",
+      "Tíminn fær að bíða."
+    ],
+    "why": [
+      "Directly observes the scene of Bangsi reading aloud while the others listen from floor cushions.",
+      "Turns the brand's anti-rush philosophy into a cozy first-person family experience.",
+      "Focuses on the quiet visual appreciation of picture-book art without hurry.",
+      "Uses classic, tactile Icelandic pacing to match the deliberate page turns.",
+      "Provides a deeply resonant closing sentiment that lets time stand still before the end card."
+    ],
+    "caption": "Enginn rekur á eftir ykkur og engar auglýsingar trufla stundina. Bara fallegar myndabækur til að lesa saman á ykkar eigin hraða."
+  },
+  "tunga": {
+    "scores": {
+      "baseline": {
+        "icelandic": 5,
+        "warmth": 3,
+        "marketability": 3,
+        "truth": 10,
+        "fit": 6
+      },
+      "set1": {
+        "icelandic": 7,
+        "warmth": 7,
+        "marketability": 7,
+        "truth": 10,
+        "fit": 8
+      },
+      "set2": {
+        "icelandic": 4,
+        "warmth": 5,
+        "marketability": 5,
+        "truth": 10,
+        "fit": 6
+      },
+      "set3": {
+        "icelandic": 6,
+        "warmth": 7,
+        "marketability": 7,
+        "truth": 10,
+        "fit": 7
+      }
+    },
+    "problems": [
+      "Baseline sounds like a monotonous software demonstration script ('Og nú á ensku... Og aftur á íslensku').",
+      "Set 2 introduces an English headline line into an Icelandic campaign and uses a stiff, forbidden imperative ('Skiptu um mál með fingri').",
+      "Set 3 misuses the idiom 'að skipta um svip' (which refers to human facial expressions, usually looking distressed or grim) to describe language toggling.",
+      "Set 1 opens awkwardly with 'Íslenska á einni síðu', which feels like a clunky technical limitation rather than an inviting story moment.",
+      "The candidate caption issued a direct command ('Skiptu á milli...') instead of framing the feature naturally."
+    ],
+    "final": [
+      "Sagan hefst á íslensku.",
+      "Einn smellur, orðin verða ensk.",
+      "Ljúft að flakka á milli.",
+      "Sama sagan, tvö mál."
+    ],
+    "why": [
+      "Sets the initial reading language naturally without sounding like an instruction manual.",
+      "Demonstrates the seamless single-tap language transition with playful, accessible Icelandic.",
+      "Uses the authentic Icelandic idiom 'að flakka á milli' to capture effortless bilingual flow.",
+      "Reiterates the core product value of unified bilingual storytelling with poetic conciseness."
+    ],
+    "caption": "Með einum smelli er hægt að skipta á milli íslensku og ensku á sömu síðunni. Tilvalið fyrir forvitin eyru og heimili þar sem tvö mál mætast."
+  },
+  "nott": {
+    "scores": {
+      "baseline": {
+        "icelandic": 5,
+        "warmth": 4,
+        "marketability": 3,
+        "truth": 10,
+        "fit": 6
+      },
+      "set1": {
+        "icelandic": 8,
+        "warmth": 8,
+        "marketability": 8,
+        "truth": 9,
+        "fit": 9
+      },
+      "set2": {
+        "icelandic": 6,
+        "warmth": 7,
+        "marketability": 6,
+        "truth": 4,
+        "fit": 6
+      },
+      "set3": {
+        "icelandic": 9,
+        "warmth": 9,
+        "marketability": 9,
+        "truth": 10,
+        "fit": 9
+      }
+    },
+    "problems": [
+      "Baseline is flat, repetitive, and childish, stringing together mundane 'Og svo' statements like a chore list.",
+      "Set 2 breaches the brief's strict prohibition on narration claims by introducing 'lágvær rödd í dimmunni', falsely implying audio read-aloud functionality.",
+      "Set 2 also overdoses on greeting-card sentimentality ('kyssir daginn bless', 'litla hjarta').",
+      "Set 1 includes 'lokum augunum', which edges close to a prescriptive bedtime instruction.",
+      "The candidate caption used the unidiomatic phrase 'blaðsíðan lokast' (pages don't close, books close)."
+    ],
+    "final": [
+      "Allir komnir undir hlýja sæng.",
+      "„Góða nótt, bjartar stjörnur.“",
+      "Lampinn slokknar, kyrrðin tekur við.",
+      "Draumarnir geta byrjað."
+    ],
+    "why": [
+      "Sets an immediate, snug bedtime tone matching the characters tucked under the blanket.",
+      "Integrates the exact sweet phrase from the on-screen picture book into the narrative beat.",
+      "Captures the visual extinguishing of the lamp and the quiet settling in without salesmanship.",
+      "Closes with an imaginative, peaceful bedtime note that echoes the brand tagline without promising sleep."
+    ],
+    "caption": "Þegar bókin lokast og ljósið slokknar tekur næturkyrrðin við. Rólegur endir á góðum degi."
+  }
+}
