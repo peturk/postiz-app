@@ -186,25 +186,25 @@
       items.push(function (t) { var p = clamp((t - 10.6) / 0.35); first.style.transform = "scale(" + lerp(1, 1.08, out3(p)) + ")"; first.style.boxShadow = p ? "0 0 0 " + (6 * p) + "px #F5C542, 0 10px 22px -12px rgba(51,38,30,.6)" : ""; });
       sfx(10.6, "pop");
       reader(12.2, 19.9, [[12.2, 1, "is"], [16.0, 2, "is"]]);
-      return { duration: 23, end: 20.0 };
+      return { duration: 25.8, end: 20.0 };
     },
     /* Lesið saman: page by page. */
     saman: function () {
       heads("saman");
       reader(0.6, 19.9, [[0.6, 1, "is"], [4.0, 2, "is"], [8.0, 3, "is"], [12.0, 4, "is"], [16.0, 5, "is"]]);
-      return { duration: 23, end: 20.0 };
+      return { duration: 25.8, end: 20.0 };
     },
     /* Á íslensku og ensku: the same page, one tap, two languages. */
     tunga: function () {
       heads("tunga");
       reader(0.6, 19.9, [[0.6, 4, "is"], [6.0, 4, "en"], [9.2, 5, "en"], [12.4, 5, "is"], [15.6, 6, "is"]], { on: 6.0, off: 12.4 });
-      return { duration: 23, end: 20.0 };
+      return { duration: 25.8, end: 20.0 };
     },
     /* Góða nótt: the last page, then the book comes down and the light goes out. */
     nott: function () {
       heads("nott");
       reader(0.6, 8.6, [[0.6, 12, "is"]]);
-      return { duration: 23, end: 20.0 };
+      return { duration: 25.8, end: 20.0 };
     }
   };
 

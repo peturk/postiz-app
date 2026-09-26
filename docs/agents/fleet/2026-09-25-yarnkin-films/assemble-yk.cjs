@@ -100,7 +100,8 @@ function run(args) {
   });
   // Voiceover (optional).
   const voPath = `vo/${film}/lines.json`;
-  const vo = fs.existsSync(voPath) ? JSON.parse(fs.readFileSync(voPath, "utf8")) : [];
+  const voDoc = fs.existsSync(voPath) ? JSON.parse(fs.readFileSync(voPath, "utf8")) : [];
+  const vo = Array.isArray(voDoc) ? voDoc : voDoc.lines;  // vo-yk.mjs writes { voice, voiceId, model, lines }
   if (vo.length) {
     const labels = [];
     vo.forEach((l, k) => {

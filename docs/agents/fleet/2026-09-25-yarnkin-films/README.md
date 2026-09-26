@@ -49,3 +49,10 @@ Gemini rule (PK, 2026-09-25, hard): the paid Gemini key (`GEMINI_TTS_API_KEY`) i
 All other Gemini work goes through a Herdr client: the critic ran in an `agy` helper tab on Gemini 3.8 Flash (High) from `copy/critic-task.md`.
 Never Gemini 3.1.
 The writer pass and the round 1-2 music and listening passes predate this rule and called the key directly; `lyria.mjs` and `listen.mjs` are therefore not kept here, and new music or listening work must run through a Herdr client.
+
+## Voice (test version, 2026-09-26)
+
+`node vo-yk.mjs <catalogue-voice-id>` reads the voice id, model and direction from WTD's Voice Bank (`web/src/data/narration/voice-bank.json` on wtd origin/main) and speaks each film's headlines (`copy/final.json`) plus the tagline "Lesum saman. Hlustum saman. Dreymum saman." over the end card; `tts.mjs` is the TTS call.
+TTS only: no transcription or judging on the paid key, so takes are checked by ear.
+A line may run past its headline but ends 0.3 s before the next spoken line; the bedtime direction's pauses stretched the tagline to 7.4 s, so its pauses are held to 0.45 s (5.2 s) and the films run 25.8 s.
+First test voice: `narrator-bedtime` (19 TTS requests).
