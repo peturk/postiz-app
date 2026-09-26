@@ -18,18 +18,14 @@ const bank = JSON.parse(execFileSync("git", ["-C", WTD, "show", "origin/main:web
 function catalogue(name) {
   const v = (Array.isArray(bank) ? bank : bank.voices).find(x => x.id === name);
   if (!v?.chosen?.voiceId) { console.error(`${name} has no chosen voice in the WTD Voice Bank`); process.exit(2); }
-  return { name, voiceId: v.chosen.voiceId, model: v.chosen.model, direction: v.chosen.sample.direction, full: v.chosen.fullVoiceSample };
+  return { name, voiceId: v.chosen.voiceId, model: v.chosen.model, direction: v.chosen.sample.direction, scenarios: v.chosen.scenarios || [] };
 }
-// WTD decision E35 (wtd 924bbf1f0): a voice's character comes from its measured
-// full-voice take; films and ads cast only voices whose scenarios include "film".
-function scenarios(v) {
-  const f = v.full; if (!f) return [];
-  const character = f.voicedShare < 30 ? "whisper" : f.breathShare >= 20 ? "breathy" : f.voicedShare >= 50 ? "full" : "soft";
-  return { whisper: ["bedtime"], breathy: ["bedtime", "read-aloud"], full: ["bedtime", "read-aloud", "film"], soft: ["bedtime", "read-aloud", "film"] }[character];
-}
+// WTD decision E35 (wtd 7380da6a4): each chosen voice carries its measured
+// character and scenarios in voice-bank.json; films and ads cast only voices
+// whose scenarios include "film".
 function filmVoice(name) {
   const v = catalogue(name);
-  if (!scenarios(v).includes("film")) { console.error(`${name} is not a film voice in the WTD Voice Bank (E35); cast one whose scenarios include "film"`); process.exit(2); }
+  if (!v.scenarios.includes("film")) { console.error(`${name} is not a film voice in the WTD Voice Bank (E35); cast one whose scenarios include "film"`); process.exit(2); }
   return v;
 }
 const TAGLINE = { text: "Lesum saman. Hlustum saman. Dreymum saman." };

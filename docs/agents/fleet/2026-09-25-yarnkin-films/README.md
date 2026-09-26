@@ -59,5 +59,5 @@ First test voice: `narrator-bedtime` (19 TTS requests).
 
 ## Casting rule (WTD decision E35, 2026-09-26)
 
-Voices come from WTD's Voice Bank only, and a film casts only voices whose scenarios include "film". The character is measured from each voice's full-voice take: full (50% voiced or more) and soft suit film; breathy (breath 20% or more) is bedtime and read-aloud; whisper (under 30% voiced) is bedtime only.
+Voices come from WTD's Voice Bank only, and a film casts only voices whose scenarios include "film". WTD measures each voice and writes its character and scenarios into voice-bank.json (chosen.character, chosen.scenarios; wtd 7380da6a4); vo-yk.mjs reads them as written.
 `vo-yk.mjs` refuses any other voice. The films use narrator-grandmother (full) and narrator-bedtime (soft) with the calm direction; narrator-mother (breathy) and narrator-father (whisper) are not film voices, so "Á íslensku og ensku" moved from the Mother to the Grandmother voice.
