@@ -1,0 +1,54 @@
+{
+ "kvold": [
+  {
+   "t": 1.0,
+   "text": "Komdu og sestu hjá mér."
+  },
+  {
+   "t": 8.0,
+   "text": "Hvað eigum við að velja?"
+  },
+  {
+   "t": 13.0,
+   "text": "Sjáðu, nú leggjum við af stað."
+  }
+ ],
+ "saman": [
+  {
+   "t": 1.2,
+   "text": "Notalegt að sitja með ykkur."
+  },
+  {
+   "t": 7.8,
+   "text": "Það liggur ekkert á."
+  },
+  {
+   "t": 14.0,
+   "text": "Ljúft að eiga svona kvöld."
+  }
+ ],
+ "tunga": [
+  {
+   "t": 3.5,
+   "text": "Sjáðu hvað gerist hérna."
+  },
+  {
+   "t": 9.2,
+   "text": "Svo skiptum við bara til baka."
+  },
+  {
+   "t": 14.5,
+   "text": "Þú velur hvernig við lesum."
+  }
+ ],
+ "nott": [
+  {
+   "t": 1.2,
+   "text": "Hreiðraðu vel um þig."
+  },
+  {
+   "t": 10.5,
+   "text": "Hvíldu þig nú, litla hjarta."
+  }
+ ]
+}

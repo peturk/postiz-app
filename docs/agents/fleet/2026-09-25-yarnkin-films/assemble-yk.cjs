@@ -135,7 +135,7 @@ function run(args) {
   await run([...inputs, "-filter_complex", fc, "-map", "[outv]", "-map", "[outa]", "-r", String(FPS),
     "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-c:a", "pcm_s24le", "-t", String(total), pre]);
   // Pass 2: one static gain to -14 LUFS, then a true-peak limiter.
-  const gain = -14 - lufs(pre);
+  const gain = -13.2 - lufs(pre);  // aim 0.8 dB high: the limiter trims voice peaks and v5 landed at -14.5 to -15.2
   await run(["-i", pre, "-map", "0:v", "-map", "0:a", "-c:v", "copy",
     "-af", `volume=${gain.toFixed(2)}dB,aresample=192000,alimiter=limit=${Math.pow(10, -2.0 / 20).toFixed(4)}:attack=2:release=60:level=disabled,aresample=48000`,
     "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", out]);

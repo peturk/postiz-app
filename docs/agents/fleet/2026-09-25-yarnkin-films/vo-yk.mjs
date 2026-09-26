@@ -21,7 +21,7 @@ function catalogue(name) {
   return { name, voiceId: v.chosen.voiceId, model: v.chosen.model, direction: v.chosen.sample.direction };
 }
 const TAGLINE = { text: "Lesum saman. Hlustum saman. Dreymum saman." };
-const copy = JSON.parse(readFileSync("copy/final.json", "utf8"));
+const copy = JSON.parse(readFileSync("copy/spoken.json", "utf8"));  // v6: the spoken layer, not the headlines
 const films = only.length ? only : Object.keys(copy);
 const dur = f => parseFloat(execFileSync(BIN + "/ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", f]).toString());
 
@@ -32,6 +32,13 @@ function speak(v, direction, text, out) {
     "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.05,areverse,silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.08,areverse", trimmed]);
   return trimmed;
 }
+// Whisper gate: a take under 40% voiced is re-recorded once (calm is the brand voice).
+function voiced(file) { return parseFloat(execFileSync("python3", ["whisper.py", file]).toString().match(/voiced\s+([0-9.]+)%/)[1]); }
+function speakCalm(v, direction, text, out) {
+  let f = speak(v, direction, text, out), vp = voiced(f);
+  if (vp < 40) { const r = out.replace(".wav", "-r1.wav"); const f2 = speak(v, direction, text, r), v2 = voiced(f2); if (v2 > vp) { f = f2; vp = v2; } }
+  return { file: f, voiced: vp };
+}
 function fit(file, slot) {
   const len = dur(file);
   if (len <= slot) return { file, len };
@@ -41,25 +48,26 @@ function fit(file, slot) {
 }
 
 mkdirSync("vo", { recursive: true });
-// The bedtime direction leaves long pauses; the tagline's pauses are held to
-// 0.45 s so it fits the end card (7.4 s -> 5.2 s for narrator-bedtime).
-const tag = "vo/tagline-tight.wav";
+// The tagline's pauses are held to 0.3 s and it is played 8% faster so the calm
+// take (5.5 s) fits a 4.9 s end card (about 4.5 s).
+const tag = "vo/tagline-calm-tight.wav";
 const tagVoice = catalogue(casting.tagline_voice);
-execFileSync(BIN + "/ffmpeg", ["-y", "-loglevel", "error", "-i", speak(tagVoice, tagVoice.direction, TAGLINE.text, "vo/tagline.wav"), "-af",
-  "silenceremove=stop_periods=-1:stop_duration=0.45:stop_threshold=-40dB", tag]);
+execFileSync(BIN + "/ffmpeg", ["-y", "-loglevel", "error", "-i", speak(tagVoice, casting.tagline_direction || tagVoice.direction, TAGLINE.text, "vo/tagline-calm.wav"), "-af",
+  "silenceremove=stop_periods=-1:stop_duration=0.3:stop_threshold=-40dB,atempo=1.08", tag]);
 for (const film of films) {
   const cast = casting.films[film], v = catalogue(cast.voice), direction = cast.direction || v.direction;
-  mkdirSync(`vo/${film}/${v.name}`, { recursive: true });
+  mkdirSync(`vo/${film}/${v.name}-v6`, { recursive: true });
   const lines = copy[film];
   const out = [];
-  lines.forEach(([text, from, to], k) => {
+  lines.forEach(({ t: from, text }, k) => {
     // A line may run past its headline, but must end 0.3 s before the next
     // spoken line (or the film's end card, casting.json films.<film>.end).
-    const t = from + 0.25, slot = (k + 1 < lines.length ? lines[k + 1][1] + 0.25 : cast.end) - t - 0.3;
-    const f = fit(speak(v, direction, text, `vo/${film}/${v.name}/${String(k).padStart(2, "0")}.wav`), slot);
-    out.push({ t, file: f.file, text, len: +f.len.toFixed(2), slot: +slot.toFixed(2), fits: f.len <= slot + 0.01 });
+    const t = from, slot = (k + 1 < lines.length ? lines[k + 1].t : cast.end) - t - 0.3;
+    const sp = speakCalm(v, direction, text, `vo/${film}/${v.name}-v6/${String(k).padStart(2, "0")}.wav`);
+    const f = fit(sp.file, slot);
+    out.push({ t, file: f.file, text, voiced: sp.voiced, len: +f.len.toFixed(2), slot: +slot.toFixed(2), fits: f.len <= slot + 0.01 });
   });
   out.push({ t: cast.end + 0.1, file: tag, text: TAGLINE.text, tag: true });
   writeFileSync(`vo/${film}/lines.json`, JSON.stringify({ voice: v.name, voiceId: v.voiceId, model: v.model, direction, tagline_voice: tagVoice.name, lines: out }, null, 1));
-  console.log(film, v.name, out.map(l => `${l.len ?? ""}/${l.slot ?? ""}${l.fits === false ? " TOO LONG" : ""}`).join("  "));
+  console.log(film, v.name, out.map(l => `${l.len ?? ""}/${l.slot ?? ""} ${l.voiced ?? ""}%${l.fits === false ? " TOO LONG" : ""}`).join("  "));
 }

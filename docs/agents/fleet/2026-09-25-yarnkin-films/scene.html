@@ -37,12 +37,12 @@
   var C = { parchment: "#F6EEDD", card: "#FBF4E4", ink: "#33261E", gold: "#F5C542", coral: "#A34633", forest: "#5E8A72", sky: "#7D8DA8", navy: "#0C1221", night: "#060A11", espresso: "#2B221B", wood: "#8A6446", rug: "#E3D2B4" };
 
   /* Room: wall, window with sky, floor, rug, lamp, shelf. */
-  var FLOOR = 1560;
+  var FLOOR = 1460;  /* v6: the room is lifted 100 px so faces clear the Reels caption zone */
   function room(o) {
     var wall = el("", "left:0;top:0;width:1080px;height:" + FLOOR + "px;background:" + o.wall);
     var win = el('<div class="sky" style="position:absolute;inset:14px;border-radius:90px 90px 8px 8px;background:' + o.sky + ';overflow:hidden"></div>',
-      "left:810px;top:300px;width:230px;height:300px;border-radius:90px 90px 12px 12px;background:" + C.card);
-    var sill = el("", "left:796px;top:596px;width:258px;height:22px;border-radius:11px;background:" + C.rug);
+      "left:830px;top:292px;width:210px;height:240px;border-radius:80px 80px 12px 12px;background:" + C.card);
+    var sill = el("", "left:816px;top:528px;width:238px;height:22px;border-radius:11px;background:" + C.rug);
     var floor = el("", "left:0;top:" + FLOOR + "px;width:1080px;height:" + (1920 - FLOOR) + "px;background:" + o.floor);
     var rug = el("", "left:90px;top:" + (FLOOR + 30) + "px;width:900px;height:90px;border-radius:45px;background:" + o.rug);
     return { wall: wall, win: win, sky: win.querySelector(".sky"), floor: floor, rug: rug };
@@ -57,7 +57,7 @@
   function stars(host, n, seed) {
     var s = seed || 7, out = [];
     for (var i = 0; i < n; i++) {
-      s = (s * 9301 + 49297) % 233280; var x = 16 + (s / 233280) * 170; s = (s * 9301 + 49297) % 233280; var y = 20 + (s / 233280) * 250;
+      s = (s * 9301 + 49297) % 233280; var x = 14 + (s / 233280) * 150; s = (s * 9301 + 49297) % 233280; var y = 16 + (s / 233280) * 190;
       var d = document.createElement("div"); d.style.cssText = "position:absolute;left:" + x + "px;top:" + y + "px;width:6px;height:6px;border-radius:3px;background:#FFF4C8";
       host.appendChild(d); out.push(d);
     }
@@ -113,6 +113,19 @@
     return { head: head, blanket: blanket };
   }
 
+  /* The product in the room (v6): a wooden reading stand under the tablet the
+     UI layer draws at x cx-260..cx+260, y 545..~1130. */
+  function stand(cx, topY) {
+    var h = FLOOR + 20 - topY;
+    return piece([360, h, '<rect x="60" y="0" width="240" height="26" rx="10" fill="#8A6446"/>'
+      + '<path d="M140 20 L96 ' + h + '" stroke="#7A5638" stroke-width="22" stroke-linecap="round"/><path d="M220 20 L264 ' + h + '" stroke="#7A5638" stroke-width="22" stroke-linecap="round"/>'
+      + '<path d="M180 20 L180 ' + (h - 10) + '" stroke="#6A4A30" stroke-width="16" stroke-linecap="round"/>'], cx - 180, topY, 9);
+  }
+  function pouf(x, w, topY, color) { return piece([w, 200, '<rect x="0" y="0" width="' + w + '" height="180" rx="60" fill="' + color + '"/><rect x="20" y="14" width="' + (w - 40) + '" height="40" rx="20" fill="rgba(255,255,255,.14)"/>'], x, topY, 8); }
+  /* A listener reacts when the page turns or the language switches: a double
+     take, then back to a warm open face on the tablet. */
+  function react(m, t, look) { at(t, function () { m.set({ mood: "alert", look: look }); }); at(t + 0.9, function () { m.set({ mood: "love", look: look }); }); }
+
   /* The cast: the product's own <Mascot>, held moods, live breath and blinks. */
   var cast = {};
   /* base: where the mascot's feet rest (the floor by default, a seat or a
@@ -132,84 +145,87 @@
     return cast[name];
   }
 
+  /* v6 layout: the tablet on its stand is the centre of every scene; the cast
+     sits beside it, faces above y 1248 (the Reels caption zone), eyes on it.
+     Nobody holds a paper book: the product is the book. */
+  var L = { x: 0.4, y: -0.15 }, R = { x: -0.4, y: -0.15 };
   var FILMS = {
-    /* Saga fyrir kvöldið: dusk on the sofa, a free book opened straight away. */
+    /* Saga fyrir kvöldið: dusk on the sofa, the tablet shows three open books, one opens. */
     kvold: function () {
       var r = room({ wall: "#EBDFC6", sky: "#7D8DA8", floor: "#D9C7A6", rug: "#CDB58F" });
-      var st = stars(r.sky, 9, 3); st.forEach(function (s) { s.style.opacity = 0; });
-      var mn = moon(r.sky, 120, 90, 34); mn.style.opacity = 0;
-      shelf(70, 640);
-      var lp = tableLamp(990, 1300);
-      sofa(40, 860, 1440);
-      var bear = mascot("bear", 90, 330, { mood: "neutral", look: { x: 0.4, y: 0 } }, 1440);
-      var rabbit = mascot("rabbit", 560, 220, { mood: "neutral", look: { x: -0.4, y: 0 } }, 1440);
+      var st = stars(r.sky, 8, 3); st.forEach(function (s) { s.style.opacity = 0; });
+      var mn = moon(r.sky, 100, 76, 30); mn.style.opacity = 0;
+      var lp = lamp(1000);
+      sofa(10, 1060, 1340);
+      var bear = mascot("bear", 20, 290, { mood: "neutral", look: L }, 1340);
+      var rabbit = mascot("rabbit", 850, 190, { mood: "neutral", look: R }, 1296);
+      stand(540, 1128);
       tween(0, 6, function (p) { r.sky.style.background = mix("#7D8DA8", "#1E2A44", p); st.forEach(function (s, i) { s.style.opacity = clamp(p * 1.6 - i * 0.08); }); mn.style.opacity = p; });
-      lp.glow.style.opacity = 0; tween(3.9, 5.2, function (p) { lp.glow.style.opacity = p; });
-      at(4.0, function () { rabbit.set({ mood: "love", look: { x: 0.4, y: 0 } }); bear.set({ mood: "love", look: { x: 0.45, y: 0 } }); });
-      at(7.6, function () { rabbit.set({ mood: "curious", look: { x: -0.3, y: -0.2 } }); bear.set({ mood: "curious", look: { x: 0.3, y: -0.2 } }); });
-      at(10.6, function () { rabbit.set({ mood: "excited" }); bear.set({ mood: "love" }); });
-      at(12.0, function () { rabbit.set({ mood: "love", look: { x: -0.4, y: -0.1 } }); bear.set({ mood: "love", hold: { kind: "book" }, look: { x: 0, y: 0.1 } }); });
+      lp.glow.style.opacity = 0; tween(3.5, 4.8, function (p) { lp.glow.style.opacity = p; });
+      at(1.0, function () { bear.set({ mood: "curious", look: L }); rabbit.set({ mood: "curious", look: R }); });
+      at(4.0, function () { bear.set({ mood: "love", look: L }); rabbit.set({ mood: "love", look: R }); });
+      react(rabbit, 7.8, R); react(bear, 8.5, L);
+      at(11.0, function () { rabbit.set({ mood: "excited", look: R }); bear.set({ mood: "love", look: L }); });
+      at(12.4, function () { rabbit.set({ mood: "love", look: R }); });
+      react(rabbit, 16.0, R);
       return 20;
     },
-    /* Lesið saman: Bangsi reads in the armchair, Ugla and Kanína listen from cushions. */
+    /* Lesið saman: Bangsi in the armchair, Ugla on its back, Kanína on a pouf; the pages turn. */
     saman: function () {
       var r = room({ wall: "#EFE3CB", sky: "#27334F", floor: "#D9C7A6", rug: "#C9A57E" });
-      moon(r.sky, 120, 90, 32); stars(r.sky, 8, 11);
-      var lp = tableLamp(1000, 1320);
-      armchair(20, 400, 1430);
-      var bear = mascot("bear", 60, 320, { mood: "love", hold: { kind: "book" }, look: { x: 0, y: 0.1 } }, 1430);
-      var owl = mascot("owl", 470, 230, { mood: "neutral", look: { x: -0.4, y: 0 } }, 1540);
-      cushion(450, 270, 1560, "#F5C542");
-      var rabbit = mascot("rabbit", 750, 190, { mood: "curious", look: { x: -0.45, y: 0 } }, 1545);
-      cushion(720, 250, 1565, "#A34633");
-      at(4.2, function () { rabbit.set({ mood: "love" }); });
-      at(8.6, function () { owl.set({ mood: "curious", look: { x: -0.4, y: -0.1 } }); });
-      at(11.0, function () { owl.set({ mood: "love" }); rabbit.set({ mood: "excited" }); });
-      at(12.6, function () { rabbit.set({ mood: "love" }); });
+      moon(r.sky, 100, 76, 30); stars(r.sky, 8, 11);
+      armchair(0, 380, 1330);
+      var bear = mascot("bear", 30, 300, { mood: "love", look: L }, 1330);
+      var owl = mascot("owl", 250, 150, { mood: "neutral", look: L }, 985);
+      pouf(900, 180, 1290, "#A34633");
+      var rabbit = mascot("rabbit", 905, 170, { mood: "curious", look: R }, 1270);
+      stand(680, 1128);
+      [2.0, 6.0, 10.0, 14.0].forEach(function (t, i) { react(i % 2 ? owl : rabbit, t, i % 2 ? L : R); });
+      at(3.2, function () { rabbit.set({ mood: "love", look: R }); });
+      at(16.4, function () { bear.set({ mood: "love", look: { x: 0.3, y: -0.05 } }); });
       return 20;
     },
-    /* Á íslensku og ensku: the window seat, one page in two languages. */
+    /* Á íslensku og ensku: the sofa, one page in two languages. */
     tunga: function () {
       var r = room({ wall: "#EFE3CB", sky: "#27334F", floor: "#D9C7A6", rug: "#CDB58F" });
-      moon(r.sky, 120, 90, 32); stars(r.sky, 8, 17);
-      shelf(70, 640);
-      var lp = tableLamp(1000, 1320);
-      sofa(60, 820, 1450, { back: "#5E7390", inner: "#7D8DA8", base: "#4E6380", cush: "#9AAAC2" });
-      var fox = mascot("fox", 140, 300, { mood: "neutral", look: { x: 0.4, y: -0.2 } }, 1450);
-      var rabbit = mascot("rabbit", 560, 220, { mood: "neutral", look: { x: -0.4, y: -0.2 } }, 1450);
-      at(3.6, function () { fox.set({ mood: "curious" }); });
-      at(6.2, function () { fox.set({ mood: "surprised" }); rabbit.set({ mood: "curious" }); });
-      at(7.4, function () { fox.set({ mood: "love", look: { x: 0.4, y: -0.2 } }); });
-      at(10.8, function () { rabbit.set({ mood: "love" }); });
+      moon(r.sky, 100, 76, 30); stars(r.sky, 8, 17);
+      lamp(1000);
+      sofa(10, 1060, 1340, { back: "#5E7390", inner: "#7D8DA8", base: "#4E6380", cush: "#9AAAC2" });
+      var fox = mascot("fox", 20, 280, { mood: "neutral", look: L }, 1340);
+      var rabbit = mascot("rabbit", 850, 190, { mood: "neutral", look: R }, 1296);
+      stand(540, 1128);
+      at(1.2, function () { fox.set({ mood: "curious", look: L }); });
+      at(2.8, function () { fox.set({ mood: "surprised", look: L }); rabbit.set({ mood: "curious", look: R }); });
+      at(3.8, function () { fox.set({ mood: "love", look: L }); });
+      react(rabbit, 5.6, R);
+      at(8.6, function () { fox.set({ mood: "alert", look: L }); });
+      at(9.5, function () { fox.set({ mood: "love", look: L }); rabbit.set({ mood: "love", look: R }); });
+      react(rabbit, 13.2, R);
       return 20;
     },
-    /* Góða nótt: everyone in bed, the last page, the book comes down, lights out. */
+    /* Góða nótt: everyone in bed, the tablet on its stand by the bed; the lamp
+       and the screen go dark together; they fall asleep. */
     nott: function () {
       var r = room({ wall: "#E6D8BC", sky: "#1E2A44", floor: "#CDB894", rug: "#B99A73" });
-      moon(r.sky, 120, 90, 34); stars(r.sky, 10, 5);
-      var lp = tableLamp(90, 1330);
-      var b = bed(190, 850, 1440);
-      var owl = mascot("owl", 205, 170, { mood: "neutral", look: { x: 0.4, y: 0 } }, 1080);
-      var rabbit = mascot("rabbit", 250, 190, { mood: "sleepy", look: { x: 0.3, y: 0 } }, 1462);
-      var bear = mascot("bear", 440, 300, { mood: "love", hold: { kind: "book" }, look: { x: 0, y: 0.1 } }, 1480);
-      var fox = mascot("fox", 760, 220, { mood: "neutral", look: { x: -0.4, y: 0 } }, 1500);
+      moon(r.sky, 100, 76, 30); stars(r.sky, 9, 5);
+      var lp = lamp(1010);
+      var b = bed(420, 620, 1340);
+      var owl = mascot("owl", 680, 150, { mood: "neutral", look: R }, 935);
+      var rabbit = mascot("rabbit", 450, 160, { mood: "sleepy", look: R }, 1352);
+      var bear = mascot("bear", 600, 270, { mood: "love", look: R }, 1372);
+      var fox = mascot("fox", 850, 190, { mood: "neutral", look: R }, 1392);
+      stand(280, 1128);
       /* Lights down is a night, not grey: deep navy with a warm pool where the
-         cast sleeps (a flat dim over parchment read as grey). The window is
-         repeated above it, so the moon never fades into the night. */
-      var dark = el("", "left:0;top:0;width:1080px;height:1920px;z-index:20;background:radial-gradient(ellipse 60% 22% at 55% 76%, rgba(58,38,20,.35), rgba(9,17,44,.95) 75%);opacity:0");
-      var winTop = r.win.cloneNode(true); winTop.style.opacity = 0; winTop.style.zIndex = 21; stage.appendChild(winTop); moon(winTop.querySelector(".sky"), 120, 90, 34); stars(winTop.querySelector(".sky"), 10, 5);
+         cast sleeps. The window is repeated above it, so the moon stays lit. */
+      var dark = el("", "left:0;top:0;width:1080px;height:1920px;z-index:20;background:radial-gradient(ellipse 50% 20% at 70% 66%, rgba(58,38,20,.35), rgba(9,17,44,.95) 75%);opacity:0");
+      var winTop = r.win.cloneNode(true); winTop.style.opacity = 0; winTop.style.zIndex = 21; stage.appendChild(winTop); moon(winTop.querySelector(".sky"), 100, 76, 30); stars(winTop.querySelector(".sky"), 9, 5);
+      react(fox, 4.8, R); react(bear, 5.0, R);
       at(5.6, function () { rabbit.set({ mood: "asleep" }); });
-      at(8.8, function () { bear.set({ mood: "sleepy", hold: undefined, look: { x: 0, y: 0.2 } }); fox.set({ mood: "sleepy", look: { x: -0.2, y: 0.2 } }); });
+      at(8.8, function () { bear.set({ mood: "sleepy", look: { x: 0, y: 0.2 } }); fox.set({ mood: "sleepy", look: { x: -0.2, y: 0.2 } }); });
       at(11.0, function () { fox.set({ mood: "asleep" }); });
       tween(11.8, 13.6, function (p) { lp.glow.style.opacity = 1 - p; dark.style.opacity = 0.85 * p; winTop.style.opacity = p; });
       at(12.8, function () { bear.set({ mood: "asleep" }); });
       at(14.6, function () { owl.set({ mood: "asleep" }); });
-      /* The book Bangsi lowers keeps glowing on the nightstand, above the dark,
-         so the product stays in the room after the lamp goes out. */
-      var glowBook = el('<div style="position:absolute;left:-40px;top:-60px;width:220px;height:170px;border-radius:50%;background:radial-gradient(ellipse, rgba(255,222,140,.55), rgba(255,222,140,0) 70%)"></div>'
-        + '<svg width="140" height="60" viewBox="0 0 140 60" style="position:absolute;left:0;top:0"><path d="M70 14 Q40 2 6 10 L6 50 Q40 42 70 54 Z" fill="#FBF4E4"/><path d="M70 14 Q100 2 134 10 L134 50 Q100 42 70 54 Z" fill="#F3E6C8"/><path d="M70 14 L70 54" stroke="#C9B28A" stroke-width="3"/></svg>',
-        "left:60px;top:1470px;width:140px;height:60px;z-index:22;opacity:0");
-      tween(8.8, 9.6, function (p) { glowBook.style.opacity = p; });
       return 20;
     }
   };

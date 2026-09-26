@@ -1,5 +1,5 @@
 {
- "principle": "The tagline over the end card is always narrator-bedtime: one consistent sonic brand asset (Ehrenberg-Bass: consistency builds the memory link; changing it resets it). Each film's body voice is cast for what that film says and who it speaks to.",
+ "principle": "The tagline over the end card is always narrator-bedtime: one consistent sonic brand asset (Ehrenberg-Bass: consistency builds the memory link; changing it resets it). Each film's body voice is cast for what that film says and who it speaks to. v6: calm is the brand voice, whisper is never used; every take must measure at least 40% voiced (whisper.py).",
  "tagline_voice": "narrator-bedtime",
  "films": {
   "kvold": {
@@ -15,10 +15,11 @@
    "job": "Consideration: the value of the shared moment, no hurry, no ads.",
    "audience": "Parents who already read to their children, both mothers and fathers; Icelandic fathers take a large share of bedtime, and ads rarely speak to them.",
    "message": "One reads, the others listen; time can wait.",
-   "voice": "narrator-father",
+   "voice": "narrator-bedtime",
    "why": "Bangsi reading in the armchair is the family reader; a warm father voice mirrors the scene, widens the audience beyond mothers, and gives the series vocal variety.",
-   "direction": "A relaxed Icelandic father reading with his children in the evening: warm soft baritone, natural and unhurried, a quiet smile, not hushed; small natural pauses between sentences.",
-   "end": 20.0
+   "direction": "Speak in a calm, warm, full voice at a normal conversational level, close to the microphone: relaxed and unhurried, a smile in the voice. Not whispered, not breathy, not hushed; every vowel clearly voiced. Natural Icelandic phrasing with a small pause between sentences.",
+   "end": 20.0,
+   "note": "Fallback until WTD adds a calm male narrator (narrator-father whispers: 13-23% voiced)."
   },
   "tunga": {
    "job": "Feature proof: one tap switches the same page between Icelandic and English.",
@@ -26,7 +27,7 @@
    "message": "Same story, two languages, one tap.",
    "voice": "narrator-mother",
    "why": "A feature needs clarity and a brighter, everyday register; the mother voice is the clearest of the four and reads as a modern family, the people who use the switch.",
-   "direction": "A warm, clear Icelandic mother reading with her child: bright and natural, a light smile, a little livelier than bedtime, very clear articulation; small natural pauses between sentences.",
+   "direction": "A warm, clear Icelandic mother talking with her child: bright and natural, a light smile, normal conversational level. Not whispered, not breathy; every vowel clearly voiced.",
    "end": 20.0
   },
   "nott": {
@@ -35,8 +36,9 @@
    "message": "The last page, the light goes out, dreams begin.",
    "voice": "narrator-bedtime",
    "why": "The bedtime reader was designed for exactly this moment, and in this film the body voice and the brand voice are the same, so the signature lands at full strength.",
-   "direction": null,
+   "direction": "Speak in a calm, warm, full voice at a normal conversational level, close to the microphone: relaxed and unhurried, a smile in the voice. Not whispered, not breathy, not hushed; every vowel clearly voiced. Natural Icelandic phrasing with a small pause between sentences.",
    "end": 17.2
   }
- }
+ },
+ "tagline_direction": "Speak in a calm, warm, full voice at a normal conversational level, close to the microphone: relaxed and unhurried, a smile in the voice. Not whispered, not breathy, not hushed; every vowel clearly voiced. Natural Icelandic phrasing with a small pause between sentences."
 }

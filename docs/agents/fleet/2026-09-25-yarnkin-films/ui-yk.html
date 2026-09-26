@@ -26,7 +26,11 @@
   .cover .img { height: 180px; border-radius: 14px; display: block; box-shadow: 0 10px 22px -12px rgba(51,38,30,.6); }
   .cover .n { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 28px; line-height: 1.15; margin-top: 12px; }
   .covers { align-items: flex-start; }
-  .reader { background: linear-gradient(180deg, #0C1221, #2B221B); border-radius: 36px; padding: 26px 26px 22px; box-shadow: 0 26px 60px -24px rgba(6,10,17,.8); color: #F6EEDD; }
+  /* The tablet (v6): a device on a stand in the room, not a floating card. */
+  .reader { background: linear-gradient(180deg, #0C1221, #2B221B); border: 14px solid #1B1511; border-radius: 48px; padding: 16px 18px 18px; box-shadow: 0 0 0 3px #4A3C31, 0 26px 60px -24px rgba(6,10,17,.8); color: #F6EEDD; }
+  .lib .row3 { display: flex; gap: 18px; align-items: center; padding: 12px 6px; border-radius: 16px; }
+  .lib .row3 img { height: 120px; border-radius: 10px; display: block; flex: none; }
+  .lib .row3 span { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 31px; line-height: 1.15; }
   .reader .bar { display: flex; justify-content: space-between; align-items: center; height: 56px; }
   .reader .lang { font-weight: 700; font-size: 30px; padding: 12px 20px; border-radius: 999px; background: rgba(246,238,221,.14); }
   .reader .lang.on { background: #F5C542; color: #33261E; }
@@ -149,12 +153,13 @@
   var PAGES = { 1: ["Óskar telur. Einar rótardyr.", "Oskar counts. One root door."], 2: ["Óskar telur. Hve margar dyr?", "Oskar counts. How many doors?"],
     3: ["Óskar telur. Einn hnappur.", "Oskar counts. One button."], 4: ["Óskar telur. Bank, bank, bank.", "Oskar counts. Tap, tap, tap."],
     5: ["Óskar telur. Ein bjarkarskífa.", "Oskar counts. One birchbark disc."], 6: ["Óskar telur. Tveir hringir. Sko!", "Oskar counts. Two circles. Look!"],
+    11: ["Óskar telur. Tvær sofandi mýs.", "Oskar counts. Two sleeping mice."],
     12: ["Óskar telur. Góða nótt, bjartar stjörnur.", "Oskar counts. Goodnight, bright stars."] };
-  var RX = 420, RY = 545, RW = 520;  /* below a two-line headline (ends ~520), bottom edge ~1130: clear of every face */
+  var RX = 280, RY = 545, RW = 520;  /* v6: the tablet on its stand (scene.html stand(cx, 1128)); each film sets RX */
   /* The reader: a list of [time, page, lang] states; a page turn cross-fades the picture. */
-  function reader(from, to, states, withLang) {
+  function reader(from, to, states, withLang, noPop) {
     var d = show(el("reader", '<div class="bar"><span class="lang' + (withLang ? '' : '" style="visibility:hidden') + '">Skipta um tungumál</span><span class="pg"></span></div>'
-      + '<div class="pic"><div class="a"></div><div class="b"></div></div><div class="txt"></div>', RX, RY, RW), from, to, { pop: true });
+      + '<div class="pic"><div class="a"></div><div class="b"></div></div><div class="txt"></div>', RX, RY, RW), from, to, { pop: !noPop });
     var a = d.querySelector(".a"), b = d.querySelector(".b"), txt = d.querySelector(".txt"), pg = d.querySelector(".pg"), lang = d.querySelector(".lang");
     states.forEach(function (s, i) { if (i && s[1] !== states[i - 1][1]) sfx(s[0], "page"); if (i && s[2] !== states[i - 1][2]) sfx(s[0], "tap"); });
     var shown = null;
@@ -180,44 +185,48 @@
   /* Direction inside the story (v5): a quiet, true next step. */
   function nextStep(x, y, from, to) { return chip("3 bækur opnar · yarnkin.com", x, y, from, to); }
   var FILMS = {
-    /* Saga fyrir kvöldið: the open books are there from the first second (the
-       hook); the lamp comes on; the covers light up; one opens. */
+    /* Saga fyrir kvöldið: the tablet shows the three open books from the first
+       second; they light up; the first opens in the same tablet. */
     kvold: function () {
       heads("kvold");
-      var sh = show(el("card", '<div class="covers" style="margin-top:0">'
-        + [[OSK, "Óskar telur ræturnar", 180], [VET, "Geturðu fundið vettlinginn?", 320], [LIT, "Litirnir á flóamarkaði áarsteinanna", 320]].map(function (c) {
-          return '<div class="cover" style="width:' + c[2] + 'px"><img class="img" src="' + ART + c[0] + '-cover.png" style="width:' + c[2] + 'px"><div class="n">' + c[1] + '</div></div>'; }).join("")
-        + '</div>', 90, 600, 900), 0.3, 12.0, { pop: true });
-      var imgs = sh.querySelectorAll(".cover .img");
+      RX = 280;
+      var lib = show(el("reader lib", '<div class="bar"><span class="pg">Yarnkin</span></div>'
+        + [[OSK, "Óskar telur ræturnar"], [VET, "Geturðu fundið vettlinginn?"], [LIT, "Litirnir á flóamarkaði áarsteinanna"]].map(function (c) {
+          return '<div class="row3"><img src="' + ART + c[0] + '-cover.png"><span>' + c[1] + '</span></div>'; }).join(""), RX, RY, RW), 0.3, 12.2, { pop: true });
+      var rowsEl = lib.querySelectorAll(".row3");
       [7.8, 8.5, 9.2].forEach(function (t0, i) {
         sfx(t0, "pop");
         items.push(function (t) { var up = clamp((t - t0) / 0.3), down = i ? clamp((t - t0 - 0.9) / 0.4) : 0, p = up - down;
           if (i === 0 && t >= 11.0) { p = 1; }
-          imgs[i].style.transform = "scale(" + lerp(1, 1.06, out3(p)) + ")"; imgs[i].style.boxShadow = p > 0 ? "0 0 0 " + (6 * p) + "px #F5C542, 0 10px 22px -12px rgba(51,38,30,.6)" : ""; });
+          rowsEl[i].style.background = "rgba(245,197,66," + (0.28 * p).toFixed(3) + ")"; });
       });
-      reader(12.2, 19.9, [[12.2, 1, "is"], [16.0, 2, "is"]]);
-      return { duration: 25.8, end: 20.0 };
+      sfx(11.0, "tap");
+      reader(12.2, 19.9, [[12.2, 1, "is"], [16.0, 2, "is"]], null, true);
+      return { duration: 25.1, end: 20.0 };
     },
     /* Lesið saman: already reading when the film starts; the first page turns at 2 s. */
     saman: function () {
       heads("saman");
+      RX = 420;
       reader(0.3, 19.9, [[0.3, 1, "is"], [2.0, 2, "is"], [6.0, 3, "is"], [10.0, 4, "is"], [14.0, 5, "is"]]);
-      nextStep(RX, 1160, 16.0, 19.9);
-      return { duration: 25.8, end: 20.0 };
+      nextStep(80, 462, 16.0, 19.9);
+      return { duration: 25.1, end: 20.0 };
     },
     /* Á íslensku og ensku: the first switch lands at 2.8 s, inside the hook. */
     tunga: function () {
       heads("tunga");
+      RX = 280;
       reader(0.3, 19.9, [[0.3, 4, "is"], [2.8, 4, "en"], [5.6, 5, "en"], [8.6, 5, "is"], [13.2, 6, "is"]], { on: 2.8, off: 8.6 });
-      return { duration: 25.8, end: 20.0 };
+      return { duration: 25.1, end: 20.0 };
     },
-    /* Góða nótt: the last page, the book comes down and keeps glowing on the
-       nightstand, the light goes out; the story ends at 17.2 s. */
+    /* Góða nótt: the last page on the tablet by the bed; the screen goes dark
+       with the lamp (11.8-13.6): the product respects sleep. */
     nott: function () {
       heads("nott");
-      reader(0.3, 8.6, [[0.3, 12, "is"]]);
-      nextStep(80, 560, 9.2, 13.8);
-      return { duration: 23.0, end: 17.2 };
+      RX = 20;
+      var d = reader(0.3, 17.1, [[0.3, 11, "is"], [4.8, 12, "is"]]);  /* page 11 turns to the last page as "Góða nótt" lands */
+      items.push(function (t) { var p = clamp((t - 11.8) / 1.8); d.style.filter = "brightness(" + (1 - 0.92 * p).toFixed(3) + ")"; });
+      return { duration: 22.3, end: 17.2 };
     }
   };
 

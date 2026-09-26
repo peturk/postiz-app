@@ -1,0 +1,57 @@
+{
+  "films": {
+    "saman": {
+      "A": {
+        "score": 16,
+        "evidence": "The immediate reading scene and reliable four-second page turns sustain viewing momentum, though an unchanging camera angle across all twenty seconds limits visual dynamism."
+      },
+      "B": {
+        "score": 18,
+        "evidence": "Bangsi reading in the armchair alongside the owl and rabbit, reinforced by the elevated mid-story 'yarnkin.com' chip, creates distinctive mascot-driven brand equity that remains instantly identifiable sound-off."
+      },
+      "C": {
+        "score": 21,
+        "evidence": "While the unhurried Icelandic prose captures a tender bedtime ritual, falling back to the female bedtime narrator rather than an authentic father voice weakens the intended representation for co-reading Icelandic fathers and dilutes vocal diversity across the campaign."
+      },
+      "D": {
+        "score": 14,
+        "evidence": "The elevated mid-story chip '3 bækur opnar · yarnkin.com' effectively connects the calm reading moment to an accessible destination without disrupting the unhurried tone."
+      },
+      "E": {
+        "score": 19,
+        "evidence": "On-screen typography and contrast are immaculate with the repositioned chip clearing the tablet stand cleanly, while audio measurements (-14.3 LUFS, -1.7 dBFS peak, 43-64% voiced) confirm compliant broadcast loudness and audible vocalization judged purely from recorded metrics since audio cannot be monitored directly."
+      },
+      "total": 88,
+      "weakest": "Falling back to the female bedtime voice deprives the father-focused reading scene of its authentic male vocal counterpart and reduces campaign vocal variety.",
+      "best_change": "Cast a properly voiced, non-whispering Icelandic father narrator measuring at least 45% voiced to authentically mirror Bangsi reading in the armchair."
+    },
+    "nott": {
+      "A": {
+        "score": 18,
+        "evidence": "The endearing bedroom scene hooks scrolling parents immediately, while introducing a page turn to page twelve at 4.8 seconds alongside character reactions successfully eliminates the previous mid-film lull and sustains gentle momentum."
+      },
+      "B": {
+        "score": 19,
+        "evidence": "Uniting all four mascots under the quilt and smoothly dimming the tablet screen alongside the lamp preserves product presence and distinctive brand assets throughout the entire bedtime ritual."
+      },
+      "C": {
+        "score": 25,
+        "evidence": "The poetic Icelandic cadence ('kyrrðin tekur við', 'Draumarnir geta byrjað') and loving spoken reassurances achieve unmatched emotional intimacy by honoring the vulnerable quiet of falling asleep."
+      },
+      "D": {
+        "score": 13,
+        "evidence": "The peaceful progression toward sleep instinctively prompts parents to close their devices rather than take action, leaving conversion dependent entirely on the final end card without any mid-film signpost."
+      },
+      "E": {
+        "score": 19,
+        "evidence": "The synchronized dimming of the lamp and tablet screen is executed flawlessly without violating brand rules against sleep promises, while audio metrics (-14.5 LUFS, -1.9 dBFS peak, 43-64% voiced) confirm compliant broadcast loudness and vocalization evaluated strictly from reported measurements as audio cannot be monitored directly."
+      },
+      "total": 94,
+      "weakest": "The narrative trajectory into sleep and darkness naturally encourages parents to set their devices down rather than explore the app, leaving acquisition entirely reliant on the final end card.",
+      "best_change": "Introduce a quiet mid-story pill chip such as '3 bækur opnar · yarnkin.com' around second eight before the lights dim to provide a low-friction bridge to action before the room goes dark."
+    }
+  },
+  "strongest": "-",
+  "why": "-",
+  "series": "-"
+}

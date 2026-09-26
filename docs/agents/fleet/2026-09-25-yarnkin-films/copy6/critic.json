@@ -1,0 +1,186 @@
+{
+  "kvold": {
+    "scores": {
+      "set1": {
+        "overall": 9,
+        "naturalness": 9,
+        "complements": 10,
+        "warmth": 9,
+        "truth": 10,
+        "timing": 9,
+        "notes": "Very natural grandmotherly tone; 'Komdu og sestu hjá mér' is flawless, though 'nýjum vinum' is slightly generic."
+      },
+      "set2": {
+        "overall": 6,
+        "naturalness": 5,
+        "complements": 9,
+        "warmth": 7,
+        "truth": 10,
+        "timing": 8,
+        "notes": "'Gerum okkur notalegt' sounds translated from English or Danish, and 'hvaða heim' is overdramatic for a toddler counting book."
+      }
+    },
+    "problems": [
+      "In set 2, 'gerum okkur notalegt hérna' is a calqued phrase that sounds stiff in Icelandic compared to natural idioms like 'koma sér vel fyrir' or 'hafa það náðugt'.",
+      "In set 2, 'Hvaða heim langar þig að heimsækja?' is overly elevated and dramatic for a young children's board book about counting roots.",
+      "In set 1, 'Nú kynnumst við nýjum vinum' is somewhat generic and conventional."
+    ],
+    "final": [
+      {
+        "t": 1.0,
+        "text": "Komdu og sestu hjá mér."
+      },
+      {
+        "t": 8.0,
+        "text": "Hvað eigum við að velja?"
+      },
+      {
+        "t": 13.0,
+        "text": "Sjáðu, nú leggjum við af stað."
+      }
+    ],
+    "why": [
+      "An authentic, grandmotherly invitation that draws the child onto the sofa without duplicating any on-screen text.",
+      "An engaging and interactive question timed perfectly as the three open book covers light up before the tap.",
+      "Captures the adventurous excitement of opening the book while sounding completely natural and avoiding headline repeats."
+    ]
+  },
+  "saman": {
+    "scores": {
+      "set1": {
+        "overall": 7,
+        "naturalness": 7,
+        "complements": 9,
+        "warmth": 8,
+        "truth": 10,
+        "timing": 9,
+        "notes": "Warm sentiment, but all three lines monotonously follow the formulaic '[Adjective] að [verb]...' structure, sounding like social media copy rather than a father speaking in the room."
+      },
+      "set2": {
+        "overall": 6,
+        "naturalness": 5,
+        "complements": 8,
+        "warmth": 7,
+        "truth": 10,
+        "timing": 8,
+        "notes": "'Við dveljum eins lengi og viljum' misses the pronoun 'við' and uses the stiff, literary verb 'dvelja', which no Icelandic parent says at bedtime."
+      }
+    },
+    "problems": [
+      "Both sets rely excessively on passive adjectival declarations ('Notalegt að...', 'Dásamlegt að...', 'Gott að...', 'Ljúft að...'), creating a monotonous, artificial rhythm instead of authentic speech.",
+      "In set 1, 'Dásamlegt að eiga þessa stund' feels overly sentimental and gushy for an Icelandic father reading to his children.",
+      "In set 2, 'Við dveljum eins lengi og viljum' is grammatically truncated and uses an archaic, bookish verb ('dvelja') that sounds unnatural in modern spoken Icelandic."
+    ],
+    "final": [
+      {
+        "t": 1.2,
+        "text": "Notalegt að sitja með ykkur."
+      },
+      {
+        "t": 7.8,
+        "text": "Það liggur ekkert á."
+      },
+      {
+        "t": 14.0,
+        "text": "Ljúft að eiga svona kvöld."
+      }
+    ],
+    "why": [
+      "Establishes a cozy, grounded family moment right as the scene opens in the armchair.",
+      "Replaces the stiff drafts with the quintessential Icelandic phrase for having all the time in the world, without repeating the word 'tími'.",
+      "Provides an understated, affectionate close to the evening reading ritual well before the story ends."
+    ]
+  },
+  "tunga": {
+    "scores": {
+      "set1": {
+        "overall": 9,
+        "naturalness": 9,
+        "complements": 10,
+        "warmth": 9,
+        "truth": 10,
+        "timing": 10,
+        "notes": "'Svo skiptum við bara til baka' and 'Þú velur hvernig við lesum' are exceptionally natural, clear spoken Icelandic suited for a modern mother."
+      },
+      "set2": {
+        "overall": 6,
+        "naturalness": 6,
+        "complements": 9,
+        "warmth": 6,
+        "truth": 10,
+        "timing": 9,
+        "notes": "'Snögglega' carries a jarring, startling tone, and 'Eins oft og okkur sýnist' sounds slightly combative or flippant."
+      }
+    },
+    "problems": [
+      "In set 2, 'snögglega' implies suddenness or abruptness, which conflicts with the calm, seamless switching experience of the app.",
+      "In set 2, 'Eins oft og okkur sýnist' carries a colloquial nuance of stubborn defiance ('as often as we please, regardless of others') rather than relaxed flexibility.",
+      "In set 1, 'Sjáðu hvað birtist hér' is slightly inaccurate visually because the text translates in place rather than newly popping into view."
+    ],
+    "final": [
+      {
+        "t": 3.5,
+        "text": "Sjáðu hvað gerist hérna."
+      },
+      {
+        "t": 9.2,
+        "text": "Svo skiptum við bara til baka."
+      },
+      {
+        "t": 14.5,
+        "text": "Þú velur hvernig við lesum."
+      }
+    ],
+    "why": [
+      "Directs the child's attention naturally to the language change on screen without falsely implying new content popped up.",
+      "Wonderfully idiomatic and conversational Icelandic for demonstrating the one-tap switch back to Icelandic.",
+      "Empowers the child reader with warmth and simplicity, fitting the mother persona perfectly while avoiding all headline words."
+    ],
+    "headlines": {
+      "line2": "Einn smellur, nú á ensku.",
+      "line4": "Sama sagan, tvö tungumál.",
+      "why": "The writer's proposed replacements must be adopted. In line 2, 'orðin verða ensk' is an unidiomatic predicate calque because Icelandic uses the prepositional phrase 'á ensku', which also creates a pleasing structural parallel with 'á íslensku'. In line 4, 'tvö mál' is ambiguous in Icelandic as 'mál' can mean a case, issue, or meal; 'tvö tungumál' is precise, elegant, and preserves the clean 4-word cadence."
+    }
+  },
+  "nott": {
+    "scores": {
+      "set1": {
+        "overall": 8,
+        "naturalness": 8,
+        "complements": 8,
+        "warmth": 9,
+        "truth": 10,
+        "timing": 7,
+        "notes": "'Hreiðraðu vel um þig' and 'litla hjarta' are wonderfully warm, but three lines overcrowd a 17.2-second bedtime film where visual stillness must lead."
+      },
+      "set2": {
+        "overall": 7,
+        "naturalness": 7,
+        "complements": 9,
+        "warmth": 7,
+        "truth": 10,
+        "timing": 9,
+        "notes": "Correctly opts for a sparse two-line structure, but 'hérna' is filler and 'Lokaðu augunum og hvíldu þig' sounds more like a parental command than a gentle bedtime ritual."
+      }
+    },
+    "problems": [
+      "In set 1, having three spoken lines clutters a short 17.2-second sequence that needs quietude and space as the characters fall asleep.",
+      "In set 1, 'Ljúft að kveðja þennan dag' is an adult, reflective sentiment that intrudes on the quiet moment when Bangsi closes the book.",
+      "In set 2, 'Lokaðu augunum og hvíldu þig' reads as a directive instruction rather than a soothing, affectionate lull."
+    ],
+    "final": [
+      {
+        "t": 1.2,
+        "text": "Hreiðraðu vel um þig."
+      },
+      {
+        "t": 10.5,
+        "text": "Hvíldu þig nú, litla hjarta."
+      }
+    ],
+    "why": [
+      "The quintessential Icelandic bedtime invitation that creates an immediate sense of warmth and security without repeating headline words.",
+      "A tender, affectionate whisper timed just as the lamp dims, leaving generous silence for the mascots to fall asleep before the end card."
+    ]
+  }
+}

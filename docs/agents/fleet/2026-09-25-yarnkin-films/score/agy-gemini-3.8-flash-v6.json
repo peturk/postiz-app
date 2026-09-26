@@ -1,0 +1,107 @@
+{
+  "films": {
+    "kvold": {
+      "A": {
+        "score": 17,
+        "evidence": "The dusk atmosphere and early presence of three open books capture initial interest, followed by steady visual cues like the lamp turning on and book selection, despite static character plushies in the opening seconds."
+      },
+      "B": {
+        "score": 18,
+        "evidence": "Continuous visibility of the top Yarnkin pill badge, the two couch mascots, and recognizable picture-book covers firmly establishes brand identity sound-off without aggressive logo placement."
+      },
+      "C": {
+        "score": 24,
+        "evidence": "The grandmother storyteller voice and evocative Icelandic phrasing ('Rökkrið læðist inn') paired with tender spoken invitations ('Komdu og sestu hjá mér') create an authentic, unhurried parent-to-parent bond with zero sales pressure."
+      },
+      "D": {
+        "score": 15,
+        "evidence": "Explicitly demonstrating that three books are open immediately without signup provides a completely frictionless, zero-pressure next step that perfectly fulfills the acquisition brief."
+      },
+      "E": {
+        "score": 17,
+        "evidence": "Visual typography is sharp and compliant with core claims, though the end-card URL sits slightly low into the bottom 35% safe zone, while measured audio metrics (-14.1 LUFS, -1.9 dBFS peak, 43-64% voiced) confirm compliant broadcast loudness and unwhispered delivery judged solely from reported figures as audio cannot be heard."
+      },
+      "total": 91,
+      "weakest": "The final end-card URL sits slightly low in the frame, encroaching on the bottom 35% Reels UI overlay zone.",
+      "best_change": "Raise the end-card text block by 20 to 30 pixels to guarantee full clearance above platform overlay buttons."
+    },
+    "saman": {
+      "A": {
+        "score": 16,
+        "evidence": "The immediate reading scene and reliable four-second page turns sustain viewing momentum, though an unchanging camera angle across all twenty seconds limits visual dynamism."
+      },
+      "B": {
+        "score": 18,
+        "evidence": "Bangsi reading in the armchair alongside the owl and rabbit, reinforced by the mid-story 'yarnkin.com' chip, creates distinctive mascot-driven brand equity that remains instantly identifiable sound-off."
+      },
+      "C": {
+        "score": 21,
+        "evidence": "While the unhurried Icelandic prose captures a tender bedtime ritual, falling back to the female bedtime narrator rather than an authentic father voice weakens the intended representation for co-reading Icelandic fathers and dilutes vocal diversity across the campaign."
+      },
+      "D": {
+        "score": 14,
+        "evidence": "The mid-story chip '3 bækur opnar · yarnkin.com' effectively connects the calm reading moment to an accessible destination without disrupting the unhurried tone."
+      },
+      "E": {
+        "score": 18,
+        "evidence": "On-screen typography and contrast are immaculate with zero immersion breaks, while audio measurements (-14.3 LUFS, -1.7 dBFS peak, 43-64% voiced) confirm compliant technical loudness and audible vocalization judged purely from recorded metrics since audio cannot be monitored directly."
+      },
+      "total": 87,
+      "weakest": "Falling back to the female bedtime voice deprives the father-focused reading scene of its authentic male vocal counterpart and reduces campaign vocal variety.",
+      "best_change": "Cast a properly voiced, non-whispering Icelandic father narrator measuring at least 45% voiced to authentically mirror Bangsi reading in the armchair."
+    },
+    "tunga": {
+      "A": {
+        "score": 19,
+        "evidence": "Triggering the interactive language switch within the first four seconds sparks immediate curiosity, driving a brisk visual rhythm with fresh UI interactions every two to three seconds."
+      },
+      "B": {
+        "score": 20,
+        "evidence": "Demonstrating Yarnkin's unique bilingual toggle in live UI action establishes unmistakable product-linked brand attribution that communicates the core proposition with total clarity sound-off."
+      },
+      "C": {
+        "score": 24,
+        "evidence": "The natural mother voice and collaborative spoken dialogue ('Sjáðu hvað gerist hérna', 'Þú velur hvernig við lesum') resonate warmly with bilingual Icelandic households without slipping into a didactic or commercial register."
+      },
+      "D": {
+        "score": 15,
+        "evidence": "Visually proving how effortless the one-tap language switch is provides the most compelling, low-friction motivation to explore the app without violating the anti-hard-sell guideline."
+      },
+      "E": {
+        "score": 18,
+        "evidence": "UI elements strictly adhere to safe zones and product truths, though inner book text is slightly small for quick scanning on mobile displays, while audio loudness (-14.3 LUFS, -1.9 dBFS peak, 43-64% voiced) confirms proper technical mixing based strictly on measured data as audio cannot be monitored directly."
+      },
+      "total": 96,
+      "weakest": "The inner story text inside the book mockup is somewhat small for effortless reading on compact smartphone screens.",
+      "best_change": "Scale up the tablet reading pane slightly or zoom in subtly during the toggle to enhance text legibility on smaller mobile devices."
+    },
+    "nott": {
+      "A": {
+        "score": 15,
+        "evidence": "While gathering all four mascots under the quilt provides an endearing initial frame, lingering on a completely static tablet screen for ten seconds before the lights turn off creates a substantial drop-off risk for scrolling parents."
+      },
+      "B": {
+        "score": 17,
+        "evidence": "Uniting all four mascots under the quilt and aligning the bedtime voice across body and tagline builds rich brand equity, though extinguishing the tablet completely at second 13 eliminates product presence during the final scene."
+      },
+      "C": {
+        "score": 25,
+        "evidence": "The poetic Icelandic cadence ('kyrrðin tekur við', 'Draumarnir geta byrjað') and loving spoken reassurances achieve unmatched emotional intimacy by honoring the vulnerable quiet of falling asleep."
+      },
+      "D": {
+        "score": 12,
+        "evidence": "The peaceful drift toward darkness and sleep instinctively prompts parents to close their devices rather than take action, leaving conversion dependent entirely on the final end card without any mid-film signpost."
+      },
+      "E": {
+        "score": 18,
+        "evidence": "The lighting dimming is executed smoothly without breaching the strict prohibition against sleep promises, while audio metrics (-14.5 LUFS, -1.9 dBFS peak, 43-64% voiced) confirm compliant technical loudness and unwhispered vocalization evaluated strictly from reported measurements as audio cannot be monitored directly."
+      },
+      "total": 87,
+      "weakest": "The prolonged ten-second visual stillness on page twelve followed by darkness encourages parents to turn off their phones rather than explore the app.",
+      "best_change": "Incorporate a page turn or subtle breathing animation during seconds four to eight, and leave a softly glowing bedside book visible after the lamp turns off to sustain visual interest and product presence."
+    }
+  },
+  "strongest": "tunga",
+  "why": "Tunga is the strongest film because it achieves the highest creative effectiveness on mobile: by initiating its interactive one-tap language toggle within the first four seconds, it hooks scrolling parents immediately, demonstrates Yarnkin's unique bilingual feature with total sound-off clarity, and speaks to modern Icelandic families with natural warmth, collaborative dialogue, and zero commercial pressure.",
+  "series": "As a four-film campaign, the suite delivers comprehensive full-funnel coverage: Kvold drives low-friction acquisition through an open dusk story, Saman fosters consideration through cozy family reading, Tunga provides undeniable feature proof for bilingual households, and Nott anchors long-term emotional brand love. Ehrenberg-Bass distinctive assets are deployed with disciplined consistency across all films—the recurring mascots, warm bedtime palette, persistent top pill, and especially the single bedtime narrator delivering the identical three-part tagline ('Lesum saman. Hlustum saman. Dreymum saman.') over uniform end cards—cementing mental availability while honoring Yarnkin's calm, anti-hard-sell philosophy, though restoring an authentic, non-whispering father voice in Saman would optimize vocal variety across the series."
+}

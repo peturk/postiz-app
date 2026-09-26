@@ -1,0 +1,131 @@
+{
+  "kvold": {
+    "sets": [
+      [
+        {
+          "t": 1.0,
+          "text": "Komdu og sestu hjá mér."
+        },
+        {
+          "t": 8.0,
+          "text": "Hvað eigum við að velja?"
+        },
+        {
+          "t": 13.0,
+          "text": "Nú kynnumst við nýjum vinum."
+        }
+      ],
+      [
+        {
+          "t": 1.0,
+          "text": "Komdu, gerum okkur notalegt hérna."
+        },
+        {
+          "t": 8.2,
+          "text": "Hvaða heim langar þig að heimsækja?"
+        },
+        {
+          "t": 13.0,
+          "text": "Sjáðu, nú leggjum við af stað."
+        }
+      ]
+    ]
+  },
+  "saman": {
+    "sets": [
+      [
+        {
+          "t": 1.2,
+          "text": "Notalegt að sitja með ykkur."
+        },
+        {
+          "t": 7.8,
+          "text": "Dásamlegt að eiga þessa stund."
+        },
+        {
+          "t": 14.0,
+          "text": "Gott að kveðja daginn svona."
+        }
+      ],
+      [
+        {
+          "t": 1.2,
+          "text": "Hér er dásamlegt að vera."
+        },
+        {
+          "t": 7.8,
+          "text": "Við dveljum eins lengi og viljum."
+        },
+        {
+          "t": 14.0,
+          "text": "Ljúft að eiga svona kvöld."
+        }
+      ]
+    ]
+  },
+  "tunga": {
+    "sets": [
+      [
+        {
+          "t": 3.5,
+          "text": "Sjáðu hvað birtist hér."
+        },
+        {
+          "t": 9.2,
+          "text": "Svo skiptum við bara til baka."
+        },
+        {
+          "t": 14.5,
+          "text": "Þú velur hvernig við lesum."
+        }
+      ],
+      [
+        {
+          "t": 3.5,
+          "text": "Sjáðu, hér breytist allt snögglega."
+        },
+        {
+          "t": 9.2,
+          "text": "Eins oft og okkur sýnist."
+        },
+        {
+          "t": 14.0,
+          "text": "Við ráðum ferðinni sjálf."
+        }
+      ]
+    ],
+    "headline_fixes": {
+      "line2": "Einn smellur, nú á ensku.",
+      "line4": "Sama sagan, tvö tungumál.",
+      "why": "'Orðin verða ensk' reads unnaturally in Icelandic because words do not 'become English' predicatively; the natural idiom is prepositional ('á ensku'). Replacing it with 'Einn smellur, nú á ensku.' creates a clean parallel with line 1 ('á íslensku') and preserves the 5-word timing. For line 4, 'mál' in isolation is ambiguous (can mean court case, issue, or meal); 'Sama sagan, tvö tungumál.' is unambiguous, idiomatic, and directly conveys the bilingual feature in the exact same 4-word footprint."
+    }
+  },
+  "nott": {
+    "sets": [
+      [
+        {
+          "t": 1.2,
+          "text": "Hreiðraðu vel um þig."
+        },
+        {
+          "t": 6.0,
+          "text": "Ljúft að kveðja þennan dag."
+        },
+        {
+          "t": 10.8,
+          "text": "Hvíldu þig nú, litla hjarta."
+        }
+      ],
+      [
+        {
+          "t": 1.5,
+          "text": "Hreiðraðu vel um þig hérna."
+        },
+        {
+          "t": 10.5,
+          "text": "Lokaðu augunum og hvíldu þig."
+        }
+      ]
+    ]
+  }
+}
