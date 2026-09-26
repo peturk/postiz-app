@@ -18,7 +18,19 @@ const bank = JSON.parse(execFileSync("git", ["-C", WTD, "show", "origin/main:web
 function catalogue(name) {
   const v = (Array.isArray(bank) ? bank : bank.voices).find(x => x.id === name);
   if (!v?.chosen?.voiceId) { console.error(`${name} has no chosen voice in the WTD Voice Bank`); process.exit(2); }
-  return { name, voiceId: v.chosen.voiceId, model: v.chosen.model, direction: v.chosen.sample.direction };
+  return { name, voiceId: v.chosen.voiceId, model: v.chosen.model, direction: v.chosen.sample.direction, full: v.chosen.fullVoiceSample };
+}
+// WTD decision E35 (wtd 924bbf1f0): a voice's character comes from its measured
+// full-voice take; films and ads cast only voices whose scenarios include "film".
+function scenarios(v) {
+  const f = v.full; if (!f) return [];
+  const character = f.voicedShare < 30 ? "whisper" : f.breathShare >= 20 ? "breathy" : f.voicedShare >= 50 ? "full" : "soft";
+  return { whisper: ["bedtime"], breathy: ["bedtime", "read-aloud"], full: ["bedtime", "read-aloud", "film"], soft: ["bedtime", "read-aloud", "film"] }[character];
+}
+function filmVoice(name) {
+  const v = catalogue(name);
+  if (!scenarios(v).includes("film")) { console.error(`${name} is not a film voice in the WTD Voice Bank (E35); cast one whose scenarios include "film"`); process.exit(2); }
+  return v;
 }
 const TAGLINE = { text: "Lesum saman. Hlustum saman. Dreymum saman." };
 const copy = JSON.parse(readFileSync("copy/spoken.json", "utf8"));  // v6: the spoken layer, not the headlines
@@ -51,11 +63,11 @@ mkdirSync("vo", { recursive: true });
 // The tagline's pauses are held to 0.3 s and it is played 8% faster so the calm
 // take (5.5 s) fits a 4.9 s end card (about 4.5 s).
 const tag = "vo/tagline-calm-tight.wav";
-const tagVoice = catalogue(casting.tagline_voice);
+const tagVoice = filmVoice(casting.tagline_voice);
 execFileSync(BIN + "/ffmpeg", ["-y", "-loglevel", "error", "-i", speak(tagVoice, casting.tagline_direction || tagVoice.direction, TAGLINE.text, "vo/tagline-calm.wav"), "-af",
   "silenceremove=stop_periods=-1:stop_duration=0.3:stop_threshold=-40dB,atempo=1.08", tag]);
 for (const film of films) {
-  const cast = casting.films[film], v = catalogue(cast.voice), direction = cast.direction || v.direction;
+  const cast = casting.films[film], v = filmVoice(cast.voice), direction = cast.direction || v.direction;
   mkdirSync(`vo/${film}/${v.name}-v6`, { recursive: true });
   const lines = copy[film];
   const out = [];

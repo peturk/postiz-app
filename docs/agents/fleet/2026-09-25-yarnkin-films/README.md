@@ -56,3 +56,8 @@ The writer pass and the round 1-2 music and listening passes predate this rule a
 TTS only: no transcription or judging on the paid key, so takes are checked by ear.
 A line may run past its headline but ends 0.3 s before the next spoken line; the bedtime direction's pauses stretched the tagline to 7.4 s, so its pauses are held to 0.45 s (5.2 s) and the films run 25.8 s.
 First test voice: `narrator-bedtime` (19 TTS requests).
+
+## Casting rule (WTD decision E35, 2026-09-26)
+
+Voices come from WTD's Voice Bank only, and a film casts only voices whose scenarios include "film". The character is measured from each voice's full-voice take: full (50% voiced or more) and soft suit film; breathy (breath 20% or more) is bedtime and read-aloud; whisper (under 30% voiced) is bedtime only.
+`vo-yk.mjs` refuses any other voice. The films use narrator-grandmother (full) and narrator-bedtime (soft) with the calm direction; narrator-mother (breathy) and narrator-father (whisper) are not film voices, so "Á íslensku og ensku" moved from the Mother to the Grandmother voice.
