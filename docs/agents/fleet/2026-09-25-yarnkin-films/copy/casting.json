@@ -1,0 +1,38 @@
+{
+ "principle": "The tagline over the end card is always narrator-bedtime: one consistent sonic brand asset (Ehrenberg-Bass: consistency builds the memory link; changing it resets it). Each film's body voice is cast for what that film says and who it speaks to.",
+ "tagline_voice": "narrator-bedtime",
+ "films": {
+  "kvold": {
+   "job": "Acquisition: the first touch. Tells a parent who has never heard of Yarnkin that tonight's story is one tap away, free, no account.",
+   "audience": "Parents of children 2-8 scrolling in the early evening (roughly 17-19), deciding what to do before bed.",
+   "message": "A story for tonight, open now, nothing to sign up for.",
+   "voice": "narrator-grandmother",
+   "why": "Dusk and 'Rökkrið læðist inn' is the opening of a tale; the grandmother storyteller is the archetype of a story beginning, carries trust for a brand the viewer does not know yet, and is clearly not a sales voice.",
+   "direction": "An Icelandic grandmother opening a story at dusk: warm, unhurried, a smile in the voice, clear on every word, gently inviting rather than hushed; small natural pauses between sentences."
+  },
+  "saman": {
+   "job": "Consideration: the value of the shared moment, no hurry, no ads.",
+   "audience": "Parents who already read to their children, both mothers and fathers; Icelandic fathers take a large share of bedtime, and ads rarely speak to them.",
+   "message": "One reads, the others listen; time can wait.",
+   "voice": "narrator-father",
+   "why": "Bangsi reading in the armchair is the family reader; a warm father voice mirrors the scene, widens the audience beyond mothers, and gives the series vocal variety.",
+   "direction": "A relaxed Icelandic father reading with his children in the evening: warm soft baritone, natural and unhurried, a quiet smile, not hushed; small natural pauses between sentences."
+  },
+  "tunga": {
+   "job": "Feature proof: one tap switches the same page between Icelandic and English.",
+   "audience": "Bilingual and newcomer families in Iceland, and Icelandic parents who want their children to hear English too.",
+   "message": "Same story, two languages, one tap.",
+   "voice": "narrator-mother",
+   "why": "A feature needs clarity and a brighter, everyday register; the mother voice is the clearest of the four and reads as a modern family, the people who use the switch.",
+   "direction": "A warm, clear Icelandic mother reading with her child: bright and natural, a light smile, a little livelier than bedtime, very clear articulation; small natural pauses between sentences."
+  },
+  "nott": {
+   "job": "Brand love: the ritual Yarnkin belongs to, ending the day.",
+   "audience": "Every parent at bedtime; this is the brand's emotional core and the film most likely to be shared.",
+   "message": "The last page, the light goes out, dreams begin.",
+   "voice": "narrator-bedtime",
+   "why": "The bedtime reader was designed for exactly this moment, and in this film the body voice and the brand voice are the same, so the signature lands at full strength.",
+   "direction": null
+  }
+ }
+}

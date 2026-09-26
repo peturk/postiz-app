@@ -42,6 +42,9 @@
   .end .mark img { width: 600px; height: auto; display: block; }
   .end .line { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 60px; letter-spacing: -.5px; line-height: 1.18; text-align: center; }
   .end .url { font-weight: 600; font-size: 40px; color: #B8A58F; }
+  .end .cta { font-weight: 600; font-size: 38px; color: #F6EEDD; opacity: .85; }
+  .brandmark { left: 80px; top: 292px; background: #33261E; border-radius: 999px; padding: 10px 22px 8px; }
+  .brandmark img { height: 40px; display: block; }
   .end .moon { width: 70px; height: 70px; }
   .shadowtext { text-shadow: 0 2px 18px rgba(246,238,221,.35); }
 </style>
@@ -210,12 +213,15 @@
 
   var name = params.get("v");
   var film = FILMS[name]();
+  /* Branding early (ABCD): a small wordmark from the first second, above the
+     headline, inside the Reels safe zone (below the top 14%). */
+  show(el("brandmark", '<img src="' + ICON + '" alt="Yarnkin">'), 0.2, film.end - 0.1);
   window.__duration = film.duration;
   window.__feedY = 285;
   window.__cardRef = 0;
   window.__cardRects = [];
   var end = document.createElement("div"); end.className = "end";
-  end.innerHTML = '<div class="inner"><div class="mark"><img src="' + ICON + '" alt="Yarnkin"></div><div class="line">Lesum saman.<br>Hlustum saman.<br>Dreymum saman.</div><div class="url">yarnkin.com</div></div>';
+  end.innerHTML = '<div class="inner"><div class="mark"><img src="' + ICON + '" alt="Yarnkin"></div><div class="line">Lesum saman.<br>Hlustum saman.<br>Dreymum saman.</div><div class="cta">Byrjaðu strax í kvöld, án innskráningar.</div><div class="url">yarnkin.com</div></div>';
   if (FEED) { end.style.top = "285px"; end.style.height = "1350px"; }
   layer.appendChild(end);
   if (FEED) layer.style.top = "-285px";

@@ -1,0 +1,107 @@
+{
+  "films": {
+    "kvold": {
+      "A": {
+        "score": 13,
+        "evidence": "The opening three seconds linger on an empty wall with subtle window dimming before any book appears at second eight, creating a significant drop-off risk for scrolling parents."
+      },
+      "B": {
+        "score": 14,
+        "evidence": "While the mascots and top pill badge introduce early branding, the actual picture-book interface remains invisible for the first seven seconds, delaying category recognition."
+      },
+      "C": {
+        "score": 23,
+        "evidence": "The grandmother voice delivery and evocative twilight phrasing ('Rökkrið læðist inn') establish genuine warmth, cultural intimacy, and non-commercial trust for a new brand."
+      },
+      "D": {
+        "score": 14,
+        "evidence": "The clear proposition that three books are open now with no account needed provides a frictionless, zero-pressure invitation that honors brand guidelines."
+      },
+      "E": {
+        "score": 16,
+        "evidence": "Body typography and safe zones are cleanly handled though the end-card URL is tiny and low, and audio metrics (-14.6 LUFS, -1.9 dBFS peak) meet mobile specs based strictly on measured data as audio playback cannot be heard."
+      },
+      "total": 80,
+      "weakest": "The first seven seconds lack immediate product presence, leaving an empty center stage during the critical hook period.",
+      "best_change": "Introduce the three open book covers by second two so scrolling parents immediately see the product alongside the dusk atmosphere."
+    },
+    "saman": {
+      "A": {
+        "score": 15,
+        "evidence": "The immediate entrance of the book and reading trio establishes the scene promptly, though maintaining the same static armchair tableau across 20 seconds limits visual dynamism."
+      },
+      "B": {
+        "score": 18,
+        "evidence": "Bangsi reading in the armchair alongside the owl and bunny creates consistent, distinctive mascot branding that is immediately identifiable sound-off."
+      },
+      "C": {
+        "score": 24,
+        "evidence": "Casting a relaxed father voice reading unhurriedly ('Tíminn fær að bíða') captures a cherished, authentic bedtime ritual that specifically resonates with Icelandic co-reading fathers."
+      },
+      "D": {
+        "score": 11,
+        "evidence": "The body narrative is entirely contemplative without any cue toward how to access the service, leaving the call to action entirely dependent on the final end card."
+      },
+      "E": {
+        "score": 17,
+        "evidence": "Sound-off contrast and safe-zone adherence are well-executed for core elements, while measured audio levels (-15.2 LUFS, -1.9 dBFS peak) indicate compliant broadcast loudness based solely on technical data as audio cannot be monitored directly."
+      },
+      "total": 85,
+      "weakest": "The body copy lacks any directional cue toward the app, making the shift to the end-card call to action feel abrupt.",
+      "best_change": "Incorporate a subtle visual or copy cue in the body highlighting that these stories are open right now without ads to bridge the emotional moment directly to the app."
+    },
+    "tunga": {
+      "A": {
+        "score": 18,
+        "evidence": "The interactive language switch at second six and the dynamic text transformation provide continuous visual curiosity and brisk pacing every 2-3 seconds."
+      },
+      "B": {
+        "score": 19,
+        "evidence": "Demonstrating Yarnkin's unique bilingual reading toggle directly anchors brand identity in the core product experience, remaining unmistakable with sound off."
+      },
+      "C": {
+        "score": 22,
+        "evidence": "The mother's clear articulation and natural phrasing ('Ljúft að flakka á milli') connect warmly with modern bilingual Icelandic households without sounding pedagogical."
+      },
+      "D": {
+        "score": 14,
+        "evidence": "The live demonstration of the one-tap switch gives viewers an immediate, tangible reason to visit the site without resorting to an aggressive hard sell."
+      },
+      "E": {
+        "score": 18,
+        "evidence": "Interactive UI elements respect safe zones with truthful claims, supported by sound technical loudness (-15.3 LUFS, -1.7 dBFS peak) judged strictly from the recorded data since audio cannot be heard."
+      },
+      "total": 91,
+      "weakest": "The typography inside the book mockup is somewhat small for effortless scanning on compact smartphone screens.",
+      "best_change": "Enlarge the book card slightly or add a subtle camera punch-in during the language toggle to optimize text legibility on smaller mobile devices."
+    },
+    "nott": {
+      "A": {
+        "score": 16,
+        "evidence": "The dramatic lighting cue as the lamp turns off at second 12 delivers a powerful visual transition, though the subsequent five seconds of dark stillness risk losing scrolling viewer momentum."
+      },
+      "B": {
+        "score": 16,
+        "evidence": "Uniting all four mascots under the quilt and utilizing the bedtime voice reinforces brand equity, but removing the book at second eight eliminates product presence for more than half the film."
+      },
+      "C": {
+        "score": 25,
+        "evidence": "The soothing bedtime cadence ('kyrrðin tekur við') and tender Icelandic prose achieve extraordinary emotional resonance by capturing the authentic vulnerability of falling asleep."
+      },
+      "D": {
+        "score": 11,
+        "evidence": "The tranquil progression toward sleep and darkness naturally invites the viewer to set their phone aside, substantially weakening conversion impetus toward the end card."
+      },
+      "E": {
+        "score": 19,
+        "evidence": "Dynamic contrast adjustment ensures sound-off legibility as the scene darkens while strictly observing safe zones and avoiding prohibited sleep promises, with audio loudness (-15.1 LUFS, -1.9 dBFS peak) conforming to standards based purely on the reported metrics as audio cannot be heard."
+      },
+      "total": 87,
+      "weakest": "The narrative lull toward sleep actively encourages viewers to turn off screens rather than visit the website or explore the app.",
+      "best_change": "Leave a softly illuminated bedside book or luminous Yarnkin nightstand motif visible after the lights extinguish to sustain product presence through the final quiet seconds."
+    }
+  },
+  "strongest": "tunga",
+  "why": "Tunga is the strongest film because it brilliantly balances calm storytelling with high-performing mobile mechanics: its live one-tap bilingual demonstration commands attention and drives instant sound-off brand attribution, while speaking directly to a real, everyday priority for modern Icelandic families with natural warmth and clear, low-friction direction.",
+  "series": "As a four-part campaign, the set functions with exceptional strategic synergy across the full funnel: Kvold drives low-barrier acquisition, Saman nurtures consideration through shared parental reading, Tunga provides undeniable feature proof for modern bilingual homes, and Nott anchors long-term brand love. Ehrenberg-Bass principles are expertly maintained through recurring mascot assets, a unified calming palette, consistent technical loudness (-14.6 to -15.3 LUFS), and especially the singular bedtime narrator delivering the identical three-part tagline across all end cards, creating enduring sonic and visual memory structures while respecting the brand's calm, zero-pressure ethos."
+}
