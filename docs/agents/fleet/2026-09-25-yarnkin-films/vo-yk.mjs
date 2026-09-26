@@ -20,7 +20,7 @@ function catalogue(name) {
   if (!v?.chosen?.voiceId) { console.error(`${name} has no chosen voice in the WTD Voice Bank`); process.exit(2); }
   return { name, voiceId: v.chosen.voiceId, model: v.chosen.model, direction: v.chosen.sample.direction };
 }
-const TAGLINE = { t: 20.1, text: "Lesum saman. Hlustum saman. Dreymum saman." };
+const TAGLINE = { text: "Lesum saman. Hlustum saman. Dreymum saman." };
 const copy = JSON.parse(readFileSync("copy/final.json", "utf8"));
 const films = only.length ? only : Object.keys(copy);
 const dur = f => parseFloat(execFileSync(BIN + "/ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", f]).toString());
@@ -54,12 +54,12 @@ for (const film of films) {
   const out = [];
   lines.forEach(([text, from, to], k) => {
     // A line may run past its headline, but must end 0.3 s before the next
-    // spoken line (or the end card).
-    const t = from + 0.25, slot = (k + 1 < lines.length ? lines[k + 1][1] + 0.25 : 20.0) - t - 0.3;
+    // spoken line (or the film's end card, casting.json films.<film>.end).
+    const t = from + 0.25, slot = (k + 1 < lines.length ? lines[k + 1][1] + 0.25 : cast.end) - t - 0.3;
     const f = fit(speak(v, direction, text, `vo/${film}/${v.name}/${String(k).padStart(2, "0")}.wav`), slot);
     out.push({ t, file: f.file, text, len: +f.len.toFixed(2), slot: +slot.toFixed(2), fits: f.len <= slot + 0.01 });
   });
-  out.push({ t: TAGLINE.t, file: tag, text: TAGLINE.text, tag: true });
+  out.push({ t: cast.end + 0.1, file: tag, text: TAGLINE.text, tag: true });
   writeFileSync(`vo/${film}/lines.json`, JSON.stringify({ voice: v.name, voiceId: v.voiceId, model: v.model, direction, tagline_voice: tagVoice.name, lines: out }, null, 1));
   console.log(film, v.name, out.map(l => `${l.len ?? ""}/${l.slot ?? ""}${l.fits === false ? " TOO LONG" : ""}`).join("  "));
 }

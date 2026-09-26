@@ -31,9 +31,9 @@
   .reader .lang { font-weight: 700; font-size: 30px; padding: 12px 20px; border-radius: 999px; background: rgba(246,238,221,.14); }
   .reader .lang.on { background: #F5C542; color: #33261E; }
   .reader .pg { font-weight: 700; font-size: 30px; color: #C9B79F; }
-  .reader .pic { position: relative; width: 340px; height: 340px; margin: 14px auto 0; border-radius: 18px; overflow: hidden; }
+  .reader .pic { position: relative; width: 360px; height: 360px; margin: 14px auto 0; border-radius: 18px; overflow: hidden; }
   .reader .pic div { position: absolute; inset: 0; background-size: cover; background-position: center; }
-  .reader .txt { font-family: "Source Serif 4", Georgia, serif; font-weight: 500; font-size: 38px; line-height: 1.2; text-align: center; margin-top: 14px; min-height: 92px; }
+  .reader .txt { font-family: "Source Serif 4", Georgia, serif; font-weight: 500; font-size: 42px; line-height: 1.18; text-align: center; margin-top: 14px; min-height: 100px; }
   .end2 { text-align: center; }
   .end2 .row2 { display: flex; gap: 16px; justify-content: center; margin-top: 22px; }
   .tap { position: absolute; width: 90px; height: 90px; border-radius: 50%; border: 6px solid #F5C542; }
@@ -41,10 +41,10 @@
   .end .inner { display: grid; justify-items: center; gap: 46px; }
   .end .mark img { width: 600px; height: auto; display: block; }
   .end .line { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 60px; letter-spacing: -.5px; line-height: 1.18; text-align: center; }
-  .end .url { font-weight: 600; font-size: 40px; color: #B8A58F; }
-  .end .cta { font-weight: 600; font-size: 38px; color: #F6EEDD; opacity: .85; }
+  .end .url { font-weight: 700; font-size: 56px; color: #F5C542; }
+  .end .cta { font-weight: 600; font-size: 44px; color: #F6EEDD; opacity: .85; }
   .brandmark { left: 80px; top: 292px; background: #33261E; border-radius: 999px; padding: 10px 22px 8px; }
-  .brandmark img { height: 40px; display: block; }
+  .brandmark img { height: 52px; display: block; }
   .end .moon { width: 70px; height: 70px; }
   .shadowtext { text-shadow: 0 2px 18px rgba(246,238,221,.35); }
 </style>
@@ -150,7 +150,7 @@
     3: ["Óskar telur. Einn hnappur.", "Oskar counts. One button."], 4: ["Óskar telur. Bank, bank, bank.", "Oskar counts. Tap, tap, tap."],
     5: ["Óskar telur. Ein bjarkarskífa.", "Oskar counts. One birchbark disc."], 6: ["Óskar telur. Tveir hringir. Sko!", "Oskar counts. Two circles. Look!"],
     12: ["Óskar telur. Góða nótt, bjartar stjörnur.", "Oskar counts. Goodnight, bright stars."] };
-  var RX = 400, RY = 530, RW = 480;  /* right of the seated cast, bottom edge ~1080: clear of every head */
+  var RX = 420, RY = 545, RW = 520;  /* below a two-line headline (ends ~520), bottom edge ~1130: clear of every face */
   /* The reader: a list of [time, page, lang] states; a page turn cross-fades the picture. */
   function reader(from, to, states, withLang) {
     var d = show(el("reader", '<div class="bar"><span class="lang' + (withLang ? '' : '" style="visibility:hidden') + '">Skipta um tungumál</span><span class="pg"></span></div>'
@@ -177,37 +177,47 @@
      Gemini (copy/brief.md, copy.mjs), replaced here from copy/final.json. */
   var COPY = __COPY__;
   function heads(film) { COPY[film].forEach(function (h) { head(h[0], h[1], h[2]); }); }
+  /* Direction inside the story (v5): a quiet, true next step. */
+  function nextStep(x, y, from, to) { return chip("3 bækur opnar · yarnkin.com", x, y, from, to); }
   var FILMS = {
-    /* Saga fyrir kvöldið: the three open books, one lights up, the book opens. */
+    /* Saga fyrir kvöldið: the open books are there from the first second (the
+       hook); the lamp comes on; the covers light up; one opens. */
     kvold: function () {
       heads("kvold");
       var sh = show(el("card", '<div class="covers" style="margin-top:0">'
         + [[OSK, "Óskar telur ræturnar", 180], [VET, "Geturðu fundið vettlinginn?", 320], [LIT, "Litirnir á flóamarkaði áarsteinanna", 320]].map(function (c) {
           return '<div class="cover" style="width:' + c[2] + 'px"><img class="img" src="' + ART + c[0] + '-cover.png" style="width:' + c[2] + 'px"><div class="n">' + c[1] + '</div></div>'; }).join("")
-        + '</div>', 90, 600, 900), 7.8, 12.0, { pop: true });
-      var first = sh.querySelector(".cover .img");
-      items.push(function (t) { var p = clamp((t - 10.6) / 0.35); first.style.transform = "scale(" + lerp(1, 1.08, out3(p)) + ")"; first.style.boxShadow = p ? "0 0 0 " + (6 * p) + "px #F5C542, 0 10px 22px -12px rgba(51,38,30,.6)" : ""; });
-      sfx(10.6, "pop");
+        + '</div>', 90, 600, 900), 0.3, 12.0, { pop: true });
+      var imgs = sh.querySelectorAll(".cover .img");
+      [7.8, 8.5, 9.2].forEach(function (t0, i) {
+        sfx(t0, "pop");
+        items.push(function (t) { var up = clamp((t - t0) / 0.3), down = i ? clamp((t - t0 - 0.9) / 0.4) : 0, p = up - down;
+          if (i === 0 && t >= 11.0) { p = 1; }
+          imgs[i].style.transform = "scale(" + lerp(1, 1.06, out3(p)) + ")"; imgs[i].style.boxShadow = p > 0 ? "0 0 0 " + (6 * p) + "px #F5C542, 0 10px 22px -12px rgba(51,38,30,.6)" : ""; });
+      });
       reader(12.2, 19.9, [[12.2, 1, "is"], [16.0, 2, "is"]]);
       return { duration: 25.8, end: 20.0 };
     },
-    /* Lesið saman: page by page. */
+    /* Lesið saman: already reading when the film starts; the first page turns at 2 s. */
     saman: function () {
       heads("saman");
-      reader(0.6, 19.9, [[0.6, 1, "is"], [4.0, 2, "is"], [8.0, 3, "is"], [12.0, 4, "is"], [16.0, 5, "is"]]);
+      reader(0.3, 19.9, [[0.3, 1, "is"], [2.0, 2, "is"], [6.0, 3, "is"], [10.0, 4, "is"], [14.0, 5, "is"]]);
+      nextStep(RX, 1160, 16.0, 19.9);
       return { duration: 25.8, end: 20.0 };
     },
-    /* Á íslensku og ensku: the same page, one tap, two languages. */
+    /* Á íslensku og ensku: the first switch lands at 2.8 s, inside the hook. */
     tunga: function () {
       heads("tunga");
-      reader(0.6, 19.9, [[0.6, 4, "is"], [6.0, 4, "en"], [9.2, 5, "en"], [12.4, 5, "is"], [15.6, 6, "is"]], { on: 6.0, off: 12.4 });
+      reader(0.3, 19.9, [[0.3, 4, "is"], [2.8, 4, "en"], [5.6, 5, "en"], [8.6, 5, "is"], [13.2, 6, "is"]], { on: 2.8, off: 8.6 });
       return { duration: 25.8, end: 20.0 };
     },
-    /* Góða nótt: the last page, then the book comes down and the light goes out. */
+    /* Góða nótt: the last page, the book comes down and keeps glowing on the
+       nightstand, the light goes out; the story ends at 17.2 s. */
     nott: function () {
       heads("nott");
-      reader(0.6, 8.6, [[0.6, 12, "is"]]);
-      return { duration: 25.8, end: 20.0 };
+      reader(0.3, 8.6, [[0.3, 12, "is"]]);
+      nextStep(80, 560, 9.2, 13.8);
+      return { duration: 23.0, end: 17.2 };
     }
   };
 

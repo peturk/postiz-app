@@ -2,7 +2,7 @@
  "kvold": [
   [
    "Rökkrið læðist inn.",
-   0.5,
+   0.2,
    3.5
   ],
   [
@@ -29,7 +29,7 @@
  "saman": [
   [
    "Einn les, aðrir hlusta.",
-   0.4,
+   0.2,
    4.0
   ],
   [
@@ -56,29 +56,29 @@
  "tunga": [
   [
    "Sagan hefst á íslensku.",
-   0.4,
-   5.8
+   0.2,
+   2.6
   ],
   [
    "Einn smellur, orðin verða ensk.",
-   6.0,
-   12.2
+   2.8,
+   8.4
   ],
   [
    "Ljúft að flakka á milli.",
-   12.4,
-   15.4
+   8.6,
+   13.0
   ],
   [
    "Sama sagan, tvö mál.",
-   15.6,
+   13.2,
    19.9
   ]
  ],
  "nott": [
   [
    "Allir komnir undir hlýja sæng.",
-   0.4,
+   0.2,
    4.4
   ],
   [
@@ -89,12 +89,12 @@
   [
    "Lampinn slokknar, kyrrðin tekur við.",
    9.2,
-   14.2
+   13.8
   ],
   [
    "Draumarnir geta byrjað.",
-   14.4,
-   19.9
+   14.0,
+   17.1
   ]
  ]
 }

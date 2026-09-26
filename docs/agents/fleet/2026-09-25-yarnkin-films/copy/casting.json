@@ -8,7 +8,8 @@
    "message": "A story for tonight, open now, nothing to sign up for.",
    "voice": "narrator-grandmother",
    "why": "Dusk and 'Rökkrið læðist inn' is the opening of a tale; the grandmother storyteller is the archetype of a story beginning, carries trust for a brand the viewer does not know yet, and is clearly not a sales voice.",
-   "direction": "An Icelandic grandmother opening a story at dusk: warm, unhurried, a smile in the voice, clear on every word, gently inviting rather than hushed; small natural pauses between sentences."
+   "direction": "An Icelandic grandmother opening a story at dusk: warm, unhurried, a smile in the voice, clear on every word, gently inviting rather than hushed; small natural pauses between sentences.",
+   "end": 20.0
   },
   "saman": {
    "job": "Consideration: the value of the shared moment, no hurry, no ads.",
@@ -16,7 +17,8 @@
    "message": "One reads, the others listen; time can wait.",
    "voice": "narrator-father",
    "why": "Bangsi reading in the armchair is the family reader; a warm father voice mirrors the scene, widens the audience beyond mothers, and gives the series vocal variety.",
-   "direction": "A relaxed Icelandic father reading with his children in the evening: warm soft baritone, natural and unhurried, a quiet smile, not hushed; small natural pauses between sentences."
+   "direction": "A relaxed Icelandic father reading with his children in the evening: warm soft baritone, natural and unhurried, a quiet smile, not hushed; small natural pauses between sentences.",
+   "end": 20.0
   },
   "tunga": {
    "job": "Feature proof: one tap switches the same page between Icelandic and English.",
@@ -24,7 +26,8 @@
    "message": "Same story, two languages, one tap.",
    "voice": "narrator-mother",
    "why": "A feature needs clarity and a brighter, everyday register; the mother voice is the clearest of the four and reads as a modern family, the people who use the switch.",
-   "direction": "A warm, clear Icelandic mother reading with her child: bright and natural, a light smile, a little livelier than bedtime, very clear articulation; small natural pauses between sentences."
+   "direction": "A warm, clear Icelandic mother reading with her child: bright and natural, a light smile, a little livelier than bedtime, very clear articulation; small natural pauses between sentences.",
+   "end": 20.0
   },
   "nott": {
    "job": "Brand love: the ritual Yarnkin belongs to, ending the day.",
@@ -32,7 +35,8 @@
    "message": "The last page, the light goes out, dreams begin.",
    "voice": "narrator-bedtime",
    "why": "The bedtime reader was designed for exactly this moment, and in this film the body voice and the brand voice are the same, so the signature lands at full strength.",
-   "direction": null
+   "direction": null,
+   "end": 17.2
   }
  }
 }

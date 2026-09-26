@@ -4,7 +4,7 @@ Lyria ignores requested lengths and endings, so every cue is edited:
   1. estimate the beat period (onset-flux autocorrelation) and the downbeat
      phase (comb over bar positions),
   2. snap the judged cadence time to the nearest downbeat,
-  3. land that downbeat at TARGET by trimming at most one bar of intro (on a
+  3. land that downbeat at TARGET by trimming at most two bars of intro (on a
      downbeat) and changing tempo by at most MAX_TEMPO,
   4. ring out to the end.
 Usage: python3 cue_edit.py <in.mp3> <out.wav> <cadence_s> [--target 20.25] [--end 23.4]
@@ -14,7 +14,7 @@ import json, os, subprocess, sys
 import numpy as np
 
 FF = os.path.expanduser("~/.local/bin/ffmpeg")
-MAX_TEMPO = 0.06  # tempo change; the intro trim is at most one bar (on a downbeat)
+MAX_TEMPO = 0.06  # tempo change; the intro trim is at most two bars (on a downbeat)
 
 
 def load(path, sr=22050):
@@ -48,7 +48,7 @@ def main():
     n = round((cad - phase) / bar)
     cad_snap = phase + n * bar
     best = None
-    for trim in (0.0, phase, phase + bar):
+    for trim in (0.0, phase, phase + bar, phase + 2 * bar):
         if trim < 0:
             continue
         f = (cad_snap - trim) / target
