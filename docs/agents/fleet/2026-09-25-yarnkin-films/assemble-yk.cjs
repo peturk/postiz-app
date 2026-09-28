@@ -48,7 +48,7 @@ function run(args) {
   const W = 1080, H = feed ? 1350 : 1920, tag = feed ? "feed" : "reel";
   const icon = "data:image/png;base64," + fs.readFileSync("art/yarnkin-wordmark.png").toString("base64");
   const copy = fs.readFileSync("copy/final.json", "utf8");  // headlines: [text, from, to] per film, from the Gemini copy pass
-  fs.writeFileSync("ui.build.html", fs.readFileSync("ui-yk.html", "utf8").replace(/__ICON__/g, icon).replace("__COPY__", copy));
+  fs.writeFileSync("ui.build.html", fs.readFileSync("ui-yk.html", "utf8").replace(/__ICON__/g, icon).replace("__COPY__", copy).replace("__BOOKS__", fs.readFileSync("books.json", "utf8")));
   fs.mkdirSync("i2v-out", { recursive: true });
 
   const b = await chromium.launch();

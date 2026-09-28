@@ -19,7 +19,7 @@ Set dressing (wall, window, moon, lamp, shelf) is flat shapes in the brand palet
 ## Pipeline
 
 1. `sh build-rig.sh` copies the creature sources from the yarnkin repo and bundles them with a two-function harness (`harness/entry.tsx`) into `rig/yk-rig.js`; only the theme hook and `cn` are stubbed.
-2. Art: fetch covers and page previews from `http://yarnkin/api/trpc/stories.list` and `stories.getById` into `art/` (paths in `books.json`); `art/yarnkin-wordmark.png` is the official wordmark.
+2. Books: `node fetch-books.mjs` pulls each film's book from the live catalogue (https://yarnkin.com, public books): page texts in both languages into `books.json`, the Icelandic cover and page previews into `art/`; `ui-yk.html` reads the texts from `books.json`, so a film always quotes the catalogue word for word. `art/yarnkin-wordmark.png` is the official wordmark.
 3. `scene.html` directs each film (`FILMS.<film>`): set, cast with held moods, light changes.
    Use held moods (`mood` with `live`), not behaviours: behaviours pick random moods and can land on `suspicious` or `cheeky`.
    Cast faces from a grid of real rig poses before directing: `love` with a level gaze is the warm, open state for all four; `neutral` is rest; `curious` and `excited` only briefly (`excited` holds an open "o" mouth); `happy` and `calm` squint; Bangsi's `neutral` with a downward look frowns.
@@ -72,3 +72,19 @@ The end card grows to fit it: the films run 26.0 s (`nott` 23.2 s).
 New takes: `saman` (3 lines) and `nott` (2 lines), 5 TTS requests; every body take measures 48-69% voiced.
 `vo-yk.mjs` reads the per-language Voice Bank (`voices[].languages.is.chosen`, wtd 9d8f4c6b2).
 Review page: https://claude.ai/artifact/H13EzusFoR3MyAjg7S9Wn8 (`films-v7-page.html` is its source); all 8 masters measure -14.0 to -14.3 LUFS, true peak at most -1.8 dB.
+
+## v8: a different book in every film (PK, 2026-09-28)
+
+| Film | Book |
+|---|---|
+| `kvold` | shelf of Forvitna stúlkan, Edda gerir við flautuna, Dísa og flautan úr árgrjóti undir rótunum; Forvitna stúlkan opens |
+| `saman` | Edda gerir við flautuna, pages 1-5 |
+| `tunga` | Tindra horfir vel, pages 1, 2 and 4 (short lines in both languages) |
+| `nott` | Óskar telur ræturnar, pages 11-12 |
+
+- The shelf highlight is one highlight that moves (book 1, 2, 3, back to 1 for the tap); in v7 the first book stayed lit while the others lit up.
+- The reader fits long page text (40 to 24 px) into a fixed box, so the new books' 120-175 character pages fit above the cast.
+- „Þrjár bækur standa opnar.“ and the chip „3 bækur opnar“ were no longer true (21 public books); the headline is now „Bækurnar bíða á hillunni.“ (Gemini 3.8 Flash critic through a Herdr agy client) and the chip uses the product's own „Fleiri sögur“.
+- The Óskar page now reads „Góða nótt, björtu stjörnur.“ in the catalogue; the headline quotes it (the critic confirmed the weak vocative form).
+- Lesið saman: PK heard „Tað“ for „Það“ in v7. Machine checks cannot hear it (the Icelandic Whisper model writes „það“ even for a take recorded on purpose with a T), so PK chose by ear from new takes recorded with a pronunciation note ('Þ' as the th in "think"): take C for „Það liggur ekkert á.“ and take G for „Ljúft að eiga svona kvöld.“ (the v7 take was heard as „líft“).
+- Catalogue defects found on the way (for WTD): six books show English covers in Icelandic; Loki og luktastígurinn has truncated Icelandic pages 2, 3 and 5; Súpan sem lagaði allt (5, 6, 11) and Týndi lykillinn (5, 7, 8) too; Edda page 5 lacks a sentence in English; cover titles differ from catalogue titles for Forvitna stúlkan („Sú forvitna“), Mosi og ljóskerstígurinn („Nóri…“) and Höfn Birtu breytist („…höfnin hennar Míku“).

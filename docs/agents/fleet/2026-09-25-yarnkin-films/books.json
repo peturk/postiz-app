@@ -1,17 +1,301 @@
 {
- "sb_factory_721fd4722f0db3": {
-  "title_is": "Óskar telur ræturnar",
-  "title": "Oskar Counts the Roots",
+ "sb_1782954251371_li5zk8": {
+  "use": "kvold: opened from the shelf (Forvitna stúlkan)",
+  "title_is": "Forvitna stúlkan",
+  "title": "The Curious One",
+  "pageCount": 8,
   "pages": [
    {
     "n": 1,
-    "is": "Óskar telur. Einar rótardyr.",
+    "is": "Þetta er herbergi Nínu á háttatíma. Lampaljósið ljómar hlýlega. Allt er á sínum stað. En takið eftir — á svefnhillunni er eitthvað nýtt.",
+    "en": "This is Nia's room at bedtime. The lamp pool glows warm. Everything is in its place. But notice — on the sleepy shelf, something new.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 2,
+    "is": "Hér er koddinn í nærmynd. Samanbrotinn rjómalitaður pappír. Skörp brot. Og á annarri hliðinni — lítil dæld í stjörnulögun.",
+    "en": "Here is the pillow up close. Folded cream paper. Crisp creases. And on one side — a tiny dent in the shape of a star.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 3,
+    "is": "Nína heldur varlega á honum. Hann er svalur og kyrr. 'Af hverju er stjarna hér?' hvíslar hún. Mjúka þögnin svarar ekki.",
+    "en": "Nia holds it carefully. It is cool and still. 'Why is there a star?' she whispers. The soft hush does not answer.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 4,
+    "is": "Hún hallar koddanum að lampanum. Hér er eitthvað meira: blekdropi inni í stjörnunni. Hann lítur út eins og örlítið spurningarmerki.",
+    "en": "She tilts the pillow toward the lamp. Here is something more: a dot of ink inside the star. It looks like a tiny question mark.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 5,
+    "is": "Daginn eftir tekur Nína koddann með sér á stóra, iðandi markaðshátíð. Hún finnur einn bás sem hefur ekkert nafn. Vörður stendur við hliðið með langan gátlista.",
+    "en": "The next day, Nia brings the pillow to a big, busy fair. She finds one booth with no name. A keeper stands at the gate with a long checklist.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 6,
+    "is": "Á lista varðarins stendur: Aðeins þeir sem vita AF HVERJU mega koma inn. Nína les skiltið. Hún horfir á koddann sinn. Svo lítur hún upp.",
+    "en": "The keeper's list says: Only those who know WHY may enter. Nia reads the sign. She looks at her pillow. Then she looks up.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 7,
+    "is": "'Af hverju býr stjarnan hér?' spyr Nína og bendir á dældina. Vörðurinn blikkar augunum. Enginn hafði nokkurn tíma spurt að þessu áður.",
+    "en": "'Why does the star live here?' Nia asks, pointing to the dent. The keeper blinks. Nobody had ever asked that before.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 8,
+    "is": "Vörðurinn brosir og opnar hliðið. Inni eru hundrað pappírskoddar — og hundrað spurningar til viðbótar. Nína er þegar með þrjár.",
+    "en": "The keeper smiles and opens the gate. Inside, there are a hundred paper pillows — and a hundred more questions. Nia already has three.",
+    "layout": "full-bleed"
+   }
+  ],
+  "files": {
+   "cover": "sb_1782954251371_li5zk8-cover.png",
+   "p1": "sb_1782954251371_li5zk8-p1.webp",
+   "p2": "sb_1782954251371_li5zk8-p2.webp",
+   "p3": "sb_1782954251371_li5zk8-p3.webp",
+   "p4": "sb_1782954251371_li5zk8-p4.webp",
+   "p5": "sb_1782954251371_li5zk8-p5.webp",
+   "p6": "sb_1782954251371_li5zk8-p6.webp",
+   "p7": "sb_1782954251371_li5zk8-p7.webp",
+   "p8": "sb_1782954251371_li5zk8-p8.webp"
+  }
+ },
+ "sb_1781550938747_pshsk9": {
+  "use": "saman (Edda gerir við flautuna); on the kvold shelf",
+  "title_is": "Edda gerir við flautuna",
+  "title": "Edda Fixes the Flute",
+  "pageCount": 6,
+  "pages": [
+   {
+    "n": 1,
+    "is": "Þetta er litla silfurflautan hennar Eddu. Stjarna er grafin á aðra hliðina. Blátt band er bundið nálægt efri endanum. Í kvöld hefur bandið losnað.",
+    "en": "This is Edda's tiny silver flute. A star is engraved on one side. A blue ribbon is tied near the top. Tonight, the ribbon has come loose.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 2,
+    "is": "Sjáðu hvað Edda heldur varlega á flautunni. Hún sér að stjarnan er orðin dauf. Hún teygir sig í litla, mjúka fægiklútinn sinn.",
+    "en": "Notice how carefully Edda holds the flute. She can see the star is dull. She reaches for her small soft polishing cloth.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 3,
+    "is": "Hér er Edda að nudda stjörnuna í mjúkum hringjum. Silfrið byrjar að glansa. Svo — mjó ljósrönd birtist undir svefnherbergishurðinni.",
+    "en": "Here is Edda, rubbing the star in gentle circles. The silver begins to shine. Then — a thin strip of light appears under the bedroom door.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 4,
+    "is": "Taktu eftir: ljósið hreyfist ekki. Það er bara næturljósið hans pabba frammi á gangi. Edda brosir og heldur áfram að fægja.",
+    "en": "Notice: the light does not move. It is only Papa's night-light in the hall. Edda smiles and keeps polishing.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 5,
+    "is": "Hér kemur pabbi, stígur hljóðlega inn í herbergið. „Þú gerðir við hana,“ segir hann og brosir. „Sérðu hvað hún glansar núna?“ Edda heldur flautunni á lofti. Stjarnan glitrar.",
+    "en": "Here is Papa, stepping softly into the room. \"You fixed it,\" he says. Edda holds up the flute. The star glitters.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 6,
+    "is": "Þetta er mýksti tónninn sem þú hefur nokkurn tíma heyrt. Edda og pabbi spila hann saman, bara einu sinni. Næturljósið lýsir. Nú er kominn tími til að sofa.",
+    "en": "This is the softest note you ever heard. Edda and Papa play it together, just once. The night-light glows. It is time to sleep.",
+    "layout": "full-bleed"
+   }
+  ],
+  "files": {
+   "cover": "sb_1781550938747_pshsk9-cover.png",
+   "p1": "sb_1781550938747_pshsk9-p1.webp",
+   "p2": "sb_1781550938747_pshsk9-p2.webp",
+   "p3": "sb_1781550938747_pshsk9-p3.webp",
+   "p4": "sb_1781550938747_pshsk9-p4.webp",
+   "p5": "sb_1781550938747_pshsk9-p5.webp",
+   "p6": "sb_1781550938747_pshsk9-p6.webp"
+  }
+ },
+ "sb_factory_9cc00516ff9f0c": {
+  "use": "raddir: one book, several narrators (Dísa); on the kvold shelf",
+  "title_is": "Dísa og flautan úr árgrjóti undir rótunum",
+  "title": "Disa and the River-Stone Flute under the Roots",
+  "pageCount": 12,
+  "pages": [
+   {
+    "n": 1,
+    "is": "Ég kúri mig djúpt undir risastórum rótarbogunum. Heimili mitt er notalegt og glóandi mosinn skín mjúklega.",
+    "en": "I nestle deep under the giant root arches. My home feels warm, and the glowing moss shines softly.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 2,
+    "is": "Afi treystir mér fyrir laufpakka. Hann treystir mér til að skila sofandi flautunni til gáttarinnar.",
+    "en": "Grandpa entrusts me with a leaf parcel. He trusts me to return the slumbering flute to the portal.",
+    "layout": "image-top-text-bottom"
+   },
+   {
+    "n": 3,
+    "is": "Inni í pakkanum ómar svala árgrjótsflautan lágt. Mjúkur söngur hennar vekur létta freistingu til að halda henni að eilífu.",
+    "en": "Inside, the cool river stone flute hums. Its soft song creates a gentle temptation to keep it forever.",
+    "layout": "text-left-image-right"
+   },
+   {
+    "n": 4,
+    "is": "Ég fel slétta steininn í skjóðunni minni. Enginn sér val mitt í myrkrinu.",
+    "en": "I conceal the smooth stone inside my satchel. Nobody witnesses my choice in the darkness.",
+    "layout": "image-left-text-right"
+   },
+   {
+    "n": 5,
+    "is": "Í fljótandi skólanum hættir blíði vindurinn að blása. Mjúku garðljósin byrja að flökta.",
+    "en": "At the floating school, the gentle wind ceases. The soft garden lights begin to flicker.",
+    "layout": "image-top-text-bottom"
+   },
+   {
+    "n": 6,
+    "is": "Án flautunnar verður loftið napurkalt. Ljómandi birta garðsins byrjar að dofna.",
+    "en": "Without the flute, the air turns chillingly cold. The garden's radiant glow begins to fade.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 7,
+    "is": "Ég finn fyrir þungri byrði. Leynilega valið mitt hefur skaðað garðinn.",
+    "en": "I feel a heavy weight. My secret choice has hurt the garden.",
+    "layout": "vignette"
+   },
+   {
+    "n": 8,
+    "is": "Ég opna striga-skjóðuna mína. Ég verð að skila sofandi flautunni tafarlaust.",
+    "en": "I open my canvas satchel. I must restore the slumbering flute at once.",
+    "layout": "text-left-image-right"
+   },
+   {
+    "n": 9,
+    "is": "Afi fylgist með þegar ég legg flautuna varlega aftur á milli trjárótanna.",
+    "en": "Grandpa watches as I place the flute gently back among the tree roots.",
+    "layout": "image-left-text-right"
+   },
+   {
+    "n": 10,
+    "is": "Garðurinn glitrar. Að gera hið rétta færir mér hljóðláta ró að nýju.",
+    "en": "The garden shimmers. Doing the right thing restores a quiet peace inside me.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 11,
+    "is": "Afi brosir hlýlega í viðurkenningarskyni. Ég finn til öryggis og ánægju.",
+    "en": "Grandpa smiles with warm approval. I feel secure and content.",
+    "layout": "image-top-text-bottom"
+   },
+   {
+    "n": 12,
+    "is": "Ég loka augunum í ró. Sofandi flautan hvílist loksins.",
+    "en": "I close my eyes peacefully. The slumbering flute finally rests.",
+    "layout": "spot-illustration"
+   }
+  ],
+  "files": {
+   "cover": "sb_factory_9cc00516ff9f0c-cover.png",
+   "p1": "sb_factory_9cc00516ff9f0c-p1.webp",
+   "p2": "sb_factory_9cc00516ff9f0c-p2.webp",
+   "p3": "sb_factory_9cc00516ff9f0c-p3.webp",
+   "p4": "sb_factory_9cc00516ff9f0c-p4.webp",
+   "p5": "sb_factory_9cc00516ff9f0c-p5.webp",
+   "p6": "sb_factory_9cc00516ff9f0c-p6.webp",
+   "p7": "sb_factory_9cc00516ff9f0c-p7.webp",
+   "p8": "sb_factory_9cc00516ff9f0c-p8.webp",
+   "p9": "sb_factory_9cc00516ff9f0c-p9.webp",
+   "p10": "sb_factory_9cc00516ff9f0c-p10.webp",
+   "p11": "sb_factory_9cc00516ff9f0c-p11.webp",
+   "p12": "sb_factory_9cc00516ff9f0c-p12.webp"
+  }
+ },
+ "sb_factory_ca46a0f07d97f3": {
+  "use": "tunga: short lines in both languages (Tindra horfir vel)",
+  "title_is": "Tindra horfir vel",
+  "title": "Tindra Looks Closely",
+  "pageCount": 8,
+  "pages": [
+   {
+    "n": 1,
+    "is": "Tindra horfir. Hlý sólin. Hmm, hmm.",
+    "en": "Tindra looks. Warm sun. Hum, hum.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 2,
+    "is": "Tindra horfir. Mjúkur mosi. Tipp, tipp.",
+    "en": "Tindra looks. Soft moss. Tap, tap.",
+    "layout": "image-top-text-bottom"
+   },
+   {
+    "n": 3,
+    "is": "Tindra horfir. Pínulítil dós. Ó!",
+    "en": "Tindra looks. Tiny can. Ooh!",
+    "layout": "text-left-image-right"
+   },
+   {
+    "n": 4,
+    "is": "Tindra horfir. Þurrt fræ. Plipp, plopp.",
+    "en": "Tindra looks. Dry seed. Plip, plop.",
+    "layout": "image-left-text-right"
+   },
+   {
+    "n": 5,
+    "is": "Tindra horfir. Mikill vindur. Svúff!",
+    "en": "Tindra looks. Big wind. Whoosh!",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 6,
+    "is": "Tindra rúllar. Örugg kúla. Kúra, kúra.",
+    "en": "Tindra rolls. Safe ball. Curl, curl.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 7,
+    "is": "Tindra horfir. Bjart blóm. Húrra!",
+    "en": "Tindra looks. Bright bloom. Yay!",
+    "layout": "image-top-text-bottom"
+   },
+   {
+    "n": 8,
+    "is": "Tindra sofnar. Notalegt heimili. Sss.",
+    "en": "Tindra sleeps. Cozy home. Shhh.",
+    "layout": "vignette"
+   }
+  ],
+  "files": {
+   "cover": "sb_factory_ca46a0f07d97f3-cover.png",
+   "p1": "sb_factory_ca46a0f07d97f3-p1.webp",
+   "p2": "sb_factory_ca46a0f07d97f3-p2.webp",
+   "p3": "sb_factory_ca46a0f07d97f3-p3.webp",
+   "p4": "sb_factory_ca46a0f07d97f3-p4.webp",
+   "p5": "sb_factory_ca46a0f07d97f3-p5.webp",
+   "p6": "sb_factory_ca46a0f07d97f3-p6.webp",
+   "p7": "sb_factory_ca46a0f07d97f3-p7.webp",
+   "p8": "sb_factory_ca46a0f07d97f3-p8.webp"
+  }
+ },
+ "sb_factory_721fd4722f0db3": {
+  "use": "nott: the last page, Góða nótt (Óskar telur ræturnar)",
+  "title_is": "Óskar telur ræturnar",
+  "title": "Oskar Counts the Roots",
+  "pageCount": 12,
+  "pages": [
+   {
+    "n": 1,
+    "is": "Óskar telur. Ein rótarhurð.",
     "en": "Oskar counts. One root door.",
     "layout": "full-bleed"
    },
    {
     "n": 2,
-    "is": "Óskar telur. Hve margar dyr?",
+    "is": "Óskar telur. Hversu margar hurðir?",
     "en": "Oskar counts. How many doors?",
     "layout": "image-top-text-bottom"
    },
@@ -29,19 +313,49 @@
    },
    {
     "n": 5,
-    "is": "Óskar telur. Ein bjarkarskífa.",
+    "is": "Óskar telur. Ein birkibarkarskífa.",
     "en": "Oskar counts. One birchbark disc.",
     "layout": "text-left-image-right"
    },
    {
     "n": 6,
-    "is": "Óskar telur. Tveir hringir. Sko!",
+    "is": "Óskar telur. Tveir hringir. Sjáðu!",
     "en": "Oskar counts. Two circles. Look!",
     "layout": "full-bleed"
    },
    {
+    "n": 7,
+    "is": "Óskar telur. Einn notalegur stígur.",
+    "en": "Oskar counts. One cozy path.",
+    "layout": "image-top-text-bottom"
+   },
+   {
+    "n": 8,
+    "is": "Óskar telur. Einn trékubbur.",
+    "en": "Oskar counts. One wooden block.",
+    "layout": "full-bleed"
+   },
+   {
+    "n": 9,
+    "is": "Óskar telur. Kubburinn passar.",
+    "en": "Oskar counts. The block fits.",
+    "layout": "image-left-text-right"
+   },
+   {
+    "n": 10,
+    "is": "Óskar telur. Þrjú skref. Húrra!",
+    "en": "Oskar counts. Three steps. Yay!",
+    "layout": "vignette"
+   },
+   {
+    "n": 11,
+    "is": "Óskar telur. Tvær sofandi mýs.",
+    "en": "Oskar counts. Two sleeping mice.",
+    "layout": "vignette"
+   },
+   {
     "n": 12,
-    "is": "Óskar telur. Góða nótt, bjartar stjörnur.",
+    "is": "Óskar telur. Góða nótt, björtu stjörnur.",
     "en": "Oskar counts. Goodnight, bright stars.",
     "layout": "vignette"
    }
@@ -54,109 +368,12 @@
    "p4": "sb_factory_721fd4722f0db3-p4.webp",
    "p5": "sb_factory_721fd4722f0db3-p5.webp",
    "p6": "sb_factory_721fd4722f0db3-p6.webp",
+   "p7": "sb_factory_721fd4722f0db3-p7.webp",
+   "p8": "sb_factory_721fd4722f0db3-p8.webp",
+   "p9": "sb_factory_721fd4722f0db3-p9.webp",
+   "p10": "sb_factory_721fd4722f0db3-p10.webp",
+   "p11": "sb_factory_721fd4722f0db3-p11.webp",
    "p12": "sb_factory_721fd4722f0db3-p12.webp"
-  }
- },
- "sb_1782458330480_f89riq": {
-  "title_is": "Geturðu fundið vettlinginn?",
-  "title": "Can You Find the Mitten?",
-  "pages": [
-   {
-    "n": 1,
-    "is": "Sjáðu básinn á Maker Fair! Geturðu fundið rjómalitaða pappírsvettlinginn?",
-    "en": "Look at the Maker Fair booth! Can you find the cream paper mitten?",
-    "layout": "full-bleed"
-   },
-   {
-    "n": 2,
-    "is": "Fræið er mjög lítið. Geturðu komið auga á litla, brúna fræið í moldinni? Hvað skyldi vaxa upp af því?",
-    "en": "The seed is very small. Can you spot the tiny brown seed in the soil? What will it grow into?",
-    "layout": "image-top-text-bottom"
-   },
-   {
-    "n": 3,
-    "is": "Árni vill smíða vaxtarvél. Geturðu valið hringlaga, bláa tannhjólið sem passar í raufina?",
-    "en": "Ari wants to build a growth machine. Can you choose the round blue gear that fits the slot?",
-    "layout": "text-left-image-right"
-   },
-   {
-    "n": 4,
-    "is": "Plöntur þurfa vatn. Geturðu fylgt slóð vatnsdropanna niður í moldina?",
-    "en": "Plants need water. Can you trace the line of water drops to the soil?",
-    "layout": "image-left-text-right"
-   },
-   {
-    "n": 5,
-    "is": "Sjáðu! Fræið varð að laufgrænni plöntu. Geturðu talið appelsínugulu gulræturnar? Flettu við til að sjá þær skína!",
-    "en": "Look! The seed grew into a leafy green plant. Can you count the orange carrots? Turn the page to see them shine!",
-    "layout": "text-left-image-right"
-   },
-   {
-    "n": 6,
-    "is": "Hver biti á sér sögu! Geturðu parað bleiku gulrótaskálina við vélmennið?",
-    "en": "Every bite has a story! Can you match the pink bowl of carrots to the robot?",
-    "layout": "full-bleed"
-   }
-  ],
-  "files": {
-   "cover": "sb_1782458330480_f89riq-cover.png",
-   "p1": "sb_1782458330480_f89riq-p1.webp",
-   "p2": "sb_1782458330480_f89riq-p2.webp",
-   "p3": "sb_1782458330480_f89riq-p3.webp",
-   "p4": "sb_1782458330480_f89riq-p4.webp",
-   "p5": "sb_1782458330480_f89riq-p5.webp",
-   "p6": "sb_1782458330480_f89riq-p6.webp"
-  }
- },
- "sb_factory_8665093d8f331d": {
-  "title_is": "Litirnir á flóamarkaði áarsteinanna",
-  "title": "The Colors of Secondhand River-stone Market",
-  "pages": [
-   {
-    "n": 1,
-    "is": "Sjáðu ána. Plask! Plask!",
-    "en": "See the river. Splash! Splash!",
-    "layout": "full-bleed"
-   },
-   {
-    "n": 2,
-    "is": "Sjáðu steinana. Tikk, tikk.",
-    "en": "See the stones. Tap, tap.",
-    "layout": "image-top-text-bottom"
-   },
-   {
-    "n": 3,
-    "is": "Sjáðu víðinn. Svisj, svisj.",
-    "en": "See the willow. Swish, swish.",
-    "layout": "text-left-image-right"
-   },
-   {
-    "n": 4,
-    "is": "Sjáðu Leif. Rauð stígvél ganga.",
-    "en": "See Leif. Red wellies walk.",
-    "layout": "image-left-text-right"
-   },
-   {
-    "n": 5,
-    "is": "Sjáðu markaðinn. Suð, suð.",
-    "en": "See the market. Hum, hum.",
-    "layout": "full-bleed"
-   },
-   {
-    "n": 6,
-    "is": "Sjáðu Leif beygja sig. Horfðu niður!",
-    "en": "See Leif crouch. Look down!",
-    "layout": "full-bleed"
-   }
-  ],
-  "files": {
-   "cover": "sb_factory_8665093d8f331d-cover.png",
-   "p1": "sb_factory_8665093d8f331d-p1.webp",
-   "p2": "sb_factory_8665093d8f331d-p2.webp",
-   "p3": "sb_factory_8665093d8f331d-p3.webp",
-   "p4": "sb_factory_8665093d8f331d-p4.webp",
-   "p5": "sb_factory_8665093d8f331d-p5.webp",
-   "p6": "sb_factory_8665093d8f331d-p6.webp"
   }
  }
 }
