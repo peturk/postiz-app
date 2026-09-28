@@ -1,24 +1,25 @@
-// Voiceover for the Yarnkin films: the on-screen headlines (copy/final.json)
-// read by a voice from WTD's Voice Bank, the one voice catalogue. The voice
+// Voiceover for the Yarnkin films: the spoken layer (copy/spoken.json, never
+// the on-screen headlines) read by a voice from WTD's Voice Bank, the one voice catalogue. The voice
 // id, model and direction come from the catalogue, never from a local copy.
 // TTS only: the paid key speaks and nothing else (no transcription, no
 // judging; a take is checked by ear).
 // Casting (which catalogue voice reads which film, with what direction, and
 // why) lives in copy/casting.json; the tagline is always its tagline_voice.
 // Usage: GEMINI_API_KEY=... node vo-yk.mjs [film ...]
-// Writes vo/<film>/NN.wav, vo/tagline.wav and vo/<film>/lines.json for assemble-yk.cjs.
+// Writes vo/<film>/<voice>-v6/NN.wav, vo/tagline-<voice>-held.wav and vo/<film>/lines.json for assemble-yk.cjs.
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 
 const BIN = process.env.HOME + "/.local/bin";
 const WTD = process.env.WTD_REPO || process.env.HOME + "/git/wtd";
 const only = process.argv.slice(2);
 const casting = JSON.parse(readFileSync("copy/casting.json", "utf8"));
 const bank = JSON.parse(execFileSync("git", ["-C", WTD, "show", "origin/main:web/src/data/narration/voice-bank.json"]).toString());
+// The Voice Bank is per language (wtd 9d8f4c6b2): the films are Icelandic.
 function catalogue(name) {
-  const v = (Array.isArray(bank) ? bank : bank.voices).find(x => x.id === name);
-  if (!v?.chosen?.voiceId) { console.error(`${name} has no chosen voice in the WTD Voice Bank`); process.exit(2); }
-  return { name, voiceId: v.chosen.voiceId, model: v.chosen.model, direction: v.chosen.sample.direction, scenarios: v.chosen.scenarios || [] };
+  const chosen = bank.voices.find(x => x.id === name)?.languages?.is?.chosen;
+  if (!chosen?.voiceId) { console.error(`${name} has no chosen Icelandic voice in the WTD Voice Bank`); process.exit(2); }
+  return { name, voiceId: chosen.voiceId, model: chosen.model, direction: chosen.sample.direction, scenarios: chosen.scenarios || [] };
 }
 // WTD decision E35 (wtd 7380da6a4): each chosen voice carries its measured
 // character and scenarios in voice-bank.json; films and ads cast only voices
@@ -55,13 +56,26 @@ function fit(file, slot) {
   return { file: out, len: dur(out) };
 }
 
+// Pauses longer than maxPause are cut down to it (half kept at each edge); the voice
+// itself is never sped up (PK approved the tagline take at its own pace).
+function holdPauses(file, maxPause, out) {
+  const log = spawnSync(BIN + "/ffmpeg", ["-i", file, "-af", "silencedetect=n=-40dB:d=" + maxPause, "-f", "null", "-"]).stderr.toString();
+  const starts = [...log.matchAll(/silence_start: ([0-9.]+)/g)].map(m => +m[1]), ends = [...log.matchAll(/silence_end: ([0-9.]+)/g)].map(m => +m[1]);
+  const keep = [];
+  let from = 0;
+  starts.forEach((s, i) => { if (ends[i] === undefined) return; keep.push([from, s + maxPause / 2]); from = ends[i] - maxPause / 2; });
+  keep.push([from, dur(file)]);
+  const fc = keep.map(([a, b], i) => `[0:a]atrim=${a.toFixed(3)}:${b.toFixed(3)},asetpts=PTS-STARTPTS,afade=t=in:d=0.01,afade=t=out:st=${(b - a - 0.01).toFixed(3)}:d=0.01[p${i}];`).join("")
+    + keep.map((_, i) => `[p${i}]`).join("") + `concat=n=${keep.length}:v=0:a=1[out]`;
+  execFileSync(BIN + "/ffmpeg", ["-y", "-loglevel", "error", "-i", file, "-filter_complex", fc, "-map", "[out]", out]);
+  return out;
+}
+
 mkdirSync("vo", { recursive: true });
-// The tagline's pauses are held to 0.3 s and it is played 8% faster so the calm
-// take (5.5 s) fits a 4.9 s end card (about 4.5 s).
-const tag = "vo/tagline-calm-tight.wav";
+// The tagline is spoken once per voice and its pauses held to 0.4 s; the end
+// card (ui-yk.html) is sized to it.
 const tagVoice = filmVoice(casting.tagline_voice);
-execFileSync(BIN + "/ffmpeg", ["-y", "-loglevel", "error", "-i", speak(tagVoice, casting.tagline_direction || tagVoice.direction, TAGLINE.text, "vo/tagline-calm.wav"), "-af",
-  "silenceremove=stop_periods=-1:stop_duration=0.3:stop_threshold=-40dB,atempo=1.08", tag]);
+const tag = holdPauses(speak(tagVoice, casting.tagline_direction || tagVoice.direction, TAGLINE.text, `vo/tagline-${tagVoice.name}.wav`), 0.4, `vo/tagline-${tagVoice.name}-held.wav`);
 for (const film of films) {
   const cast = casting.films[film], v = filmVoice(cast.voice), direction = cast.direction || v.direction;
   mkdirSync(`vo/${film}/${v.name}-v6`, { recursive: true });

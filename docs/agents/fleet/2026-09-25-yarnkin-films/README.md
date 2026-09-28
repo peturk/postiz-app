@@ -61,3 +61,14 @@ First test voice: `narrator-bedtime` (19 TTS requests).
 
 Voices come from WTD's Voice Bank only, and a film casts only voices whose scenarios include "film". WTD measures each voice and writes its character and scenarios into voice-bank.json (chosen.character, chosen.scenarios; wtd 7380da6a4); vo-yk.mjs reads them as written.
 `vo-yk.mjs` refuses any other voice. The films use narrator-grandmother (full) and narrator-bedtime (soft) with the calm direction; narrator-mother (breathy) and narrator-father (whisper) are not film voices, so "Á íslensku og ensku" moved from the Mother to the Grandmother voice.
+
+## v7: one voice, the Grandmother (PK, 2026-09-28)
+
+PK chose the Grandmother storyteller (`narrator-grandmother`) as the voice of the series after the calm-vs-whisper A/B on the critique page (https://claude.ai/artifact/3J8Ukq485yb7jxvSa2JX9g).
+She now reads all four films and the tagline; `copy/casting.json` records why per film.
+The tagline is the exact take PK approved (voice library Y139, 64.6% voiced after the trim, 2% breath), never re-generated.
+Its long pauses are held to 0.4 s by `holdPauses` in `vo-yk.mjs`, and it is not sped up, so it runs 5.4 s.
+The end card grows to fit it: the films run 26.0 s (`nott` 23.2 s).
+New takes: `saman` (3 lines) and `nott` (2 lines), 5 TTS requests; every body take measures 48-69% voiced.
+`vo-yk.mjs` reads the per-language Voice Bank (`voices[].languages.is.chosen`, wtd 9d8f4c6b2).
+Review page: https://claude.ai/artifact/H13EzusFoR3MyAjg7S9Wn8 (`films-v7-page.html` is its source); all 8 masters measure -14.0 to -14.3 LUFS, true peak at most -1.8 dB.

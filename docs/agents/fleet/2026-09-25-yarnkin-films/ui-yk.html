@@ -202,7 +202,7 @@
       });
       sfx(11.0, "tap");
       reader(12.2, 19.9, [[12.2, 1, "is"], [16.0, 2, "is"]], null, true);
-      return { duration: 25.1, end: 20.0 };
+      return { duration: 26.0, end: 20.0 };
     },
     /* Lesið saman: already reading when the film starts; the first page turns at 2 s. */
     saman: function () {
@@ -210,14 +210,14 @@
       RX = 420;
       reader(0.3, 19.9, [[0.3, 1, "is"], [2.0, 2, "is"], [6.0, 3, "is"], [10.0, 4, "is"], [14.0, 5, "is"]]);
       nextStep(80, 462, 16.0, 19.9);
-      return { duration: 25.1, end: 20.0 };
+      return { duration: 26.0, end: 20.0 };
     },
     /* Á íslensku og ensku: the first switch lands at 2.8 s, inside the hook. */
     tunga: function () {
       heads("tunga");
       RX = 280;
       reader(0.3, 19.9, [[0.3, 4, "is"], [2.8, 4, "en"], [5.6, 5, "en"], [8.6, 5, "is"], [13.2, 6, "is"]], { on: 2.8, off: 8.6 });
-      return { duration: 25.1, end: 20.0 };
+      return { duration: 26.0, end: 20.0 };
     },
     /* Góða nótt: the last page on the tablet by the bed; the screen goes dark
        with the lamp (11.8-13.6): the product respects sleep. */
@@ -226,7 +226,7 @@
       RX = 20;
       var d = reader(0.3, 17.1, [[0.3, 11, "is"], [4.8, 12, "is"]]);  /* page 11 turns to the last page as "Góða nótt" lands */
       items.push(function (t) { var p = clamp((t - 11.8) / 1.8); d.style.filter = "brightness(" + (1 - 0.92 * p).toFixed(3) + ")"; });
-      return { duration: 22.3, end: 17.2 };
+      return { duration: 23.2, end: 17.2 };
     }
   };
 

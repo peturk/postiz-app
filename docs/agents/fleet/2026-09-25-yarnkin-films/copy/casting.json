@@ -1,6 +1,6 @@
 {
- "principle": "The tagline over the end card is always narrator-bedtime: one consistent sonic brand asset (Ehrenberg-Bass: consistency builds the memory link; changing it resets it). Each film's body voice is cast for what that film says and who it speaks to. v6: calm is the brand voice, whisper is never used; every take must measure at least 40% voiced (whisper.py). Films cast only voices whose WTD Voice Bank scenarios include film (E35).",
- "tagline_voice": "narrator-bedtime",
+ "principle": "One voice for the whole series: narrator-grandmother, the Grandmother storyteller from WTD's Voice Bank (PK's choice, 2026-09-28, after the calm-vs-whisper A/B). She reads every film and the tagline, so the sonic brand is one consistent voice (Ehrenberg-Bass: consistency builds the memory link). Calm is the brand voice, whisper is never used; every take must measure at least 40% voiced (whisper.py). Films cast only voices whose WTD Voice Bank scenarios include film (E35).",
+ "tagline_voice": "narrator-grandmother",
  "films": {
   "kvold": {
    "job": "Acquisition: the first touch. Tells a parent who has never heard of Yarnkin that tonight's story is one tap away, free, no account.",
@@ -15,11 +15,10 @@
    "job": "Consideration: the value of the shared moment, no hurry, no ads.",
    "audience": "Parents who already read to their children, both mothers and fathers; Icelandic fathers take a large share of bedtime, and ads rarely speak to them.",
    "message": "One reads, the others listen; time can wait.",
-   "voice": "narrator-bedtime",
-   "why": "Bangsi reading in the armchair is the family reader; a warm father voice mirrors the scene, widens the audience beyond mothers, and gives the series vocal variety.",
+   "voice": "narrator-grandmother",
+   "why": "The Grandmother reading to the family in the armchair is the series voice; one reader for every film, and her full, clear voice makes the shared reading warm without hushing it.",
    "direction": "Speak in a calm, warm, full voice at a normal conversational level, close to the microphone: relaxed and unhurried, a smile in the voice. Not whispered, not breathy, not hushed; every vowel clearly voiced. Natural Icelandic phrasing with a small pause between sentences.",
-   "end": 20.0,
-   "note": "Fallback until WTD adds a calm male narrator (narrator-father whispers: 13-23% voiced)."
+   "end": 20.0
   },
   "tunga": {
    "job": "Feature proof: one tap switches the same page between Icelandic and English.",
@@ -34,11 +33,12 @@
    "job": "Brand love: the ritual Yarnkin belongs to, ending the day.",
    "audience": "Every parent at bedtime; this is the brand's emotional core and the film most likely to be shared.",
    "message": "The last page, the light goes out, dreams begin.",
-   "voice": "narrator-bedtime",
-   "why": "The bedtime reader was designed for exactly this moment, and in this film the body voice and the brand voice are the same, so the signature lands at full strength.",
-   "direction": "Speak in a calm, warm, full voice at a normal conversational level, close to the microphone: relaxed and unhurried, a smile in the voice. Not whispered, not breathy, not hushed; every vowel clearly voiced. Natural Icelandic phrasing with a small pause between sentences.",
+   "voice": "narrator-grandmother",
+   "why": "The Grandmother tucking the cast in is the ritual the brand belongs to, and the body voice and the tagline are the same voice, so the signature lands at full strength.",
+   "direction": "An Icelandic grandmother at the bedside as the lamp goes out: calm, warm, full voice, a little slower and softer in tone, a smile in the voice. Not whispered, not breathy, not hushed; every vowel clearly voiced. Natural Icelandic phrasing with a small pause between sentences.",
    "end": 17.2
   }
  },
- "tagline_direction": "Speak in a calm, warm, full voice at a normal conversational level, close to the microphone: relaxed and unhurried, a smile in the voice. Not whispered, not breathy, not hushed; every vowel clearly voiced. Natural Icelandic phrasing with a small pause between sentences."
+ "tagline_direction": "Speak in a calm, warm, full voice at a normal conversational level, close to the microphone: relaxed and unhurried, a smile in the voice. Not whispered, not breathy, not hushed; every vowel clearly voiced. Natural Icelandic phrasing with a small pause between sentences.",
+ "tagline_take": "The take PK approved on the critique page: voice library Y139 (calm direction, 63.3% voiced, 2% breath). vo-yk.mjs reuses vo/tagline-narrator-grandmother.wav when it exists, so place that take there; it is never re-generated."
 }
